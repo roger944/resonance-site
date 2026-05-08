@@ -1,2 +1,2 @@
 # resonance-site
-Resonance Breath App
+Resonance Breath  App
