@@ -2,1491 +2,1784 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Resonance — Synchronize · Breathe · Ascend</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --black:#000;--black2:#0a0a0c;--black3:#111114;
-  --gold:#FFD700;--gold2:#e2c06a;--gold3:rgba(255,215,0,0.45);--gold4:rgba(255,215,0,0.12);
-  --purple:#7B2FBE;--purple2:#9B4FDE;--indigo:#3F51B5;
-  --teal:#4a9a8a;--teal2:#6abcaa;
-  --muted:rgba(255,255,255,0.38);--muted2:rgba(255,255,255,0.16);
-  --border:rgba(255,215,0,0.12);--border2:rgba(255,215,0,0.25);
-  --card:rgba(255,255,255,0.025);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:#f0ece4;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;overflow-x:hidden;}
 
-/* ANIMATIONS */
-.fade-in{opacity:0;transform:translateY(28px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1);}
-.fade-in.visible{opacity:1;transform:none;}
-.fade-left{opacity:0;transform:translateX(-28px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1);}
-.fade-left.visible{opacity:1;transform:none;}
-.fade-right{opacity:0;transform:translateX(28px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1);}
-.fade-right.visible{opacity:1;transform:none;}
+:root {
+  --black: #000;
+  --black2: #0a0a0c;
+  --gold: #FFD700;
+  --gold2: #e2c06a;
+  --gold3: rgba(255,215,0,0.45);
+  --gold4: rgba(255,215,0,0.12);
+  --purple: #7B2FBE;
+  --purple2: #9B4FDE;
+  --teal: #4a9a8a;
+  --muted: rgba(255,255,255,0.38);
+  --muted2: rgba(255,255,255,0.16);
+  --border: rgba(255,215,0,0.12);
+  --border2: rgba(255,215,0,0.25);
+}
 
-#flowCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.45;}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background: var(--black);
+  color: #f0ece4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 5vw;display:flex;align-items:center;justify-content:space-between;height:68px;}
-.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
-.nav-wordmark{font-size:14px;font-weight:800;letter-spacing:7px;text-transform:uppercase;color:var(--gold);}
-.nav-links{display:flex;gap:24px;align-items:center;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;}
-.nav-links a:hover{color:var(--gold);}
-.nav-cta{border:1px solid rgba(255,215,0,0.3);color:var(--gold);padding:8px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:transparent;cursor:pointer;transition:all 0.4s;}
-.nav-cta:hover{background:var(--gold);color:#000;}
+/* ═══════════════════════════════════════════ */
+/* LAYOUT */
+/* ═══════════════════════════════════════════ */
 
+.app-container {
+  min-height: 100vh;
+  background: var(--black);
+}
+
+.section {
+  padding: 80px 5vw;
+  position: relative;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.section-title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold3);
+  margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════ */
+/* BUTTONS */
+/* ═══════════════════════════════════════════ */
+
+.btn {
+  padding: 13px 32px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #000;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--border2);
+}
+
+.btn-outline:hover {
+  background: var(--gold4);
+  border-color: var(--gold);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ═══════════════════════════════════════════ */
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 5vw 80px;position:relative;overflow:hidden;z-index:1;}
-.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,215,0,0.07),transparent 70%);pointer-events:none;animation:glowpulse 6s ease-in-out infinite;}
-@keyframes glowpulse{0%,100%{opacity:0.6;}50%{opacity:1;}}
-.hero-eyebrow{font-size:10px;letter-spacing:6px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-bottom:28px;animation:floatup 1.2s cubic-bezier(0.22,1,0.36,1) both;}
-.hero h1{font-size:clamp(3.5rem,10vw,8rem);font-weight:800;letter-spacing:14px;text-transform:uppercase;color:var(--gold);line-height:1;margin-bottom:12px;text-shadow:0 0 80px rgba(255,215,0,0.3);animation:floatup 1.2s 0.15s cubic-bezier(0.22,1,0.36,1) both;}
-.hero-hz{font-size:clamp(0.8rem,1.5vw,1.1rem);color:rgba(255,215,0,0.35);letter-spacing:9px;margin-bottom:14px;animation:floatup 1.2s 0.25s cubic-bezier(0.22,1,0.36,1) both;}
-.hero-tag{font-size:10px;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:52px;animation:floatup 1.2s 0.35s cubic-bezier(0.22,1,0.36,1) both;}
-@keyframes floatup{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:72px;animation:floatup 1.2s 0.45s cubic-bezier(0.22,1,0.36,1) both;}
-.btn-gold{background:var(--gold);color:#000;padding:14px 38px;font-weight:800;font-size:11px;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.4s;position:relative;overflow:hidden;}
-.btn-gold:hover{box-shadow:0 0 32px rgba(255,215,0,0.4);transform:translateY(-1px);}
-.btn-outline{background:transparent;color:var(--gold);padding:14px 38px;font-size:11px;letter-spacing:3px;text-transform:uppercase;border:1px solid rgba(255,215,0,0.25);transition:all 0.4s;cursor:pointer;text-decoration:none;display:inline-block;}
-.btn-outline:hover{border-color:var(--gold);background:rgba(255,215,0,0.05);}
-.yantra-wrap{position:relative;width:min(300px,72vw);height:min(300px,72vw);margin:0 auto;animation:floatup 1.4s 0.5s cubic-bezier(0.22,1,0.36,1) both;}
-.yr1{animation:yr 80s linear infinite;transform-origin:50% 50%;}
-.yr2{animation:yr 55s linear infinite reverse;transform-origin:50% 50%;}
-.yr3{animation:yr 35s linear infinite;transform-origin:50% 50%;}
-@keyframes yr{to{transform:rotate(360deg);}}
+/* ═══════════════════════════════════════════ */
 
-/* SECTIONS */
-.section{padding:110px 5vw;position:relative;z-index:1;}
-.eyebrow{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-bottom:14px;}
-.section-title{font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;}
-.section-title em{font-style:normal;color:var(--gold);}
-.section-sub{color:var(--muted);font-size:15px;max-width:540px;line-height:1.95;}
-.centered{text-align:center;}.centered .section-sub{margin:0 auto;}
-.wave-div{width:100%;overflow:hidden;line-height:0;position:relative;z-index:1;}
-.wave-div svg{display:block;width:100%;}
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 5vw 60px;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255,215,0,0.05), transparent 70%);
+}
 
-/* ══════════════════════════════════════════
-   RESONANCE SCORE SECTION
-══════════════════════════════════════════ */
-.score-section{background:#000;}
-.score-hero{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
-@media(max-width:768px){.score-hero{grid-template-columns:1fr;gap:40px;}}
-.score-display{position:relative;width:280px;height:280px;margin:0 auto;display:flex;align-items:center;justify-content:center;}
-.score-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,215,0,0.15);}
-.sr1{width:280px;height:280px;animation:srpulse 4s ease-in-out infinite;}
-.sr2{width:220px;height:220px;animation:srpulse 4s ease-in-out infinite 0.5s;}
-.sr3{width:160px;height:160px;animation:srpulse 4s ease-in-out infinite 1s;}
-@keyframes srpulse{0%,100%{transform:scale(1);opacity:0.3;}50%{transform:scale(1.04);opacity:0.7;}}
-.score-inner{text-align:center;z-index:1;}
-.score-number{font-size:72px;font-weight:200;color:var(--gold);line-height:1;letter-spacing:-2px;text-shadow:0 0 40px rgba(255,215,0,0.4);}
-.score-label{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-top:4px;}
-.score-bar-wrap{margin-top:16px;width:120px;height:2px;background:rgba(255,255,255,0.08);border-radius:1px;overflow:hidden;}
-.score-bar{height:100%;background:linear-gradient(90deg,rgba(255,215,0,0.4),var(--gold));border-radius:1px;animation:scorefill 2s 1s cubic-bezier(0.22,1,0.36,1) both;}
-@keyframes scorefill{from{width:0%;}to{width:67%;}}
-.score-text h3{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
-.score-text h3 em{font-style:normal;color:var(--gold);}
-.score-text p{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:20px;}
-.score-milestones{display:grid;gap:10px;margin-top:24px;}
-.milestone{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);transition:all 0.3s;}
-.milestone:hover{border-color:rgba(255,215,0,0.2);background:rgba(255,215,0,0.03);}
-.milestone-score{font-size:13px;font-weight:700;color:var(--gold);min-width:32px;}
-.milestone-lock{font-size:14px;opacity:0.5;}
-.milestone-info{flex:1;}
-.milestone-name{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
-.milestone-desc{font-size:10px;color:var(--muted);letter-spacing:0.5px;}
-.milestone.unlocked .milestone-lock{opacity:1;filter:none;}
-.milestone.locked{opacity:0.5;}
+.hero h1 {
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  font-weight: 800;
+  letter-spacing: clamp(4px, 2vw, 16px);
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 16px;
+  text-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-/* ══════════════════════════════════════════
-   PINEAL PROTOCOL / SLEEP MODE
-══════════════════════════════════════════ */
-.sleep-section{background:var(--black2);overflow:hidden;}
-.sleep-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
-@media(max-width:768px){.sleep-grid{grid-template-columns:1fr;gap:40px;}}
-.sleep-visual{position:relative;width:280px;height:280px;margin:0 auto;}
-.sleep-yantra{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
-.sleep-yantra svg{animation:sleepfade 8s ease-in-out infinite;}
-@keyframes sleepfade{0%,100%{opacity:0.8;filter:drop-shadow(0 0 20px rgba(123,47,190,0.4));}50%{opacity:0.3;filter:drop-shadow(0 0 6px rgba(123,47,190,0.1));}}
-.sleep-rings .ring{position:absolute;border-radius:50%;border:1px solid rgba(123,47,190,0.2);top:50%;left:50%;transform:translate(-50%,-50%);}
-.sleep-rings .r1{width:280px;height:280px;animation:sleeppulse 8s ease-in-out infinite;}
-.sleep-rings .r2{width:210px;height:210px;animation:sleeppulse 8s ease-in-out infinite 1s;}
-.sleep-rings .r3{width:140px;height:140px;animation:sleeppulse 8s ease-in-out infinite 2s;}
-@keyframes sleeppulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.2;}50%{transform:translate(-50%,-50%) scale(1.06);opacity:0.5;}}
-.sleep-steps{display:flex;flex-direction:column;gap:0;}
-.sleep-step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.04);position:relative;}
-.sleep-step:last-child{border:none;}
-.sleep-step::before{content:'';position:absolute;left:18px;top:44px;bottom:-1px;width:1px;background:linear-gradient(180deg,rgba(123,47,190,0.4),transparent);}
-.sleep-step:last-child::before{display:none;}
-.step-num{width:38px;height:38px;border-radius:50%;border:1px solid rgba(123,47,190,0.4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(123,47,190,0.8);flex-shrink:0;background:rgba(123,47,190,0.06);}
-.step-content h4{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;color:#f0ece4;}
-.step-content p{font-size:12px;color:var(--muted);line-height:1.7;}
-.step-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border:1px solid;margin-top:6px;display:inline-block;}
-.tag-purple{color:rgba(123,47,190,0.8);border-color:rgba(123,47,190,0.3);}
-.tag-gold{color:var(--gold2);border-color:rgba(255,215,0,0.25);}
-.tag-blue{color:#7986CB;border-color:rgba(63,81,181,0.35);}
+.hero-tagline {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold3);
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-/* PINEAL DEMO */
-.pineal-demo{position:relative;margin-top:32px;padding:24px;border:1px solid rgba(123,47,190,0.2);background:rgba(123,47,190,0.04);}
-.pineal-demo::before{content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(123,47,190,0.6),transparent);}
-.demo-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(123,47,190,0.6);margin-bottom:16px;}
-.demo-btn{padding:10px 20px;border:1px solid rgba(123,47,190,0.4);background:rgba(123,47,190,0.08);color:rgba(123,47,190,0.9);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.4s;width:100%;}
-.demo-btn:hover{background:rgba(123,47,190,0.15);border-color:rgba(123,47,190,0.6);}
+.hero-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 50px;
+  animation: fadeInUp 0.8s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-/* ══════════════════════════════════════════
-   AFTERGLOW / SHAREABLE CARD
-══════════════════════════════════════════ */
-.afterglow-section{background:#000;}
-.afterglow-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1100px;margin:0 auto;}
-@media(max-width:768px){.afterglow-grid{grid-template-columns:1fr;}}
-.session-card{background:#0a0a0c;border:1px solid rgba(255,215,0,0.2);padding:32px;position:relative;overflow:hidden;max-width:340px;margin:0 auto;}
-.session-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.session-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,215,0,0.04),transparent 70%);pointer-events:none;}
-.card-yantra{width:64px;height:64px;margin:0 auto 16px;display:block;}
-.card-title{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:4px;}
-.card-sub{font-size:10px;color:var(--muted);text-align:center;letter-spacing:2px;margin-bottom:24px;}
-.card-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid rgba(255,255,255,0.06);margin-bottom:20px;}
-.card-metric{padding:14px;background:rgba(255,255,255,0.02);text-align:center;}
-.card-metric:nth-child(2){border-left:1px solid rgba(255,255,255,0.06);}
-.card-metric:nth-child(3){border-top:1px solid rgba(255,255,255,0.06);}
-.card-metric:nth-child(4){border-top:1px solid rgba(255,255,255,0.06);border-left:1px solid rgba(255,255,255,0.06);}
-.cm-val{font-size:22px;font-weight:200;color:var(--gold);letter-spacing:1px;}
-.cm-lbl{font-size:8px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.card-quote{font-size:11px;color:var(--muted);text-align:center;font-style:italic;line-height:1.8;padding:0 8px;border-top:1px solid rgba(255,255,255,0.05);padding-top:16px;}
-.card-wordmark{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.3);text-align:center;margin-top:16px;}
-.share-btn{margin-top:16px;width:100%;padding:10px;border:1px solid rgba(255,215,0,0.2);background:transparent;color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;}
-.share-btn:hover{background:rgba(255,215,0,0.06);}
-.afterglow-features{display:flex;flex-direction:column;gap:24px;padding-top:8px;}
-.ag-feat{border-left:2px solid rgba(255,215,0,0.2);padding-left:20px;transition:border-color 0.3s;}
-.ag-feat:hover{border-color:rgba(255,215,0,0.5);}
-.ag-feat h4{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.ag-feat p{font-size:13px;color:var(--muted);line-height:1.8;}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 
-/* ══════════════════════════════════════════
-   STREAK / RITUAL
-══════════════════════════════════════════ */
-.streak-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;border:1px solid rgba(255,255,255,0.05);margin-top:56px;}
-.streak-card{background:#000;padding:32px;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.4s;text-align:center;}
-.streak-card:hover{background:rgba(255,215,0,0.02);}
-.streak-icon{font-size:28px;margin-bottom:12px;display:block;}
-.streak-val{font-size:36px;font-weight:200;color:var(--gold);letter-spacing:2px;margin-bottom:4px;}
-.streak-name{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.streak-desc{font-size:11px;color:var(--muted2);line-height:1.7;}
+/* ═══════════════════════════════════════════ */
+/* SCORE DISPLAY */
+/* ═══════════════════════════════════════════ */
 
-/* SLEEP MODAL */
-.sleep-overlay{display:none;position:fixed;inset:0;z-index:300;background:#000;align-items:center;justify-content:center;flex-direction:column;}
-.sleep-overlay.open{display:flex;}
-.sleep-modal-inner{text-align:center;padding:40px;position:relative;z-index:1;max-width:420px;}
-.sleep-yantra-anim{width:200px;height:200px;margin:0 auto 32px;}
-.sleep-hz-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(123,47,190,0.6);margin-bottom:8px;}
-.sleep-title{font-size:18px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px;}
-.sleep-phase{font-size:32px;font-weight:200;color:var(--purple2);letter-spacing:2px;margin-bottom:4px;transition:all 1s;}
-.sleep-count{font-size:48px;font-weight:200;color:#f0ece4;opacity:0.5;letter-spacing:2px;}
-.sleep-progress{width:200px;height:1px;background:rgba(255,255,255,0.08);margin:20px auto;overflow:hidden;}
-.sleep-prog-bar{height:100%;background:rgba(123,47,190,0.6);width:0%;transition:width 1s linear;}
-.sleep-fade-note{font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:2px;margin-top:16px;}
-.sleep-close{position:absolute;top:20px;right:24px;background:none;border:none;color:rgba(255,255,255,0.2);font-size:18px;cursor:pointer;letter-spacing:1px;z-index:2;transition:color 0.3s;}
-.sleep-close:hover{color:rgba(255,255,255,0.5);}
-#sleepBg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(123,47,190,0.12),transparent 70%);animation:sleepbg 8s ease-in-out infinite;}
-@keyframes sleepbg{0%,100%{opacity:0.6;}50%{opacity:1;}}
+.score-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-/* TRIAL MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.94);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
-.modal{background:#0a0a0c;border:1px solid rgba(255,215,0,0.18);width:100%;max-width:480px;padding:44px;position:relative;max-height:90vh;overflow-y:auto;animation:modalin 0.5s cubic-bezier(0.22,1,0.36,1);}
-@keyframes modalin{from{opacity:0;transform:translateY(20px) scale(0.97);}to{opacity:1;transform:none;}}
-.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;transition:color 0.3s;}
-.modal-close:hover{color:var(--gold);}
-.step-track{display:flex;gap:6px;justify-content:center;margin-bottom:36px;}
-.step-pip{height:2px;background:rgba(255,255,255,0.1);flex:1;transition:all 0.5s cubic-bezier(0.22,1,0.36,1);}
-.step-pip.active{background:var(--gold);flex:1.8;}
-.step-pip.done{background:rgba(74,154,138,0.8);}
-.mstep{display:none;animation:stepIn 0.5s cubic-bezier(0.22,1,0.36,1);}
-.mstep.active{display:block;}
-@keyframes stepIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-.quiz-q{font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-.quiz-sub{font-size:11px;color:var(--muted);margin-bottom:22px;letter-spacing:1px;}
-.quiz-options{display:grid;gap:8px;}
-.quiz-opt{padding:12px 16px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);color:var(--muted);font-size:13px;cursor:pointer;text-align:left;transition:all 0.3s;width:100%;}
-.quiz-opt:hover,.quiz-opt.sel{border-color:rgba(255,215,0,0.4);background:rgba(255,215,0,0.06);color:var(--gold);}
-.t-input{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:#f0ece4;font-size:14px;outline:none;margin-bottom:10px;transition:border-color 0.3s;}
-.t-input:focus{border-color:rgba(255,215,0,0.4);}
-.t-input::placeholder{color:var(--muted2);}
-.tnote{font-size:10px;color:var(--muted2);margin-bottom:20px;}
-.trial-ring-wrap{width:160px;height:160px;margin:20px auto 24px;position:relative;display:flex;align-items:center;justify-content:center;}
-.trial-ring{width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,215,0,0.4);position:absolute;transition:transform 0.15s linear,opacity 0.15s linear;}
-.trial-core{width:72px;height:72px;border-radius:50%;background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.25);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
-.trial-core small{font-size:9px;color:var(--muted);font-weight:400;}
-.ctdown{font-size:52px;font-weight:200;color:var(--gold);line-height:1;margin:8px 0 4px;letter-spacing:2px;text-align:center;}
-.ctlabel{font-size:9px;color:var(--muted);margin-bottom:16px;letter-spacing:3px;text-transform:uppercase;text-align:center;}
-.prog-wrap{height:1px;background:rgba(255,255,255,0.07);margin-bottom:18px;overflow:hidden;}
-.prog-bar{height:100%;background:linear-gradient(90deg,rgba(255,215,0,0.4),var(--gold));width:0%;transition:width 1s linear;}
-.result-icon{font-size:36px;margin-bottom:14px;color:var(--gold);text-align:center;}
-.result-title{font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;color:var(--gold);text-align:center;}
-.result-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.9;text-align:center;}
-.insight-box{background:rgba(255,215,0,0.04);border:1px solid var(--border);padding:16px;margin-bottom:22px;}
-.insight-box h4{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,215,0,0.5);margin-bottom:8px;}
-.insight-box p{font-size:13px;color:var(--muted);line-height:1.8;}
-.rbtns{display:flex;gap:10px;flex-direction:column;}
+.score-rings {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* CHECKOUT */
-.modal-checkout{background:#0a0a0c;border:1px solid rgba(255,215,0,0.18);width:100%;max-width:520px;padding:44px;position:relative;max-height:90vh;overflow-y:auto;animation:modalin 0.5s cubic-bezier(0.22,1,0.36,1);}
-.t-select{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,0.08);background:#0a0a0c;color:#f0ece4;font-size:14px;outline:none;margin-bottom:10px;cursor:pointer;}
-.t-select:focus{border-color:rgba(255,215,0,0.4);}
+.score-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  animation: scorePulse 4s ease-in-out infinite;
+}
 
+.score-ring:nth-child(1) {
+  width: 240px;
+  height: 240px;
+  animation-delay: 0s;
+}
+
+.score-ring:nth-child(2) {
+  width: 180px;
+  height: 180px;
+  animation-delay: 0.5s;
+}
+
+.score-ring:nth-child(3) {
+  width: 120px;
+  height: 120px;
+  animation-delay: 1s;
+}
+
+@keyframes scorePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+.score-inner {
+  text-align: center;
+  z-index: 1;
+}
+
+.score-number {
+  font-size: 64px;
+  font-weight: 200;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -2px;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold3);
+  margin-top: 8px;
+}
+
+.score-bar-wrap {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 16px auto 0;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.score-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold3), var(--gold));
+  border-radius: 1px;
+  transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-max {
+  font-size: 9px;
+  color: var(--gold3);
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 32px;
+}
+
+.stat-card {
+  background: var(--black);
+  padding: 20px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-card:last-child {
+  border-right: none;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 200;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════ */
+/* MILESTONES */
+/* ═══════════════════════════════════════════ */
+
+.milestones {
+  margin-top: 40px;
+}
+
+.milestone {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 10px;
+  transition: all 0.3s;
+}
+
+.milestone:hover {
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+.milestone.locked {
+  opacity: 0.4;
+}
+
+.milestone-score {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 36px;
+}
+
+.milestone-icon {
+  font-size: 18px;
+}
+
+.milestone-content {
+  flex: 1;
+}
+
+.milestone-name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.milestone-desc {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════ */
 /* TECHNIQUES */
-.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
-.cat-tab{padding:7px 18px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.35s;}
-.cat-tab:hover{border-color:rgba(255,215,0,0.25);color:rgba(255,215,0,0.7);}
-.cat-tab.active[data-c="ALL"]{background:var(--gold);border-color:var(--gold);color:#000;font-weight:700;}
-.cat-tab.active[data-c="TRANSFORM"]{background:#FFD700;border-color:#FFD700;color:#000;font-weight:700;}
-.cat-tab.active[data-c="BALANCE"]{background:#E91E8C;border-color:#E91E8C;color:#fff;font-weight:700;}
-.cat-tab.active[data-c="RESTORE"]{background:#5C6BC0;border-color:#5C6BC0;color:#fff;font-weight:700;}
-.cat-tab.active[data-c="SLEEP"]{background:#7B2FBE;border-color:#7B2FBE;color:#fff;font-weight:700;}
-.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;border:1px solid rgba(255,255,255,0.05);}
-.tech-card{background:#000;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:26px;cursor:pointer;transition:background 0.4s;position:relative;overflow:hidden;}
-.tech-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,var(--glow-color,rgba(255,215,0,0.04)),transparent 60%);opacity:0;transition:opacity 0.4s;}
-.tech-card:hover::before{opacity:1;}
-.tech-card:hover{background:rgba(255,255,255,0.02);}
-.tc-stripe{position:absolute;top:0;left:0;width:2px;height:100%;}
-.tc-top{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
-.tc-name{font-size:15px;font-weight:700;letter-spacing:1px;margin-bottom:3px;}
-.tc-meta{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-.tc-phases{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
-.tc-phase{font-size:9px;padding:3px 9px;border:1px solid rgba(255,255,255,0.06);color:var(--muted2);}
-.tc-desc{font-size:12px;color:var(--muted);line-height:1.8;}
-.tc-btn{margin-top:16px;padding:9px 18px;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-weight:800;transition:all 0.3s;}
-.tc-lock{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:9px;color:rgba(255,215,0,0.4);letter-spacing:1.5px;text-transform:uppercase;}
+/* ═══════════════════════════════════════════ */
 
-/* SOLFEGGIO */
-.sol-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1px;margin-top:52px;border:1px solid var(--border);}
-.sol-card{background:#000;padding:22px 14px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background 0.4s;cursor:default;}
-.sol-card:hover{background:rgba(255,255,255,0.02);}
-.sol-hz{font-size:20px;font-weight:200;color:var(--gold);letter-spacing:2px;margin-bottom:6px;transition:text-shadow 0.4s;}
-.sol-card:hover .sol-hz{text-shadow:0 0 16px rgba(255,215,0,0.5);}
-.sol-desc{font-size:10px;color:var(--muted);line-height:1.6;}
+.category-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
 
-/* FEATURES */
-.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;margin-top:56px;border:1px solid rgba(255,255,255,0.05);}
-.feat-card{background:#000;padding:32px;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.4s;}
-.feat-card:hover{background:rgba(255,215,0,0.02);}
-.feat-bar{height:1px;margin-bottom:20px;width:100%;}
-.feat-num{font-size:9px;color:rgba(255,215,0,0.4);letter-spacing:4px;margin-bottom:14px;}
-.feat-card h3{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.feat-card p{font-size:12px;color:var(--muted);line-height:1.9;}
+.cat-tab {
+  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
 
+.cat-tab:hover {
+  border-color: var(--border2);
+  color: var(--gold);
+}
+
+.cat-tab.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+  font-weight: 700;
+}
+
+.techniques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tech-card {
+  background: var(--black);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-card:hover {
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-2px);
+}
+
+.tech-card.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tech-card.locked:hover {
+  transform: none;
+}
+
+.tech-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+}
+
+.tech-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.tech-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.tech-name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.tech-meta {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.tech-phases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.tech-phase {
+  font-size: 9px;
+  padding: 3px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--muted2);
+}
+
+.tech-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.tech-lock-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: var(--gold3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════════════ */
+/* SESSION RUNNER */
+/* ═══════════════════════════════════════════ */
+
+.session-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.session-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 8px;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.session-close:hover {
+  color: #fff;
+}
+
+.session-content {
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+}
+
+.session-technique {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold3);
+  margin-bottom: 40px;
+}
+
+.session-ring-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 40px;
+}
+
+.session-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+}
+
+.session-ring-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.session-phase {
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.session-countdown {
+  font-size: 52px;
+  font-weight: 200;
+  color: #f0ece4;
+  line-height: 1;
+}
+
+.session-progress {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.session-progress-bar {
+  height: 100%;
+  background: var(--gold);
+  transition: width 1s linear;
+}
+
+.session-time {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+/* ═══════════════════════════════════════════ */
+/* SESSION CARD */
+/* ═══════════════════════════════════════════ */
+
+.card-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.session-card {
+  background: #0a0a0c;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 32px;
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.session-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.card-yantra {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+.card-title {
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.card-subtitle {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.card-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 20px;
+}
+
+.card-metric {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card-metric:nth-child(2n) {
+  border-right: none;
+}
+
+.card-metric:nth-child(n+3) {
+  border-bottom: none;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 200;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.card-quote {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.8;
+  padding: 16px 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 16px;
+}
+
+.card-wordmark {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.3);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ═══════════════════════════════════════════ */
+/* MODALS */
+/* ═══════════════════════════════════════════ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s;
+}
+
+.modal {
+  background: var(--black2);
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  max-width: 480px;
+  width: 100%;
+  padding: 40px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 4px;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--gold);
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-options {
+  display: grid;
+  gap: 8px;
+}
+
+.modal-option {
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+}
+
+.modal-option:hover {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.06);
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════════════ */
 /* PRICING */
-.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;margin-top:52px;max-width:860px;margin-left:auto;margin-right:auto;border:1px solid var(--border);}
-.price-card{background:#000;padding:36px;position:relative;border-right:1px solid var(--border);transition:background 0.4s;}
-.price-card.feat{background:rgba(255,215,0,0.02);}
-.ptop{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.ptier{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
-.pamt{font-size:44px;font-weight:200;line-height:1;margin-bottom:4px;color:var(--gold);}
-.pamt span{font-size:14px;color:var(--muted);font-weight:300;}
-.pdesc{font-size:11px;color:var(--muted);margin-bottom:28px;}
-.pfeats{list-style:none;margin-bottom:32px;}
-.pfeats li{font-size:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted);display:flex;gap:10px;}
-.pfeats li:last-child{border:none;}
-.pfeats li::before{content:"—";color:rgba(255,215,0,0.4);flex-shrink:0;}
-.pfeats li.no::before{content:"·";color:rgba(255,255,255,0.1);}
-.pfeats li.no{opacity:0.25;}
-.pbtn{width:100%;padding:12px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);letter-spacing:3px;text-transform:uppercase;transition:all 0.35s;}
-.pbtn:hover{border-color:rgba(255,215,0,0.3);color:var(--gold);}
-.pbtn.gb{background:var(--gold);color:#000;border-color:var(--gold);}
-.pbtn.gb:hover{background:#ffe94d;}
-.bill-toggle{display:flex;align-items:center;gap:14px;justify-content:center;margin:32px 0 0;}
-.toggle-track{width:44px;height:22px;background:rgba(255,255,255,0.07);cursor:pointer;position:relative;border:1px solid rgba(255,255,255,0.1);transition:background 0.4s;}
-.toggle-track.on{background:rgba(74,154,138,0.5);}
-.toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--gold);transition:left 0.3s cubic-bezier(0.22,1,0.36,1);}
-.toggle-track.on .toggle-thumb{left:24px;}
-.tlbl{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:color 0.3s;}
-.tlbl.active{color:#f0ece4;}
-.save-pill{font-size:8px;background:rgba(74,154,138,0.12);color:rgba(74,154,138,0.8);padding:3px 10px;letter-spacing:1px;}
+/* ═══════════════════════════════════════════ */
 
-/* MERCH */
-.merch-label{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:48px;padding:8px 18px;border:1px solid rgba(255,255,255,0.06);}
-.merch-label::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.merch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;border:1px solid rgba(255,255,255,0.05);}
-.merch-card{background:#000;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;transition:background 0.4s;}
-.merch-card:hover{background:rgba(255,255,255,0.02);}
-.merch-img-wrap{height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.05);}
-.merch-emoji{font-size:60px;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);}
-.merch-card:hover .merch-emoji{transform:scale(1.1) translateY(-4px);}
-.merch-badge{position:absolute;top:12px;left:12px;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border:1px solid;}
-.mb-stock{background:rgba(74,154,138,0.1);color:rgba(74,154,138,0.9);border-color:rgba(74,154,138,0.25);}
-.mb-ltd{background:rgba(255,215,0,0.08);color:var(--gold2);border-color:rgba(255,215,0,0.2);}
-.merch-info{padding:18px 20px 22px;}
-.merch-name{font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:4px;}
-.merch-material{font-size:10px;color:var(--muted);margin-bottom:4px;}
-.merch-made{font-size:9px;color:rgba(255,215,0,0.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;}
-.merch-row{display:flex;align-items:center;justify-content:space-between;}
-.merch-price{font-size:16px;color:var(--gold);font-weight:200;}
-.merch-add{padding:7px 14px;border:1px solid rgba(255,215,0,0.2);background:transparent;color:var(--gold);font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.35s;}
-.merch-add:hover,.merch-add.added{background:var(--gold);color:#000;}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  max-width: 900px;
+  margin: 40px auto 0;
+}
 
-/* CART */
-.cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;backdrop-filter:blur(4px);}
-.cart-overlay.open{display:block;}
-.cart-drawer{position:fixed;top:0;right:-420px;width:400px;max-width:100vw;height:100vh;background:#0a0a0c;border-left:1px solid var(--border);z-index:101;display:flex;flex-direction:column;transition:right 0.5s cubic-bezier(0.22,1,0.36,1);}
-.cart-drawer.open{right:0;}
-.cart-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.cart-head h2{font-size:10px;letter-spacing:5px;text-transform:uppercase;}
-.close-btn{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;transition:color 0.3s;}
-.close-btn:hover{color:var(--gold);}
-.cart-body{flex:1;overflow-y:auto;padding:16px 24px;}
-.cart-empty{text-align:center;padding:60px 0;color:var(--muted);}
-.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.04);animation:stepIn 0.4s cubic-bezier(0.22,1,0.36,1);}
-.ci-img{width:54px;height:54px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid rgba(255,255,255,0.05);}
-.ci-info{flex:1;}
-.ci-name{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;}
-.ci-var{font-size:10px;color:var(--muted);margin-bottom:6px;}
-.ci-row{display:flex;align-items:center;justify-content:space-between;}
-.ci-price{font-size:14px;color:var(--gold);}
-.ci-qty{display:flex;align-items:center;gap:8px;}
-.qty-btn{width:20px;height:20px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.qty-btn:hover{border-color:rgba(255,215,0,0.4);color:var(--gold);}
-.qty-num{font-size:12px;min-width:14px;text-align:center;}
-.ci-rm{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:12px;transition:color 0.3s;}
-.cart-foot{padding:20px 24px;border-top:1px solid var(--border);}
-.cf-row{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;}
-.cf-total{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px;color:#f0ece4;}
-.cf-note{font-size:9px;color:var(--muted2);margin-bottom:18px;}
-.checkout-btn{width:100%;padding:14px;background:var(--gold);color:#000;border:none;font-size:10px;font-weight:800;cursor:pointer;letter-spacing:4px;text-transform:uppercase;transition:all 0.3s;margin-bottom:8px;}
-.checkout-btn:hover{background:#ffe94d;}
-.cont-btn{width:100%;padding:11px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.06);font-size:9px;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all 0.3s;}
+.price-card {
+  background: var(--black);
+  padding: 36px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  transition: all 0.3s;
+}
 
-/* SIZE MODAL */
-.size-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:120;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;}
-.size-overlay.open{display:flex;}
-.size-modal{background:#0a0a0c;border:1px solid rgba(255,215,0,0.2);padding:30px;width:100%;max-width:380px;animation:modalin 0.4s cubic-bezier(0.22,1,0.36,1);}
-.size-modal h3{font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;}
-.size-modal .sub{font-size:10px;color:var(--muted);margin-bottom:20px;}
-.slbl{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.size-grid-opts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
-.size-opt{padding:7px 12px;border:1px solid rgba(255,255,255,0.07);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;transition:all 0.3s;}
-.size-opt:hover,.size-opt.sel{border-color:rgba(255,215,0,0.4);color:var(--gold);background:rgba(255,215,0,0.05);}
-.color-row{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
-.cdot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.3s;}
-.cdot.sel{border-color:var(--gold);transform:scale(1.2);}
-.size-add{width:100%;padding:13px;background:var(--gold);color:#000;border:none;font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;}
+.price-card:hover {
+  background: rgba(255, 215, 0, 0.02);
+}
 
-/* TESTI */
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:52px;border:1px solid rgba(255,255,255,0.05);}
-.testi-card{background:#000;padding:30px;border-right:1px solid rgba(255,255,255,0.05);transition:background 0.4s;}
-.testi-card:hover{background:rgba(255,255,255,0.01);}
-.stars{font-size:9px;letter-spacing:4px;color:rgba(255,215,0,0.5);margin-bottom:14px;}
-.testi-card blockquote{font-size:13px;line-height:1.95;color:var(--muted);margin-bottom:20px;font-style:italic;}
-.testi-author{display:flex;align-items:center;gap:12px;}
-.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:1px solid rgba(255,215,0,0.2);color:var(--gold);}
-.tn{font-size:10px;letter-spacing:2px;text-transform:uppercase;}
-.tr{font-size:10px;color:var(--muted);}
+.price-card.featured {
+  background: rgba(255, 215, 0, 0.03);
+}
 
-/* CHECKOUT MODAL */
-.checkout-modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.94);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;}
-.checkout-modal-overlay.open{display:flex;}
-#cardError{font-size:11px;color:#ff6b6b;min-height:16px;margin-bottom:8px;letter-spacing:0.5px;}
+.price-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
 
-/* FOOTER */
-footer{background:#0a0a0c;border-top:1px solid var(--border);padding:64px 5vw 40px;position:relative;z-index:1;}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
-@media(max-width:768px){.footer-top{grid-template-columns:1fr 1fr;}}
-.fwm{font-size:14px;font-weight:800;letter-spacing:7px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
-.ftag{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.25);margin-bottom:14px;}
-.fdesc{font-size:12px;color:var(--muted2);line-height:1.9;max-width:240px;}
-.fcol h4{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
-.fcol a{display:block;font-size:12px;color:var(--muted2);text-decoration:none;margin-bottom:10px;transition:color 0.3s;}
-.fcol a:hover{color:var(--gold);}
-.nl{display:flex;gap:8px;margin-top:16px;}
-.nl input{flex:1;padding:10px 12px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);color:#f0ece4;font-size:12px;outline:none;}
-.nl input:focus{border-color:rgba(255,215,0,0.3);}
-.nl input::placeholder{color:var(--muted2);}
-.nl button{padding:10px 16px;background:var(--gold);color:#000;border:none;font-size:9px;font-weight:800;cursor:pointer;letter-spacing:1px;white-space:nowrap;}
-.fbottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.fbottom p{font-size:10px;color:var(--muted2);}
-.cart-fab{position:fixed;bottom:24px;right:24px;z-index:90;background:var(--gold);color:#000;border:none;padding:12px 20px;font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;display:none;align-items:center;gap:10px;transition:all 0.4s;box-shadow:0 4px 24px rgba(255,215,0,0.2);}
-.cart-fab:hover{background:#ffe94d;transform:translateY(-2px);}
-.fab-c{background:#000;color:var(--gold);width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;}
+.price-tier {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.price-amount {
+  font-size: 44px;
+  font-weight: 200;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price-period {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.price-desc {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.price-features {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.price-features li {
+  font-size: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+}
+
+.price-features li:last-child {
+  border: none;
+}
+
+.price-features li::before {
+  content: "—";
+  color: var(--gold3);
+  flex-shrink: 0;
+}
+
+.price-features li.unavailable {
+  opacity: 0.3;
+}
+
+.price-features li.unavailable::before {
+  content: "·";
+  color: var(--muted2);
+}
+
+/* ═══════════════════════════════════════════ */
+/* UTILITY */
+/* ═══════════════════════════════════════════ */
+
+.hidden {
+  display: none !important;
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ═══════════════════════════════════════════ */
+/* RESPONSIVE */
+/* ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 5vw;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 12vw, 3.5rem);
+  }
+
+  .score-rings {
+    width: 200px;
+    height: 200px;
+  }
+
+  .score-ring:nth-child(1) { width: 200px; height: 200px; }
+  .score-ring:nth-child(2) { width: 150px; height: 150px; }
+  .score-ring:nth-child(3) { width: 100px; height: 100px; }
+
+  .score-number {
+    font-size: 52px;
+  }
+
+  .techniques-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .session-ring-container {
+    width: 180px;
+    height: 180px;
+  }
+
+  .session-countdown {
+    font-size: 42px;
+  }
+}
 </style>
 </head>
 <body>
-<canvas id="flowCanvas"></canvas>
 
-<!-- SLEEP MODAL -->
-<div class="sleep-overlay" id="sleepOverlay">
-  <div id="sleepBg"></div>
-  <button class="sleep-close" onclick="closeSleep()">✕ Exit</button>
-  <div class="sleep-modal-inner">
-    <div class="sleep-yantra-anim" id="sleepYantra">
-      <svg viewBox="0 0 200 200" width="200" height="200" fill="none" id="sleepSvg" style="filter:drop-shadow(0 0 30px rgba(123,47,190,0.5));transition:opacity 3s ease;">
-        <circle cx="100" cy="100" r="95" stroke="#7B2FBE" stroke-width="0.5" opacity="0.4"/>
-        <circle cx="100" cy="100" r="78" stroke="#7B2FBE" stroke-width="0.4" opacity="0.3"/>
-        <polygon points="100,22 152,112 48,112" stroke="#7B2FBE" stroke-width="1.2" fill="rgba(123,47,190,0.06)"/>
-        <polygon points="100,178 48,88 152,88" stroke="#9B4FDE" stroke-width="1.2" fill="rgba(123,47,190,0.03)" opacity="0.8"/>
-        <polygon points="100,38 144,108 56,108" stroke="#7B2FBE" stroke-width="0.8" fill="none" opacity="0.5"/>
-        <polygon points="100,162 56,92 144,92" stroke="#7B2FBE" stroke-width="0.8" fill="none" opacity="0.4"/>
-        <circle cx="100" cy="100" r="10" stroke="#7B2FBE" stroke-width="0.8" fill="rgba(123,47,190,0.15)"/>
-        <circle cx="100" cy="100" r="3" fill="#9B4FDE" opacity="0.9"/>
-      </svg>
+<div class="app-container" id="app">
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>RESONANCE</h1>
+    <p class="hero-tagline">963Hz · Sri Yantra · Sacred Breathwork</p>
+    <div class="hero-buttons">
+      <button class="btn btn-gold" onclick="app.openTrialModal()">Begin Free Session</button>
+      <button class="btn btn-outline" onclick="app.startTechnique('pineal')">Pineal Protocol ↓</button>
     </div>
-    <div class="sleep-hz-label" id="sleepHzLabel">963 Hz · Pineal Protocol</div>
-    <div class="sleep-title">Dissolving into stillness</div>
-    <div class="sleep-phase" id="sleepPhase">Inhale</div>
-    <div class="sleep-count" id="sleepCount">4</div>
-    <div class="sleep-progress"><div class="sleep-prog-bar" id="sleepProgBar"></div></div>
-    <div class="sleep-fade-note">Screen will fade gently as you drift off</div>
-  </div>
-</div>
+  </section>
 
-<!-- TRIAL MODAL -->
-<div class="modal-overlay" id="trialModal">
-<div class="modal">
-  <button class="modal-close" onclick="closeModal()">✕</button>
-  <div class="step-track" id="stepTrack"></div>
-  <div class="mstep active" id="ms0">
-    <p class="quiz-q">What calls you to breathwork?</p>
-    <p class="quiz-sub">We'll match you to the perfect technique.</p>
-    <div class="quiz-options">
-      <button class="quiz-opt" onclick="pick(0,this,'stress')">Reduce stress & anxiety</button>
-      <button class="quiz-opt" onclick="pick(0,this,'sleep')">Sleep more deeply</button>
-      <button class="quiz-opt" onclick="pick(0,this,'focus')">Sharpen focus & clarity</button>
-      <button class="quiz-opt" onclick="pick(0,this,'perf')">Athletic peak performance</button>
-      <button class="quiz-opt" onclick="pick(0,this,'spirit')">Spiritual practice & alignment</button>
-    </div>
-  </div>
-  <div class="mstep" id="ms1">
-    <p class="quiz-q">Your experience level</p>
-    <p class="quiz-sub">No wrong answer here.</p>
-    <div class="quiz-options">
-      <button class="quiz-opt" onclick="pick(1,this,'beginner')">Complete beginner</button>
-      <button class="quiz-opt" onclick="pick(1,this,'some')">Tried it a few times</button>
-      <button class="quiz-opt" onclick="pick(1,this,'regular')">Regular practitioner</button>
-    </div>
-  </div>
-  <div class="mstep" id="ms2">
-    <p class="quiz-q">Your biggest challenge right now</p>
-    <p class="quiz-sub">We'll send a tailored programme after your trial.</p>
-    <div class="quiz-options">
-      <button class="quiz-opt" onclick="pick(2,this,'overwhelm')">Feeling overwhelmed or anxious</button>
-      <button class="quiz-opt" onclick="pick(2,this,'energy')">Low energy or motivation</button>
-      <button class="quiz-opt" onclick="pick(2,this,'mindrace')">Racing, restless mind</button>
-      <button class="quiz-opt" onclick="pick(2,this,'body')">Physical tension or pain</button>
-    </div>
-  </div>
-  <div class="mstep" id="ms3">
-    <p class="quiz-q">Your free session awaits</p>
-    <p class="quiz-sub" style="margin-bottom:22px;">We'll email your personalised Resonance programme after the trial.</p>
-    <input class="t-input" type="text" id="tName" placeholder="First name"/>
-    <input class="t-input" type="email" id="tEmail" placeholder="Email address"/>
-    <p class="tnote">No spam. Unsubscribe any time.</p>
-    <button class="btn-gold" style="width:100%;font-size:10px;letter-spacing:3px;" onclick="startTrial()">Begin Session →</button>
-  </div>
-  <div class="mstep" id="ms4">
-    <p style="font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-bottom:18px;text-align:center;" id="tTechName">Box Breathing</p>
-    <div class="trial-ring-wrap"><div class="trial-ring" id="tRing"></div><div class="trial-core"><span id="tPhase">Ready</span><small id="tCount"></small></div></div>
-    <div class="ctdown" id="tTimer">60</div>
-    <p class="ctlabel">Seconds remaining</p>
-    <div class="prog-wrap"><div class="prog-bar" id="tProg"></div></div>
-    <p style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-align:center;">Follow the circle · Breathe naturally</p>
-  </div>
-  <div class="mstep" id="ms5">
-    <div class="result-icon">✦</div>
-    <p class="result-title">Session complete</p>
-    <p class="result-sub">Your Zen Delta has shifted. Even 60 seconds of conscious breathwork measurably lowers cortisol.</p>
-    <div class="insight-box"><h4>Your personalised path</h4><p id="rInsight"></p></div>
-    <div class="rbtns">
-      <button class="btn-gold" style="font-size:10px;letter-spacing:3px;" onclick="closeModal()">Get the Full App →</button>
-      <button class="btn-outline" style="font-size:10px;" onclick="replayTrial()">Another minute</button>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div class="checkout-modal-overlay" id="checkoutModal">
-<div class="modal-checkout">
-  <button class="modal-close" onclick="closeCheckout()">✕</button>
-  <div id="coSummary">
-    <p style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-bottom:20px;">Order Summary</p>
-    <div id="coItems" style="margin-bottom:18px;"></div>
-    <div style="border-top:1px solid rgba(255,215,0,0.1);padding-top:14px;margin-bottom:24px;">
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;"><span>Subtotal</span><span id="coSubtotal"></span></div>
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;"><span>Shipping</span><span id="coShipping" style="color:rgba(74,154,138,0.9);">—</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:16px;color:var(--gold);margin-top:10px;letter-spacing:1px;"><span>Total</span><span id="coTotal"></span></div>
-    </div>
-    <button class="btn-gold" style="width:100%;font-size:10px;letter-spacing:3px;margin-bottom:10px;" onclick="showPayment()">Proceed to Payment →</button>
-    <p style="font-size:9px;color:var(--muted2);text-align:center;letter-spacing:0.5px;">Secured by Stripe · SSL encrypted</p>
-  </div>
-  <div id="coPayment" style="display:none;">
-    <button onclick="document.getElementById('coSummary').style.display='block';document.getElementById('coPayment').style.display='none';" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;letter-spacing:1px;margin-bottom:22px;padding:0;">← Back</button>
-    <p style="font-size:9px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,215,0,0.45);margin-bottom:20px;">Payment Details</p>
-    <p style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Contact</p>
-    <input class="t-input" id="coEmail" type="email" placeholder="Email address" style="margin-bottom:8px;"/>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
-      <input class="t-input" id="coFirst" type="text" placeholder="First name" style="margin:0;"/>
-      <input class="t-input" id="coLast" type="text" placeholder="Last name" style="margin:0;"/>
-    </div>
-    <p style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Shipping</p>
-    <input class="t-input" id="coAddr" type="text" placeholder="Street address" style="margin-bottom:8px;"/>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-      <input class="t-input" id="coCity" type="text" placeholder="City" style="margin:0;"/>
-      <input class="t-input" id="coPost" type="text" placeholder="Postcode" style="margin:0;"/>
-    </div>
-    <select class="t-input t-select" id="coCountry" style="margin-bottom:18px;">
-      <option value="">Country</option>
-      <option>Hong Kong</option><option>Sweden</option><option>United Kingdom</option>
-      <option>United States</option><option>Australia</option><option>Singapore</option>
-      <option>Japan</option><option>Germany</option><option>France</option><option>Other</option>
-    </select>
-    <p style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Card Details</p>
-    <div id="stripeCardEl" style="padding:13px 14px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);margin-bottom:4px;min-height:42px;display:flex;align-items:center;">
-      <span id="stripePlaceholder" style="font-size:13px;color:var(--muted2);">Card number · MM/YY · CVC</span>
-    </div>
-    <p id="cardError" style="font-size:11px;color:#ff6b6b;min-height:16px;margin-bottom:8px;"></p>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-      <div style="padding:4px 10px;border:1px solid rgba(255,255,255,0.07);font-size:10px;color:var(--muted);">Visa</div>
-      <div style="padding:4px 10px;border:1px solid rgba(255,255,255,0.07);font-size:10px;color:var(--muted);">Mastercard</div>
-      <div style="padding:4px 10px;border:1px solid rgba(255,255,255,0.07);font-size:10px;color:var(--muted);">Apple Pay</div>
-      <div style="padding:4px 10px;border:1px solid rgba(255,255,255,0.07);font-size:10px;color:var(--muted);">Google Pay</div>
-      <div style="padding:4px 10px;border:1px solid rgba(74,154,138,0.25);font-size:10px;color:rgba(74,154,138,0.8);">FPS ⚡</div>
-    </div>
-    <button class="btn-gold" id="payBtn" style="width:100%;font-size:10px;letter-spacing:3px;" onclick="submitPayment()"><span id="payBtnText">Complete Order →</span></button>
-    <p style="font-size:9px;color:var(--muted2);text-align:center;margin-top:10px;">Deposits to HK bank via Stripe · Airwallex</p>
-  </div>
-  <div id="coSuccess" style="display:none;text-align:center;padding:20px 0;">
-    <div style="font-size:40px;margin-bottom:14px;color:var(--gold);">✦</div>
-    <p style="font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Order Confirmed</p>
-    <p style="font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:24px;">Your Resonance goods are being prepared in-house and ship within 3–5 days.</p>
-    <button class="btn-gold" style="font-size:10px;letter-spacing:3px;" onclick="closeCheckout();clearCart();">Continue →</button>
-  </div>
-</div>
-</div>
-
-<!-- SIZE MODAL -->
-<div class="size-overlay" id="sizeOverlay">
-<div class="size-modal">
-  <h3 id="smTitle">Select options</h3>
-  <p class="sub" id="smSub"></p>
-  <p class="slbl">Size</p>
-  <div class="size-grid-opts" id="sizeGrid"></div>
-  <p class="slbl">Colour</p>
-  <div class="color-row" id="colorRow"></div>
-  <button class="size-add" onclick="confirmAdd()">Add to Cart</button>
-</div>
-</div>
-
-<!-- CART -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-head"><h2>Your Cart</h2><button class="close-btn" onclick="closeCart()">✕</button></div>
-  <div class="cart-body" id="cartBody"></div>
-  <div class="cart-foot" id="cartFoot" style="display:none;">
-    <div class="cf-row"><span>Subtotal</span><span id="cSub">$0.00</span></div>
-    <div class="cf-total"><span>Total</span><span id="cTot">$0.00</span></div>
-    <p class="cf-note">Free shipping over $80 · Handcrafted in-house</p>
-    <button class="checkout-btn" onclick="goCheckout()">Checkout</button>
-    <button class="cont-btn" onclick="closeCart()">Continue shopping</button>
-  </div>
-</div>
-<button class="cart-fab" id="cartFab" onclick="openCart()">Cart <div class="fab-c" id="fabCount">0</div></button>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo" onclick="scrollTo(0,0)">
-    <svg width="26" height="26" viewBox="0 0 60 60" fill="none">
-      <circle cx="30" cy="30" r="28" stroke="#FFD700" stroke-width="0.6" opacity="0.45"/>
-      <circle cx="30" cy="30" r="20" stroke="#FFD700" stroke-width="0.35" opacity="0.3"/>
-      <polygon points="30,8 46,36 14,36" stroke="#FFD700" stroke-width="1.2" fill="rgba(255,215,0,0.07)"/>
-      <polygon points="30,52 14,24 46,24" stroke="#FFD700" stroke-width="1.2" fill="rgba(255,215,0,0.04)" opacity="0.7"/>
-      <circle cx="30" cy="30" r="4" fill="#FFD700" opacity="0.9"/>
-    </svg>
-    <span class="nav-wordmark">Resonance</span>
-  </div>
-  <div class="nav-links">
-    <a href="#trial">Free Trial</a>
-    <a href="#score">Score</a>
-    <a href="#sleep">Sleep</a>
-    <a href="#techniques">Techniques</a>
-    <a href="#merch">Shop</a>
-    <button class="nav-cta" onclick="openModal()">Begin Free</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-glow"></div>
-  <p class="hero-eyebrow">963hz · Sri Yantra · Sacred Breathwork</p>
-  <h1>Resonance</h1>
-  <p class="hero-hz">963 HZ</p>
-  <p class="hero-tag">Synchronize · Breathe · Ascend</p>
-  <div class="hero-btns">
-    <button class="btn-gold" onclick="openModal()">Begin Free Session</button>
-    <a href="#sleep" class="btn-outline">Pineal Protocol ↓</a>
-  </div>
-  <div class="yantra-wrap">
-    <svg viewBox="0 0 300 300" width="100%" height="100%" fill="none" style="filter:drop-shadow(0 0 40px rgba(255,215,0,0.18));">
-      <g class="yr1" style="transform-origin:150px 150px"><circle cx="150" cy="150" r="138" stroke="#FFD700" stroke-width="0.4" opacity="0.25"/><circle cx="150" cy="150" r="126" stroke="#FFD700" stroke-width="0.3" opacity="0.18"/></g>
-      <g class="yr2" style="transform-origin:150px 150px"><circle cx="150" cy="150" r="112" stroke="#FFD700" stroke-width="0.4" opacity="0.22"/></g>
-      <g class="yr3" style="transform-origin:150px 150px"><circle cx="150" cy="150" r="96" stroke="#FFD700" stroke-width="0.3" opacity="0.16"/></g>
-      <polygon points="150,38 220,172 80,172" stroke="#FFD700" stroke-width="1.4" fill="rgba(255,215,0,0.05)" opacity="0.95"/>
-      <polygon points="150,262 80,128 220,128" stroke="#FFD700" stroke-width="1.4" fill="rgba(255,215,0,0.03)" opacity="0.8"/>
-      <polygon points="150,58 212,164 88,164" stroke="#FFD700" stroke-width="0.9" fill="none" opacity="0.55"/>
-      <polygon points="150,242 88,136 212,136" stroke="#FFD700" stroke-width="0.9" fill="none" opacity="0.45"/>
-      <polygon points="150,82 200,156 100,156" stroke="#FFD700" stroke-width="0.7" fill="none" opacity="0.38"/>
-      <polygon points="150,218 100,144 200,144" stroke="#FFD700" stroke-width="0.7" fill="none" opacity="0.3"/>
-      <circle cx="150" cy="150" r="115" stroke="#FFD700" stroke-width="0.4" opacity="0.18"/>
-      <circle cx="150" cy="150" r="14" stroke="#FFD700" stroke-width="0.8" fill="rgba(255,215,0,0.18)" opacity="0.85"/>
-      <circle cx="150" cy="150" r="4" fill="#FFD700" opacity="1"/>
-    </svg>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<!-- FREE TRIAL -->
-<section class="section" id="trial" style="background:#0a0a0c;">
-  <div class="fade-in" style="max-width:680px;margin:0 auto;text-align:center;">
-    <p class="eyebrow">Free Trial · 963Hz</p>
-    <h2 class="section-title">Your first session is <em>free.</em></h2>
-    <p class="section-sub" style="margin:0 auto 32px;">3 questions, your email, and 60 seconds of guided breathwork matched to your goal — with Solfeggio frequency and sacred geometry.</p>
-    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;">
-      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);font-size:8px;">✦</span>Personalised technique</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);font-size:8px;">✦</span>Live geometry animation</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);font-size:8px;">✦</span>Free programme emailed</div>
-    </div>
-    <button class="btn-gold" style="font-size:10px;letter-spacing:4px;padding:15px 52px;" onclick="openModal()">Begin Free Session →</button>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,20 C360,55 720,5 1080,35 C1260,50 1380,15 1440,20 L1440,60 L0,60 Z" fill="#000"/></svg></div>
-
-<!-- RESONANCE SCORE -->
-<section class="section score-section" id="score">
-  <div class="score-hero">
-    <div class="fade-left">
-      <p class="eyebrow">Gamification</p>
-      <div class="score-text">
-        <h3>Your <em>Resonance</em> score</h3>
-        <p>A single living number — scaled from 1 to 963, because every number maps to a Solfeggio frequency. Practice consistently and watch your resonance rise. Each technique unlocks at a milestone. DMT Breath doesn't open until you've earned it.</p>
-        <p style="margin-top:12px;">This isn't a streak counter. It's a <strong style="color:#f0ece4;">frequency.</strong> "Your resonance is at 528." That's biology. That's motivation. That's yours.</p>
-        <div class="score-milestones">
-          <div class="milestone unlocked">
-            <span class="milestone-score">174</span>
-            <span class="milestone-lock">🔓</span>
-            <div class="milestone-info"><div class="milestone-name">Grounded</div><div class="milestone-desc">4-7-8, Sitali & Physiological Sigh unlocked</div></div>
-          </div>
-          <div class="milestone unlocked">
-            <span class="milestone-score">396</span>
-            <span class="milestone-lock">🔓</span>
-            <div class="milestone-info"><div class="milestone-name">Liberated</div><div class="milestone-desc">Box Breathing, Nadi Shodhana & Coherent unlocked</div></div>
-          </div>
-          <div class="milestone">
-            <span class="milestone-score">528</span>
-            <span class="milestone-lock">🔒</span>
-            <div class="milestone-info"><div class="milestone-name">Healing</div><div class="milestone-desc">Wim Hof, Kapalabhati & Ujjayi unlocked</div></div>
-          </div>
-          <div class="milestone locked">
-            <span class="milestone-score">963</span>
-            <span class="milestone-lock">🔒</span>
-            <div class="milestone-info"><div class="milestone-name">Unity</div><div class="milestone-desc">DMT Breath & Pineal Protocol unlocked · Full coherence</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="fade-right">
-      <div class="score-display">
-        <div class="score-ring sr1"></div>
-        <div class="score-ring sr2"></div>
-        <div class="score-ring sr3"></div>
+  <!-- Score Section -->
+  <section class="section" style="background: var(--black2);">
+    <div class="score-container">
+      <p class="eyebrow">Your Progress</p>
+      <h2 class="section-title">Your <em>Resonance</em> Score</h2>
+      
+      <div class="score-rings">
+        <div class="score-ring"></div>
+        <div class="score-ring"></div>
+        <div class="score-ring"></div>
         <div class="score-inner">
-          <div class="score-number" id="scoreNum">432</div>
+          <div class="score-number" id="scoreDisplay">0</div>
           <div class="score-label">Resonance Score</div>
-          <div style="display:flex;justify-content:center;"><div class="score-bar-wrap"><div class="score-bar"></div></div></div>
-          <div style="font-size:9px;color:rgba(255,215,0,0.35);letter-spacing:2px;margin-top:8px;">/ 963</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar" id="scoreBar" style="width: 0%"></div>
+          </div>
+          <div class="score-max">/ 963</div>
         </div>
       </div>
-      <!-- Streak cards -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid rgba(255,255,255,0.05);margin-top:24px;">
-        <div style="background:#000;padding:18px;text-align:center;border-right:1px solid rgba(255,255,255,0.05);">
-          <div style="font-size:22px;font-weight:200;color:var(--gold);">14</div>
-          <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;">Days of Coherence</div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="streakDisplay">0</div>
+          <div class="stat-label">Days of Coherence</div>
         </div>
-        <div style="background:#000;padding:18px;text-align:center;">
-          <div style="font-size:22px;font-weight:200;color:var(--gold);">+3</div>
-          <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;">Zen Delta Today</div>
+        <div class="stat-card">
+          <div class="stat-value" id="zenDeltaDisplay">+0</div>
+          <div class="stat-label">Zen Delta Today</div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,35 C300,5 600,55 900,25 C1100,10 1300,50 1440,30 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<!-- PINEAL PROTOCOL / SLEEP -->
-<section class="section sleep-section" id="sleep">
-  <div class="sleep-grid">
-    <div class="fade-left">
-      <p class="eyebrow">Sleep Mode · New</p>
-      <h2 class="section-title">The <em>Pineal</em> Protocol.</h2>
-      <p class="section-sub" style="margin-bottom:32px;">Nobody has a named, sequenced sleep protocol like this. Four stages. One journey. Your screen dissolves with you.</p>
-      <div class="sleep-steps">
-        <div class="sleep-step">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <h4>4-7-8 Breath</h4>
-            <p>Eight cycles of Dr. Weil's natural tranquiliser. Full parasympathetic activation before you even close your eyes.</p>
-            <div class="step-tag tag-blue">174 Hz · Soft Hexagon</div>
+      <div class="milestones">
+        <div class="milestone" id="m174">
+          <span class="milestone-score">174</span>
+          <span class="milestone-icon">🔒</span>
+          <div class="milestone-content">
+            <div class="milestone-name">Grounded</div>
+            <div class="milestone-desc">4-7-8, Sitali & Sigh unlocked</div>
           </div>
         </div>
-        <div class="sleep-step">
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <h4>Full Retention</h4>
-            <p>Exhale fully, hold empty. CO2 builds gently. Blood vessels dilate. The body floods with calm.</p>
-            <div class="step-tag tag-purple">396 Hz · Static Circle</div>
+        <div class="milestone" id="m396">
+          <span class="milestone-score">396</span>
+          <span class="milestone-icon">🔒</span>
+          <div class="milestone-content">
+            <div class="milestone-name">Liberated</div>
+            <div class="milestone-desc">Box, Nadi Shodhana & Coherent unlocked</div>
           </div>
         </div>
-        <div class="sleep-step">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <h4>963 Hz Passive Mode</h4>
-            <p>No more breath cues. Just the unity frequency and the Sri Yantra dissolving slowly into black. No timers. No chimes. Just drift.</p>
-            <div class="step-tag tag-purple">963 Hz · Sri Yantra dissolving</div>
+        <div class="milestone locked" id="m528">
+          <span class="milestone-score">528</span>
+          <span class="milestone-icon">🔒</span>
+          <div class="milestone-content">
+            <div class="milestone-name">Healing</div>
+            <div class="milestone-desc">Wim Hof, Kapalabhati & Ujjayi unlocked</div>
           </div>
         </div>
-        <div class="sleep-step">
-          <div class="step-num">04</div>
-          <div class="step-content">
-            <h4>Auto-dim to sleep</h4>
-            <p>Screen dims to zero over 20 minutes while the frequency plays. You don't end the session — you just disappear into it.</p>
-            <div class="step-tag tag-gold">Passive · No end chime</div>
+        <div class="milestone locked" id="m963">
+          <span class="milestone-score">963</span>
+          <span class="milestone-icon">🔒</span>
+          <div class="milestone-content">
+            <div class="milestone-name">Unity</div>
+            <div class="milestone-desc">DMT Breath & Pineal Protocol unlocked</div>
           </div>
         </div>
       </div>
-      <div class="pineal-demo">
-        <div class="demo-label">Try the Pineal Protocol</div>
-        <button class="demo-btn" onclick="openSleep()">✦ Enter Sleep Mode</button>
-      </div>
     </div>
-    <div class="fade-right">
-      <div class="sleep-visual">
-        <div class="sleep-rings">
-          <div class="ring r1"></div>
-          <div class="ring r2"></div>
-          <div class="ring r3"></div>
-        </div>
-        <div class="sleep-yantra">
-          <svg viewBox="0 0 240 240" width="240" height="240" fill="none" style="filter:drop-shadow(0 0 24px rgba(123,47,190,0.35));">
-            <g style="animation:yr 120s linear infinite;transform-origin:120px 120px"><circle cx="120" cy="120" r="112" stroke="#7B2FBE" stroke-width="0.4" opacity="0.3"/></g>
-            <polygon points="120,30 182,138 58,138" stroke="#7B2FBE" stroke-width="1.2" fill="rgba(123,47,190,0.06)"/>
-            <polygon points="120,210 58,102 182,102" stroke="#9B4FDE" stroke-width="1.2" fill="rgba(123,47,190,0.03)" opacity="0.8"/>
-            <polygon points="120,50 172,132 68,132" stroke="#7B2FBE" stroke-width="0.8" fill="none" opacity="0.5"/>
-            <polygon points="120,190 68,108 172,108" stroke="#7B2FBE" stroke-width="0.8" fill="none" opacity="0.4"/>
-            <circle cx="120" cy="120" r="115" stroke="#7B2FBE" stroke-width="0.3" opacity="0.2"/>
-            <circle cx="120" cy="120" r="12" stroke="#7B2FBE" stroke-width="0.8" fill="rgba(123,47,190,0.15)"/>
-            <circle cx="120" cy="120" r="4" fill="#9B4FDE" opacity="0.9"/>
-          </svg>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:28px;">
-        <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(123,47,190,0.5);margin-bottom:8px;">963 Hz · Pineal Activation</div>
-        <div style="font-size:22px;font-weight:200;color:rgba(155,79,222,0.8);letter-spacing:3px;">Dissolving</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px;letter-spacing:1px;">Screen fades over 20 minutes</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,15 C180,50 360,0 540,25 C720,50 900,5 1080,30 C1260,55 1380,10 1440,20 L1440,60 L0,60 Z" fill="#000"/></svg></div>
-
-<!-- AFTERGLOW / SESSION CARD -->
-<section class="section afterglow-section" id="afterglow">
-  <div class="afterglow-grid">
-    <div class="fade-left">
-      <p class="eyebrow">Afterglow · Share</p>
-      <h2 class="section-title">Every session leaves a <em>mark.</em></h2>
-      <p class="section-sub" style="margin-bottom:36px;">After every session, Resonance generates a beautiful shareable card — your technique, frequency, Zen Delta, and Resonance Score. Post it. People will ask what it is.</p>
-      <div class="afterglow-features">
-        <div class="ag-feat">
-          <h4>Zen Delta Score</h4>
-          <p>Pre and post-session vibe measured on a 1–10 scale. Your Delta is the shift. Watch it compound week by week into something undeniable.</p>
-        </div>
-        <div class="ag-feat">
-          <h4>Ancient Wisdom Insight</h4>
-          <p>Every session ends with a one-line teaching from ancient tradition — pulled from Vedic, Taoist, and Stoic texts and matched to your technique.</p>
-        </div>
-        <div class="ag-feat">
-          <h4>Shareable to any platform</h4>
-          <p>Black-and-gold card saves to your camera roll. Instagram, Twitter, anywhere. Zero effort. Maximum brand reach.</p>
-        </div>
-        <div class="ag-feat">
-          <h4>Days of Coherence streak</h4>
-          <p>Not a "7-day streak." A record of consecutive days of coherence. The language of the brand, all the way down to the data.</p>
-        </div>
-      </div>
-    </div>
-    <div class="fade-right">
-      <div class="session-card" id="sampleCard">
-        <svg class="card-yantra" viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="32" r="30" stroke="#FFD700" stroke-width="0.5" opacity="0.4"/>
-          <polygon points="32,8 50,40 14,40" stroke="#FFD700" stroke-width="1" fill="rgba(255,215,0,0.06)"/>
-          <polygon points="32,56 14,24 50,24" stroke="#FFD700" stroke-width="1" fill="rgba(255,215,0,0.03)" opacity="0.8"/>
-          <circle cx="32" cy="32" r="5" stroke="#FFD700" stroke-width="0.7" fill="rgba(255,215,0,0.15)"/>
-          <circle cx="32" cy="32" r="2" fill="#FFD700" opacity="0.9"/>
-        </svg>
-        <div class="card-title">Resonance</div>
-        <div class="card-sub">Session Complete · 963 Hz</div>
-        <div class="card-metrics">
-          <div class="card-metric"><div class="cm-val">DMT</div><div class="cm-lbl">Technique</div></div>
-          <div class="card-metric"><div class="cm-val">8m</div><div class="cm-lbl">Duration</div></div>
-          <div class="card-metric"><div class="cm-val">+4</div><div class="cm-lbl">Zen Delta</div></div>
-          <div class="card-metric"><div class="cm-val" style="font-size:18px;">741</div><div class="cm-lbl">Resonance</div></div>
-        </div>
-        <div class="card-quote">"The breath is the bridge between the body and the mind." — Thich Nhat Hanh</div>
-        <div class="card-wordmark">resonance · breathe · ascend</div>
-        <button class="share-btn">Share this session ↗</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,40 C360,10 720,55 1080,20 C1260,5 1380,45 1440,30 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<!-- TECHNIQUES -->
-<section class="section" id="techniques" style="background:#0a0a0c;">
-  <div class="fade-left">
+  <!-- Techniques Section -->
+  <section class="section">
     <p class="eyebrow">14 Techniques + Sleep</p>
     <h2 class="section-title">The breathing <em>library.</em></h2>
-    <p class="section-sub" style="margin-bottom:40px;">Every session simultaneously entrains breath, Solfeggio frequency audio, and sacred geometry. Three modalities at once.</p>
-  </div>
-  <div class="cat-tabs fade-in" id="catTabs">
-    <button class="cat-tab active" data-c="ALL" onclick="filterTech('ALL',this)">✦ All</button>
-    <button class="cat-tab" data-c="TRANSFORM" onclick="filterTech('TRANSFORM',this)">🔥 Transform</button>
-    <button class="cat-tab" data-c="BALANCE" onclick="filterTech('BALANCE',this)">💎 Balance</button>
-    <button class="cat-tab" data-c="RESTORE" onclick="filterTech('RESTORE',this)">❄️ Restore</button>
-    <button class="cat-tab" data-c="SLEEP" onclick="filterTech('SLEEP',this)">🌙 Sleep</button>
-  </div>
-  <div class="tech-grid" id="techGrid"></div>
-</section>
+    
+    <div class="category-tabs">
+      <button class="cat-tab active" onclick="app.filterTechniques('ALL')">✦ All</button>
+      <button class="cat-tab" onclick="app.filterTechniques('TRANSFORM')">🔥 Transform</button>
+      <button class="cat-tab" onclick="app.filterTechniques('BALANCE')">💎 Balance</button>
+      <button class="cat-tab" onclick="app.filterTechniques('RESTORE')">❄️ Restore</button>
+      <button class="cat-tab" onclick="app.filterTechniques('SLEEP')">🌙 Sleep</button>
+    </div>
 
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,25 C200,55 400,5 600,30 C800,55 1000,5 1200,30 C1300,42 1380,18 1440,25 L1440,60 L0,60 Z" fill="#000"/></svg></div>
+    <div class="techniques-grid" id="techniquesGrid"></div>
+  </section>
 
-<!-- SOLFEGGIO -->
-<section class="section" id="frequencies" style="background:#000;">
-  <div class="centered fade-in">
-    <p class="eyebrow">Solfeggio Frequencies</p>
-    <h2 class="section-title">Sound as <em>medicine.</em></h2>
-    <p class="section-sub" style="margin:0 auto;">Each technique is paired with its optimal Solfeggio frequency — played simultaneously to create measurable neurological coherence states.</p>
-  </div>
-  <div class="sol-grid">
-    <div class="sol-card fade-in"><div class="sol-hz">174 Hz</div><div class="sol-desc">Pain relief & grounding</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">285 Hz</div><div class="sol-desc">Tissue healing & repair</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">396 Hz</div><div class="sol-desc">Guilt & fear liberation</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">417 Hz</div><div class="sol-desc">Facilitating change</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">432 Hz</div><div class="sol-desc">Earth resonance</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">440 Hz</div><div class="sol-desc">Focus & clarity</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">528 Hz</div><div class="sol-desc">DNA repair · Love</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">639 Hz</div><div class="sol-desc">Heart coherence</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">741 Hz</div><div class="sol-desc">Intuition & detox</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz">852 Hz</div><div class="sol-desc">Spiritual awakening</div></div>
-    <div class="sol-card fade-in"><div class="sol-hz" style="text-shadow:0 0 20px rgba(255,215,0,0.5);">963 Hz</div><div class="sol-desc">Unity · Pineal activation</div></div>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,15 C360,50 720,5 1080,35 C1280,50 1400,15 1440,20 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<!-- FEATURES -->
-<section class="section" id="features" style="background:#0a0a0c;">
-  <div class="fade-right">
-    <p class="eyebrow">The App</p>
-    <h2 class="section-title">Triple-sync <em>biohacking.</em></h2>
-    <p class="section-sub">Resonance simultaneously entrains breath rhythm, acoustic frequency, and sacred geometry — three modalities converging for measurable neurological coherence.</p>
-  </div>
-  <div class="feat-grid">
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,var(--gold),transparent);"></div><div class="feat-num">01 · Transform</div><h3>DMT Breath & Wim Hof</h3><p>Pineal activation through prolonged retention at 963Hz. 30 rapid Wim Hof cycles with full CO2 flush. Unlocked at Resonance 963.</p></div>
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,#E91E8C,transparent);"></div><div class="feat-num">02 · Balance</div><h3>Nadi Shodhana & Coherent</h3><p>Alternate nostril at 285Hz synchronises brain hemispheres. Perfect 5-5 coherent breath syncs HRV with Earth's Schumann resonance.</p></div>
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,#5C6BC0,transparent);"></div><div class="feat-num">03 · Restore</div><h3>4-7-8, Sitali & Sigh</h3><p>Dr. Weil's natural tranquiliser triggers full parasympathetic response in 60 seconds. Stanford's physiological sigh — fastest stress relief known.</p></div>
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,#7B2FBE,transparent);"></div><div class="feat-num">04 · Sleep</div><h3>Pineal Protocol</h3><p>The only named, sequenced sleep breathwork protocol in existence. 4-7-8 → retention → 963Hz passive → auto-dim to black. No end chime.</p></div>
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,var(--gold),transparent);"></div><div class="feat-num">05 · Score</div><h3>Resonance Score 1–963</h3><p>A living frequency score. Build it through practice. Unlock techniques as you ascend through the Solfeggio scale. Addictive by design.</p></div>
-    <div class="feat-card fade-in"><div class="feat-bar" style="background:linear-gradient(90deg,#00BCD4,transparent);"></div><div class="feat-num">06 · Lab</div><h3>Custom Protocol Builder</h3><p>Build your own breath ratio, frequency and geometry. Save, replay, share. Your personal sacred science experiment.</p></div>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,35 C300,5 600,55 900,25 C1100,10 1300,50 1440,30 L1440,60 L0,60 Z" fill="#000"/></svg></div>
-
-<!-- PRICING -->
-<section class="section" id="pricing" style="background:#000;">
-  <div class="centered fade-in">
+  <!-- Pricing Section -->
+  <section class="section" style="background: var(--black2);">
     <p class="eyebrow">Plans</p>
-    <h2 class="section-title">Start free. Ascend <em>when ready.</em></h2>
-    <p class="section-sub" style="margin:0 auto;">Sharper than every competitor. Deeper than any other app.</p>
-    <div class="bill-toggle">
-      <span class="tlbl active" id="mLbl">Monthly</span>
-      <div class="toggle-track" id="billToggle" onclick="toggleBilling()"><div class="toggle-thumb"></div></div>
-      <span class="tlbl" id="aLbl">Annual <span class="save-pill">Save 35%</span></span>
+    <h2 class="section-title" style="text-align: center;">Start free. Ascend <em>when ready.</em></h2>
+    
+    <div class="pricing-grid">
+      <div class="price-card">
+        <p class="price-tier">Free</p>
+        <div class="price-amount">$0<span class="price-period"> / forever</span></div>
+        <p class="price-desc">Begin the practice</p>
+        <ul class="price-features">
+          <li>5 breathing techniques</li>
+          <li>Box, 4-7-8, Coherent, Sigh, Sitali</li>
+          <li>Resonance Score to 174</li>
+          <li>Basic session tracking</li>
+          <li class="unavailable">Solfeggio audio engine</li>
+          <li class="unavailable">Sacred geometry animations</li>
+          <li class="unavailable">Pineal Sleep Protocol</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%;" onclick="app.openTrialModal()">Try Free Session</button>
+      </div>
+
+      <div class="price-card featured">
+        <p class="price-tier">Pro</p>
+        <div class="price-amount">$7.99<span class="price-period"> / month</span></div>
+        <p class="price-desc">For the serious practitioner</p>
+        <ul class="price-features">
+          <li>All 14 techniques + Sleep</li>
+          <li>Full Solfeggio 174–963Hz</li>
+          <li>All 16 sacred geometries</li>
+          <li>Resonance Score to 741</li>
+          <li>Pineal Sleep Protocol</li>
+          <li>Shareable session cards</li>
+          <li>Zen Delta & history</li>
+          <li class="unavailable">Custom Lab builder</li>
+        </ul>
+        <button class="btn btn-gold" style="width: 100%;" onclick="app.upgradeToPro()">Start Pro Trial</button>
+      </div>
+
+      <div class="price-card">
+        <p class="price-tier">Elite</p>
+        <div class="price-amount">$14.99<span class="price-period"> / month</span></div>
+        <p class="price-desc">Full ascension · 963 unlocked</p>
+        <ul class="price-features">
+          <li>Everything in Pro</li>
+          <li>Resonance Score to 963</li>
+          <li>DMT Breath & Wim Hof retention</li>
+          <li>Resonance Lab — custom builder</li>
+          <li>AI personalised programmes</li>
+          <li>1-on-1 breathwork coach</li>
+          <li>Haptic sync · Offline access</li>
+        </ul>
+        <button class="btn btn-outline" style="width: 100%; border-color: rgba(123,47,190,0.4); color: #9B4FDE;" onclick="app.upgradeToElite()">Go Elite · 963</button>
+      </div>
     </div>
-  </div>
-  <div class="price-grid fade-in">
-    <div class="price-card">
-      <p class="ptier">Free</p>
-      <div class="pamt">$0<span> / forever</span></div>
-      <p class="pdesc">Begin the practice</p>
-      <ul class="pfeats">
-        <li>5 breathing techniques</li><li>Box, 4-7-8, Coherent, Sigh, Sitali</li><li>Resonance Score (up to 174)</li>
-        <li>Basic session tracking</li><li class="no">Solfeggio audio engine</li><li class="no">Sacred geometry animations</li><li class="no">Pineal Sleep Protocol</li>
-      </ul>
-      <button class="pbtn" onclick="openModal()">Try Free Session</button>
-    </div>
-    <div class="price-card feat">
-      <div class="ptop"></div>
-      <p class="ptier">Pro</p>
-      <div class="pamt" id="proAmt">$7.99<span> / month</span></div>
-      <p class="pdesc">For the serious practitioner</p>
-      <ul class="pfeats">
-        <li>All 14 techniques + Sleep</li><li>Full Solfeggio audio 174–963Hz</li><li>All 16 sacred geometries</li>
-        <li>Resonance Score (up to 741)</li><li>Pineal Sleep Protocol</li><li>Shareable session cards</li><li>Zen Delta & history</li><li class="no">Custom Lab builder</li>
-      </ul>
-      <button class="pbtn gb">Start Pro Trial</button>
-    </div>
-    <div class="price-card">
-      <p class="ptier">Elite</p>
-      <div class="pamt" id="eliteAmt">$14.99<span> / month</span></div>
-      <p class="pdesc">Full ascension · 963 unlocked</p>
-      <ul class="pfeats">
-        <li>Everything in Pro</li><li>Resonance Score to 963</li><li>DMT Breath & Wim Hof retention</li>
-        <li>Resonance Lab — custom builder</li><li>AI personalised programmes</li><li>1-on-1 breathwork coach</li><li>Haptic sync · Offline access</li>
-      </ul>
-      <button class="pbtn" style="border-color:rgba(123,47,190,0.4);color:#9B4FDE;">Go Elite · 963</button>
-    </div>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,20 C240,55 480,5 720,35 C960,60 1200,10 1440,25 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<!-- MERCH -->
-<section class="section" id="merch" style="background:#0a0a0c;">
-  <div class="fade-left">
-    <p class="eyebrow">Resonance Studio</p>
-    <h2 class="section-title">Wear the <em>practice.</em></h2>
-    <p class="section-sub" style="margin-bottom:28px;">Every piece is designed, printed, and finished in-house at our studio. Small batches. Intentional materials. Built to carry the practice into the world.</p>
-  </div>
-  <div class="merch-label fade-in">In stock · Ships within 3–5 days</div>
-  <div class="merch-grid" id="productGrid"></div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,25 C200,55 400,5 600,30 C800,55 1000,5 1200,30 C1300,42 1380,18 1440,25 L1440,60 L0,60 Z" fill="#000"/></svg></div>
-
-<!-- TESTIMONIALS -->
-<section class="section" style="background:#000;">
-  <div class="centered fade-in"><p class="eyebrow">Stories</p><h2 class="section-title">Real <em>transformations.</em></h2></div>
-  <div class="testi-grid">
-    <div class="testi-card fade-in"><div class="stars">★ ★ ★ ★ ★</div><blockquote>"The Pineal Protocol knocked me out in 12 minutes. I have chronic insomnia. I haven't slept like that in years. The Sri Yantra dissolving into black is genuinely hypnotic."</blockquote><div class="testi-author"><div class="av">SK</div><div><p class="tn">Sarah K.</p><p class="tr">Yoga instructor · Elite · Resonance 741</p></div></div></div>
-    <div class="testi-card fade-in"><div class="stars">★ ★ ★ ★ ★</div><blockquote>"Hitting Resonance 528 and unlocking Wim Hof felt like a genuine achievement. The score system makes me want to practice every single day. It's brilliantly addictive."</blockquote><div class="testi-author"><div class="av">MR</div><div><p class="tn">Marcus R.</p><p class="tr">Triathlete · Pro · Resonance 528</p></div></div></div>
-    <div class="testi-card fade-in"><div class="stars">★ ★ ★ ★ ★</div><blockquote>"I share my session cards after every morning practice. Three of my clients downloaded Resonance just from seeing them on my Instagram. The design is extraordinary."</blockquote><div class="testi-author"><div class="av">JP</div><div><p class="tr">Dr. Jamie P. · Therapist · Pro · Resonance 639</p></div></div></div>
-  </div>
-</section>
-
-<div class="wave-div"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60"><path d="M0,15 C360,50 720,5 1080,35 C1280,50 1400,15 1440,20 L1440,60 L0,60 Z" fill="#0a0a0c"/></svg></div>
-
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="fwm">Resonance</div>
-      <div class="ftag">Synchronize · Breathe · Ascend</div>
-      <p class="fdesc">Sacred breathwork. Solfeggio frequencies. Cymatic geometry. Triple-sync biohacking for every human.</p>
-      <div class="nl"><input type="email" placeholder="Email address"/><button>Join</button></div>
-    </div>
-    <div class="fcol"><h4>App</h4><a href="#techniques">Techniques</a><a href="#pricing">Pricing</a><a href="#trial">Free Session</a><a href="#sleep">Sleep Mode</a></div>
-    <div class="fcol"><h4>Learn</h4><a href="#">The Science</a><a href="#">963Hz Guide</a><a href="#">Cymatics</a><a href="#">Community</a></div>
-    <div class="fcol"><h4>Studio</h4><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
-  </div>
-  <div class="fbottom">
-    <p>© 2026 Resonance. All rights reserved.</p>
-    <p style="letter-spacing:3px;font-size:9px;color:rgba(255,215,0,0.18);">963 HZ · SRI YANTRA · SYNCHRONIZE · BREATHE · ASCEND</p>
-  </div>
-</footer>
-
-<!-- WAITLIST STICKY BANNER -->
-<div id="waitlistBanner" style="position:fixed;bottom:0;left:0;right:0;z-index:89;background:rgba(10,10,12,0.97);border-top:1px solid rgba(255,215,0,0.15);backdrop-filter:blur(16px);padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);">
-  <div style="display:flex;align-items:center;gap:14px;">
-    <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite;flex-shrink:0;"></div>
-    <div>
-      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#f0ece4;">App launching soon</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:1px;">iOS & Android · Join the waitlist for early access</div>
-    </div>
-  </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-    <input id="waitlistEmail" type="email" placeholder="Your email" style="padding:9px 14px;border:1px solid rgba(255,215,0,0.2);background:rgba(255,255,255,0.03);color:#f0ece4;font-size:12px;outline:none;width:200px;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(255,215,0,0.5)'" onblur="this.style.borderColor='rgba(255,215,0,0.2)'"/>
-    <button onclick="joinWaitlist()" style="padding:9px 20px;background:var(--gold);color:#000;border:none;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;white-space:nowrap;" onmouseover="this.style.background='#ffe94d'" onmouseout="this.style.background='var(--gold)'">Join Waitlist →</button>
-    <button onclick="dismissBanner()" style="background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;line-height:1;transition:color 0.3s;" onmouseover="this.style.color='#f0ece4'" onmouseout="this.style.color='var(--muted)'">✕</button>
-  </div>
+  </section>
 </div>
 
 <script>
-// AMBIENT CANVAS
-const canvas=document.getElementById('flowCanvas');
-const ctx=canvas.getContext('2d');
-let W,H,particles=[];
-function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
-resize();window.addEventListener('resize',resize);
-class Particle{
-  constructor(){this.reset(true);}
-  reset(init){this.x=Math.random()*W;this.y=init?Math.random()*H:H+20;this.vy=-(0.15+Math.random()*0.4);this.vx=(Math.random()-0.5)*0.25;this.r=0.4+Math.random()*1.2;this.life=0;this.maxLife=200+Math.random()*350;this.gold=Math.random()>0.55;}
-  update(){this.x+=this.vx+Math.sin(this.y*0.007+Date.now()*0.0003)*0.3;this.y+=this.vy;this.life++;if(this.life>this.maxLife||this.y<-10)this.reset(false);}
-  draw(){const t=this.life/this.maxLife,a=Math.sin(t*Math.PI)*0.3;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.gold?`rgba(255,215,0,${a})`:`rgba(255,255,255,${a*0.35})`;ctx.fill();}
-}
-for(let i=0;i<100;i++)particles.push(new Particle());
-function animCanvas(){
-  ctx.clearRect(0,0,W,H);
-  const t=Date.now()*0.0004;
-  for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(0,H*0.35+i*H*0.15);for(let x=0;x<=W;x+=4){const y=H*0.35+i*H*0.15+Math.sin(x*0.004+t+i*0.9)*28+Math.sin(x*0.008+t*1.3+i)*12;ctx.lineTo(x,y);}ctx.strokeStyle=`rgba(255,215,0,${0.016-i*0.004})`;ctx.lineWidth=1;ctx.stroke();}
-  particles.forEach(p=>{p.update();p.draw();});
-  requestAnimationFrame(animCanvas);
-}
-animCanvas();
+// ═══════════════════════════════════════════
+// DATA & CONSTANTS
+// ═══════════════════════════════════════════
 
-// SCROLL ANIMATIONS
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.fade-in,.fade-left,.fade-right').forEach(el=>obs.observe(el));
-
-// RESONANCE SCORE ANIMATION
-let scoreTarget=432,scoreCur=0;
-function animScore(){
-  const el=document.getElementById('scoreNum');
-  if(!el)return;
-  const diff=scoreTarget-scoreCur;
-  if(Math.abs(diff)<1){scoreCur=scoreTarget;el.textContent=scoreTarget;return;}
-  scoreCur+=diff*0.04;
-  el.textContent=Math.round(scoreCur);
-  requestAnimationFrame(animScore);
-}
-setTimeout(animScore,800);
-
-// TECHNIQUES
-const TECHNIQUES=[
-  {id:"dmt",name:"DMT Breath",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#FFD700"],cat:"TRANSFORM",phases:[{l:"Inhale",d:5},{l:"Hold",d:20},{l:"Exhale",d:5}],desc:"Pineal activation through prolonged retention & 963Hz unity frequency.",lock:963},
-  {id:"wimhof",name:"Wim Hof",hz:528,geo:"12-Point Star",colors:["#00FFFF","#FF6B00"],cat:"TRANSFORM",phases:[{l:"Inhale",d:2},{l:"Exhale",d:2}],desc:"30 rapid cycles + full retention. Alkalizes blood, boosts immune resilience.",lock:528},
-  {id:"kapalabhati",name:"Kapalabhati",hz:741,geo:"Hexagram",colors:["#FFD700","#FF8C00"],cat:"TRANSFORM",phases:[{l:"Pump",d:0.5},{l:"Passive",d:0.5}],desc:"Skull-shining breath. 60 belly pumps then full retention. Purifies nadis.",lock:528},
-  {id:"lion",name:"Lion's Breath",hz:741,geo:"Star Tetrahedron",colors:["#5C6BC0","#82B1FF"],cat:"TRANSFORM",phases:[{l:"Inhale",d:4},{l:"Roar",d:2},{l:"Reset",d:2}],desc:"Forceful Ha exhale releases deep tension and stimulates the vagus nerve.",lock:396},
-  {id:"ujjayi",name:"Ujjayi / Ocean",hz:432,geo:"Torus Knot",colors:["#00BCD4","#4DD0E1"],cat:"TRANSFORM",phases:[{l:"Inhale",d:6},{l:"Exhale",d:6}],desc:"Throat constriction creates oceanic sound, builds heat and sustains focus.",lock:528},
-  {id:"coherent",name:"Coherent Breath",hz:432,geo:"Flower of Life",colors:["#E91E8C","#FF80AB"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Exhale",d:5}],desc:"Perfect 5-5 rhythm synchronizes HRV with Earth's Schumann resonance.",lock:174},
-  {id:"nadi",name:"Nadi Shodhana",hz:285,geo:"Vesica Piscis",colors:["#E0E0E0","#B0BEC5"],cat:"BALANCE",phases:[{l:"L Inhale",d:4},{l:"Hold",d:4},{l:"R Exhale",d:4},{l:"R Inhale",d:4},{l:"Hold",d:4},{l:"L Exhale",d:4}],desc:"Alternate nostril balances ida & pingala nadis. Synchronizes hemispheres.",lock:396},
-  {id:"box",name:"Box Breathing",hz:440,geo:"Square",colors:["#00C853","#69F0AE"],cat:"BALANCE",phases:[{l:"Inhale",d:4},{l:"Hold",d:4},{l:"Exhale",d:4},{l:"Hold",d:4}],desc:"Navy SEAL stress protocol. Equal 4-count sides activate the prefrontal cortex.",lock:0},
-  {id:"pentagram",name:"Pentagram Breath",hz:639,geo:"5-Point Star",colors:["#1E88E5","#82B1FF"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Hold",d:5},{l:"Exhale",d:5},{l:"Hold",d:5},{l:"Pause",d:5}],desc:"5-5-5-5-5 pentagon. 639Hz activates emotional heart-field coherence.",lock:396},
-  {id:"sitali",name:"Sitali / Cooling",hz:285,geo:"Snowflake",colors:["#B2DFDB","#80CBC4"],cat:"RESTORE",phases:[{l:"Curl & Inhale",d:5},{l:"Hold",d:2},{l:"Exhale",d:6}],desc:"Curl tongue into a straw, sip cool air. Reduces body heat and frustration.",lock:0},
-  {id:"478",name:"4-7-8 Breath",hz:174,geo:"Soft Hexagon",colors:["#3F51B5","#7986CB"],cat:"RESTORE",phases:[{l:"Inhale",d:4},{l:"Hold",d:7},{l:"Exhale",d:8}],desc:"Dr. Weil's natural tranquilizer. Full parasympathetic response in 60 seconds.",lock:0},
-  {id:"sigh",name:"Physiological Sigh",hz:417,geo:"Morphing Ovals",colors:["#BF6B4A","#E8A87C"],cat:"RESTORE",phases:[{l:"Inhale",d:2},{l:"Sniff",d:1},{l:"Long Exhale",d:6}],desc:"Stanford's fastest stress relief. Double inhale expels trapped CO2 instantly.",lock:0},
-  {id:"buteyko",name:"Buteyko Pause",hz:396,geo:"Static Circle",colors:["#4CAF50","#81C784"],cat:"RESTORE",phases:[{l:"Exhale",d:4},{l:"Hold & Pinch",d:20},{l:"Gentle Inhale",d:4}],desc:"Builds CO2 tolerance and lowers resting breathing rate over time.",lock:174},
-  {id:"imst",name:"IMST Training",hz:174,geo:"Diamond Grid",colors:["#78909C","#B0BEC5"],cat:"RESTORE",phases:[{l:"Resist Inhale",d:5},{l:"Exhale",d:3},{l:"Rest",d:2}],desc:"High-resistance inhale lowers blood pressure as effectively as medication.",lock:174},
-  {id:"pineal",name:"Pineal Protocol",hz:963,geo:"Sri Yantra dissolving",colors:["#7B2FBE","#9B4FDE"],cat:"SLEEP",phases:[{l:"4-7-8",d:19},{l:"Retention",d:20},{l:"963Hz Passive",d:1200}],desc:"The only named sleep breathwork protocol. 4-7-8 → retention → 963Hz passive → auto-dim to black. No end chime.",lock:963},
-  {id:"sleep963",name:"963 Hz Sleep Drift",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#5C6BC0"],cat:"SLEEP",phases:[{l:"Inhale",d:5},{l:"Exhale",d:8}],desc:"Slow 5-8 breath with 963Hz drone and dissolving Sri Yantra animation. Passive fade to black.",lock:528},
+const TECHNIQUES = [
+  {id:"dmt",name:"DMT Breath",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#FFD700"],cat:"TRANSFORM",phases:[{l:"Inhale",d:5},{l:"Hold",d:20},{l:"Exhale",d:5}],desc:"Pineal activation through prolonged retention & 963Hz unity frequency.",lock:963,tier:"elite"},
+  {id:"wimhof",name:"Wim Hof",hz:528,geo:"12-Point Star",colors:["#00FFFF","#FF6B00"],cat:"TRANSFORM",phases:[{l:"Inhale",d:2},{l:"Exhale",d:2}],desc:"30 rapid cycles + full retention. Alkalizes blood, boosts immune resilience.",lock:528,tier:"pro"},
+  {id:"kapalabhati",name:"Kapalabhati",hz:741,geo:"Hexagram",colors:["#FFD700","#FF8C00"],cat:"TRANSFORM",phases:[{l:"Pump",d:0.5},{l:"Passive",d:0.5}],desc:"Skull-shining breath. 60 belly pumps then full retention. Purifies nadis.",lock:528,tier:"pro"},
+  {id:"lion",name:"Lion's Breath",hz:741,geo:"Star Tetrahedron",colors:["#5C6BC0","#82B1FF"],cat:"TRANSFORM",phases:[{l:"Inhale",d:4},{l:"Roar",d:2},{l:"Reset",d:2}],desc:"Forceful Ha exhale releases deep tension and stimulates the vagus nerve.",lock:396,tier:"pro"},
+  {id:"ujjayi",name:"Ujjayi / Ocean",hz:432,geo:"Torus Knot",colors:["#00BCD4","#4DD0E1"],cat:"TRANSFORM",phases:[{l:"Inhale",d:6},{l:"Exhale",d:6}],desc:"Throat constriction creates oceanic sound, builds heat and sustains focus.",lock:528,tier:"pro"},
+  {id:"coherent",name:"Coherent Breath",hz:432,geo:"Flower of Life",colors:["#E91E8C","#FF80AB"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Exhale",d:5}],desc:"Perfect 5-5 rhythm synchronizes HRV with Earth's Schumann resonance.",lock:0,tier:"free"},
+  {id:"nadi",name:"Nadi Shodhana",hz:285,geo:"Vesica Piscis",colors:["#E0E0E0","#B0BEC5"],cat:"BALANCE",phases:[{l:"L Inhale",d:4},{l:"Hold",d:4},{l:"R Exhale",d:4},{l:"R Inhale",d:4},{l:"Hold",d:4},{l:"L Exhale",d:4}],desc:"Alternate nostril balances ida & pingala nadis. Synchronizes hemispheres.",lock:396,tier:"pro"},
+  {id:"box",name:"Box Breathing",hz:440,geo:"Square",colors:["#00C853","#69F0AE"],cat:"BALANCE",phases:[{l:"Inhale",d:4},{l:"Hold",d:4},{l:"Exhale",d:4},{l:"Hold",d:4}],desc:"Navy SEAL stress protocol. Equal 4-count sides activate the prefrontal cortex.",lock:0,tier:"free"},
+  {id:"pentagram",name:"Pentagram Breath",hz:639,geo:"5-Point Star",colors:["#1E88E5","#82B1FF"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Hold",d:5},{l:"Exhale",d:5},{l:"Hold",d:5},{l:"Pause",d:5}],desc:"5-5-5-5-5 pentagon. 639Hz activates emotional heart-field coherence.",lock:396,tier:"pro"},
+  {id:"sitali",name:"Sitali / Cooling",hz:285,geo:"Snowflake",colors:["#B2DFDB","#80CBC4"],cat:"RESTORE",phases:[{l:"Curl & Inhale",d:5},{l:"Hold",d:2},{l:"Exhale",d:6}],desc:"Curl tongue into a straw, sip cool air. Reduces body heat and frustration.",lock:0,tier:"free"},
+  {id:"478",name:"4-7-8 Breath",hz:174,geo:"Soft Hexagon",colors:["#3F51B5","#7986CB"],cat:"RESTORE",phases:[{l:"Inhale",d:4},{l:"Hold",d:7},{l:"Exhale",d:8}],desc:"Dr. Weil's natural tranquilizer. Full parasympathetic response in 60 seconds.",lock:0,tier:"free"},
+  {id:"sigh",name:"Physiological Sigh",hz:417,geo:"Morphing Ovals",colors:["#BF6B4A","#E8A87C"],cat:"RESTORE",phases:[{l:"Inhale",d:2},{l:"Sniff",d:1},{l:"Long Exhale",d:6}],desc:"Stanford's fastest stress relief. Double inhale expels trapped CO2 instantly.",lock:0,tier:"free"},
+  {id:"buteyko",name:"Buteyko Pause",hz:396,geo:"Static Circle",colors:["#4CAF50","#81C784"],cat:"RESTORE",phases:[{l:"Exhale",d:4},{l:"Hold & Pinch",d:20},{l:"Gentle Inhale",d:4}],desc:"Builds CO2 tolerance and lowers resting breathing rate over time.",lock:174,tier:"pro"},
+  {id:"imst",name:"IMST Training",hz:174,geo:"Diamond Grid",colors:["#78909C","#B0BEC5"],cat:"RESTORE",phases:[{l:"Resist Inhale",d:5},{l:"Exhale",d:3},{l:"Rest",d:2}],desc:"High-resistance inhale lowers blood pressure as effectively as medication.",lock:174,tier:"pro"},
+  {id:"pineal",name:"Pineal Protocol",hz:963,geo:"Sri Yantra dissolving",colors:["#7B2FBE","#9B4FDE"],cat:"SLEEP",phases:[{l:"4-7-8",d:4},{l:"Hold",d:7},{l:"Exhale",d:8}],desc:"The only named sleep breathwork protocol. 4-7-8 → retention → 963Hz passive → auto-dim.",lock:963,tier:"elite"},
+  {id:"sleep963",name:"963Hz Sleep Drift",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#5C6BC0"],cat:"SLEEP",phases:[{l:"Inhale",d:5},{l:"Exhale",d:8}],desc:"Slow 5-8 breath with 963Hz drone and dissolving Sri Yantra. Passive fade to black.",lock:528,tier:"pro"},
 ];
 
-const USER_SCORE=432;
-let curCat='ALL';
+const QUOTES = [
+  "The breath is the bridge between the body and the mind. — Thich Nhat Hanh",
+  "Breath is the finest gift of nature. Be grateful for this wonderful gift. — Amit Ray",
+  "When the breath wanders, the mind is unsteady. But when the breath is still, so is the mind. — Hatha Yoga Pradipika",
+  "Feelings come and go like clouds in a windy sky. Conscious breathing is my anchor. — Thich Nhat Hanh",
+  "The wise ones fashioned speech with their thought, sifting it as grain is sifted through a sieve. — Buddha",
+  "Breath is the link between mind and body. — Dan Brule",
+  "He who lives in harmony with himself lives in harmony with the universe. — Marcus Aurelius",
+  "The present moment is filled with joy and happiness. If you are attentive, you will see it. — Thich Nhat Hanh"
+];
 
-function getTechSVG(t){
-  const c=t.colors[0],c2=t.colors[1]||c;
-  const g={
-    'Sri Yantra':`<polygon points="22,4 38,32 6,32" stroke="${c}" stroke-width="1" fill="none"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="19" stroke="${c}" stroke-width="0.5" opacity="0.3"/><circle cx="22" cy="22" r="3" fill="${c}"/>`,
-    'Sri Yantra dissolving':`<polygon points="22,4 38,32 6,32" stroke="${c}" stroke-width="1" fill="none" opacity="0.5"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.3"/><circle cx="22" cy="22" r="19" stroke="${c}" stroke-width="0.5" opacity="0.2"/><circle cx="22" cy="22" r="3" fill="${c}" opacity="0.6"/>`,
-    'Flower of Life':`<circle cx="22" cy="22" r="7" stroke="${c}" stroke-width="1.2" fill="none"/>${[0,60,120,180,240,300].map(a=>`<circle cx="${22+Math.sin(a*Math.PI/180)*12}" cy="${22-Math.cos(a*Math.PI/180)*12}" r="7" stroke="${c2}" stroke-width="1" fill="none" opacity="0.7"/>`).join('')}`,
-    'Square':`<rect x="6" y="6" width="32" height="32" stroke="${c}" stroke-width="1.5" fill="none"/><rect x="13" y="13" width="18" height="18" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
-    'Hexagram':`<polygon points="22,4 37,30 7,30" stroke="${c}" stroke-width="1.3" fill="none"/><polygon points="22,40 7,14 37,14" stroke="${c2}" stroke-width="1.3" fill="none" opacity="0.7"/>`,
-    'Snowflake':`${[0,60,120,180,240,300].map(a=>`<line x1="22" y1="22" x2="${22+Math.cos(a*Math.PI/180)*18}" y2="${22+Math.sin(a*Math.PI/180)*18}" stroke="${c}" stroke-width="1.2"/>`).join('')}<circle cx="22" cy="22" r="3" fill="${c2}"/>`,
-    '5-Point Star':`<polygon points="${[0,72,144,216,288].map(a=>`${22+18*Math.sin(a*Math.PI/180)},${22-18*Math.cos(a*Math.PI/180)}`).join(' ')}" stroke="${c}" stroke-width="1.2" fill="none"/>`,
+// ═══════════════════════════════════════════
+// SVG GEOMETRIES
+// ═══════════════════════════════════════════
+
+function getSVG(geo, colors) {
+  const [c1, c2 = c1] = colors;
+  const svgs = {
+    'Sri Yantra': `<polygon points="22,4 38,32 6,32" stroke="${c1}" stroke-width="1" fill="none"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="19" stroke="${c1}" stroke-width="0.5" opacity="0.3"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
+    'Sri Yantra dissolving': `<polygon points="22,4 38,32 6,32" stroke="${c1}" stroke-width="1" fill="none" opacity="0.5"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.3"/><circle cx="22" cy="22" r="3" fill="${c1}" opacity="0.5"/>`,
+    'Flower of Life': `<circle cx="22" cy="22" r="7" stroke="${c1}" stroke-width="1.2" fill="none"/>${[0,60,120,180,240,300].map(a=>`<circle cx="${22+Math.sin(a*Math.PI/180)*12}" cy="${22-Math.cos(a*Math.PI/180)*12}" r="7" stroke="${c2}" stroke-width="1" fill="none" opacity="0.7"/>`).join('')}`,
+    'Square': `<rect x="6" y="6" width="32" height="32" stroke="${c1}" stroke-width="1.5" fill="none"/><rect x="13" y="13" width="18" height="18" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
+    'Hexagram': `<polygon points="22,4 37,30 7,30" stroke="${c1}" stroke-width="1.3" fill="none"/><polygon points="22,40 7,14 37,14" stroke="${c2}" stroke-width="1.3" fill="none" opacity="0.7"/>`,
+    'Snowflake': `${[0,60,120,180,240,300].map(a=>`<line x1="22" y1="22" x2="${22+Math.cos(a*Math.PI/180)*18}" y2="${22+Math.sin(a*Math.PI/180)*18}" stroke="${c1}" stroke-width="1.2"/>`).join('')}<circle cx="22" cy="22" r="3" fill="${c2}"/>`,
+    '5-Point Star': `<polygon points="${[0,72,144,216,288].map(a=>`${22+18*Math.sin(a*Math.PI/180)},${22-18*Math.cos(a*Math.PI/180)}`).join(' ')}" stroke="${c1}" stroke-width="1.2" fill="none"/>`,
+    '12-Point Star': `${[...Array(12)].map((_,i)=>{const a=(i*30)*Math.PI/180;const r=i%2===0?18:10;return`<line x1="22" y1="22" x2="${22+Math.cos(a)*r}" y2="${22+Math.sin(a)*r}" stroke="${c1}" stroke-width="1.2"/>`}).join('')}<circle cx="22" cy="22" r="3" fill="${c2}"/>`,
+    'Vesica Piscis': `<circle cx="16" cy="22" r="10" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="28" cy="22" r="10" stroke="${c2}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
+    'Torus Knot': `<path d="M 22,6 Q 32,12 32,22 T 22,38 T 12,22 T 22,6" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="8" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
+    'Star Tetrahedron': `<polygon points="22,6 34,26 10,26" stroke="${c1}" stroke-width="1.2" fill="none"/><polygon points="22,38 10,18 34,18" stroke="${c2}" stroke-width="1.2" fill="none" opacity="0.7"/>`,
+    'Morphing Ovals': `<ellipse cx="22" cy="22" rx="16" ry="10" stroke="${c1}" stroke-width="1.2" fill="none"/><ellipse cx="22" cy="22" rx="10" ry="16" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
+    'Static Circle': `<circle cx="22" cy="22" r="16" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="10" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
+    'Diamond Grid': `<rect x="8" y="8" width="28" height="28" stroke="${c1}" stroke-width="1.2" fill="none" transform="rotate(45 22 22)"/><rect x="13" y="13" width="18" height="18" stroke="${c2}" stroke-width="0.8" fill="none" transform="rotate(45 22 22)" opacity="0.6"/>`,
+    'Soft Hexagon': `<polygon points="22,6 32,13 32,28 22,35 12,28 12,13" stroke="${c1}" stroke-width="1.2" fill="none"/><polygon points="22,12 28,16 28,25 22,29 16,25 16,16" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`
   };
-  return g[t.geo]||`<circle cx="22" cy="22" r="18" stroke="${c}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="11" stroke="${c2}" stroke-width="0.7" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="${c}"/>`;
+  return svgs[geo] || `<circle cx="22" cy="22" r="18" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="11" stroke="${c2}" stroke-width="0.7" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`;
 }
 
-function renderTech(){
-  const list=curCat==='ALL'?TECHNIQUES:TECHNIQUES.filter(t=>t.cat===curCat);
-  const g=document.getElementById('techGrid');
-  g.style.opacity='0';g.style.transform='translateY(12px)';
-  setTimeout(()=>{
-    g.innerHTML=list.map(t=>{
-      const locked=t.lock>USER_SCORE;
+// ═══════════════════════════════════════════
+// APP STATE & CORE LOGIC
+// ═══════════════════════════════════════════
+
+const app = {
+  state: {
+    score: 0,
+    streak: 0,
+    lastSessionDate: '',
+    totalSessions: 0,
+    zenDeltaToday: 0,
+    sessionHistory: [],
+    tier: 'free', // free, pro, elite
+    currentFilter: 'ALL'
+  },
+
+  init() {
+    this.loadState();
+    this.updateStreak();
+    this.renderUI();
+    this.renderTechniques();
+  },
+
+  loadState() {
+    const stored = localStorage.getItem('resonance_state');
+    if (stored) {
+      this.state = { ...this.state, ...JSON.parse(stored) };
+    }
+  },
+
+  saveState() {
+    localStorage.setItem('resonance_state', JSON.stringify(this.state));
+  },
+
+  updateStreak() {
+    const today = new Date().toDateString();
+    const last = this.state.lastSessionDate;
+    
+    if (!last) return;
+    
+    const lastDate = new Date(last);
+    const todayDate = new Date(today);
+    const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 1) {
+      this.state.streak = 0;
+      this.saveState();
+    }
+  },
+
+  renderUI() {
+    this.animateScore(this.state.score);
+    document.getElementById('streakDisplay').textContent = this.state.streak;
+    document.getElementById('zenDeltaDisplay').textContent = '+' + this.state.zenDeltaToday;
+    
+    // Update milestones
+    [174, 396, 528, 963].forEach(score => {
+      const el = document.getElementById('m' + score);
+      const icon = el.querySelector('.milestone-icon');
+      if (this.state.score >= score) {
+        el.classList.remove('locked');
+        icon.textContent = '🔓';
+      } else {
+        el.classList.add('locked');
+        icon.textContent = '🔒';
+      }
+    });
+  },
+
+  animateScore(target) {
+    const display = document.getElementById('scoreDisplay');
+    const bar = document.getElementById('scoreBar');
+    let current = parseInt(display.textContent) || 0;
+    const duration = 2000;
+    const steps = 60;
+    const increment = (target - current) / steps;
+    
+    const interval = setInterval(() => {
+      current += increment;
+      if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+        display.textContent = target;
+        bar.style.width = ((target / 963) * 100) + '%';
+        clearInterval(interval);
+      } else {
+        display.textContent = Math.round(current);
+        bar.style.width = ((current / 963) * 100) + '%';
+      }
+    }, duration / steps);
+  },
+
+  filterTechniques(category) {
+    this.state.currentFilter = category;
+    
+    // Update active tab
+    document.querySelectorAll('.cat-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    this.renderTechniques();
+  },
+
+  renderTechniques() {
+    const grid = document.getElementById('techniquesGrid');
+    const filtered = this.state.currentFilter === 'ALL' 
+      ? TECHNIQUES 
+      : TECHNIQUES.filter(t => t.cat === this.state.currentFilter);
+    
+    grid.innerHTML = filtered.map(tech => {
+      const isLocked = tech.lock > this.state.score;
+      const tierLocked = this.getTierAccess(tech.tier) === false;
+      const locked = isLocked || tierLocked;
+      
       return `
-        <div class="tech-card" style="--glow-color:${t.colors[0]}22;${locked?'opacity:0.6':''}" onclick="${locked?'':("tryTech('"+t.id+"')")}">
-          <div class="tc-stripe" style="background:linear-gradient(180deg,${t.colors[0]},${t.colors[1]||t.colors[0]})"></div>
-          <div class="tc-top">
-            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">${getTechSVG(t)}</svg>
+        <div class="tech-card ${locked ? 'locked' : ''}" onclick="${locked ? '' : `app.startTechnique('${tech.id}')`}">
+          <div class="tech-stripe" style="background: linear-gradient(180deg, ${tech.colors[0]}, ${tech.colors[1] || tech.colors[0]})"></div>
+          
+          <div class="tech-header">
+            <svg class="tech-icon" viewBox="0 0 44 44" fill="none">
+              ${getSVG(tech.geo, tech.colors)}
+            </svg>
             <div>
-              <div class="tc-name" style="color:${t.colors[0]}">${t.name}${t.cat==='SLEEP'?' 🌙':''}</div>
-              <div class="tc-meta">${t.hz}hz · ${t.geo} · ${t.cat}</div>
+              <div class="tech-name" style="color: ${tech.colors[0]}">${tech.name}</div>
+              <div class="tech-meta">${tech.hz}hz · ${tech.geo} · ${tech.cat}</div>
             </div>
           </div>
-          <div class="tc-phases">${t.phases.slice(0,4).map(p=>`<div class="tc-phase">${p.d}s ${p.l}</div>`).join('')}</div>
-          <div class="tc-desc">${t.desc}</div>
-          ${locked
-            ? `<div class="tc-lock">🔒 Unlocks at Resonance ${t.lock}</div>`
-            : `<button class="tc-btn" style="background:${t.colors[0]};color:${['#E91E8C','#5C6BC0','#7B2FBE','#3F51B5','#1E88E5'].includes(t.colors[0])?'#fff':'#000'}">${t.cat==='SLEEP'?'Enter Sleep Mode →':'Try in App →'}</button>`
-          }
-        </div>`;
-    }).join('');
-    g.style.transition='opacity 0.5s cubic-bezier(0.22,1,0.36,1),transform 0.5s cubic-bezier(0.22,1,0.36,1)';
-    g.style.opacity='1';g.style.transform='none';
-  },150);
-}
 
-function filterTech(cat,el){
-  curCat=cat;
-  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderTech();
-}
+          <div class="tech-phases">
+            ${tech.phases.slice(0, 4).map(p => `<div class="tech-phase">${p.d}s ${p.l}</div>`).join('')}
+          </div>
 
-function tryTech(id){
-  const map={dmt:'spirit',wimhof:'perf',kapalabhati:'perf',lion:'stress',ujjayi:'focus',coherent:'stress',nadi:'focus',box:'focus',pentagram:'spirit',sitali:'stress','478':'sleep',sigh:'stress',buteyko:'focus',imst:'perf',pineal:'sleep',sleep963:'sleep'};
-  if(id==='pineal'||id==='sleep963'){openSleep();return;}
-  answers.goal=map[id]||'spirit';
-  openModal();showStep(3);
-}
+          <div class="tech-desc">${tech.desc}</div>
 
-// SLEEP MODE
-let sleepRunning=false,sleepTick=null,sleepFadeInterval=null;
-const SLEEP_PHASES=[
-  {name:'4-7-8 Breath',phases:[{l:'Inhale',d:4},{l:'Hold',d:7},{l:'Exhale',d:8}],cycles:8,hz:'174 Hz'},
-  {name:'Retention Hold',phases:[{l:'Exhale fully',d:4},{l:'Hold empty',d:30},{l:'Gentle inhale',d:4}],cycles:2,hz:'396 Hz'},
-  {name:'963 Hz Passive',phases:[{l:'Dissolving',d:20}],cycles:999,hz:'963 Hz · Pineal Protocol'},
-];
-
-function openSleep(){
-  sleepRunning=true;
-  document.getElementById('sleepOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  document.getElementById('sleepSvg').style.opacity='0.8';
-  runSleepProtocol();
-  // Auto-dim after 2 minutes
-  let dim=0;
-  sleepFadeInterval=setInterval(()=>{
-    dim=Math.min(dim+0.004,0.85);
-    document.getElementById('sleepOverlay').style.background=`rgba(0,0,0,${dim})`;
-    if(dim>=0.85)clearInterval(sleepFadeInterval);
-  },1000);
-}
-
-function closeSleep(){
-  sleepRunning=false;
-  clearTimeout(sleepTick);
-  clearInterval(sleepFadeInterval);
-  document.getElementById('sleepOverlay').classList.remove('open');
-  document.getElementById('sleepOverlay').style.background='rgba(0,0,0,0)';
-  document.body.style.overflow='';
-}
-
-function runSleepProtocol(){
-  let stageIdx=0,cycleCount=0,phaseIdx=0;
-  function nextPhase(){
-    if(!sleepRunning)return;
-    const stage=SLEEP_PHASES[stageIdx];
-    if(!stage)return;
-    document.getElementById('sleepHzLabel').textContent=stage.hz+' · Pineal Protocol';
-    const ph=stage.phases[phaseIdx];
-    document.getElementById('sleepPhase').textContent=ph.l;
-    document.getElementById('sleepProgBar').style.width=Math.round(((stageIdx)/SLEEP_PHASES.length)*100)+'%';
-    let c=ph.d;
-    document.getElementById('sleepCount').textContent=c;
-    const civ=setInterval(()=>{c--;document.getElementById('sleepCount').textContent=c>0?c:'';},1000);
-    sleepTick=setTimeout(()=>{
-      clearInterval(civ);
-      if(!sleepRunning)return;
-      phaseIdx++;
-      if(phaseIdx>=stage.phases.length){phaseIdx=0;cycleCount++;}
-      if(cycleCount>=stage.cycles&&stageIdx<SLEEP_PHASES.length-1){stageIdx++;cycleCount=0;phaseIdx=0;
-        // Fade yantra when entering passive
-        if(stageIdx===2){
-          document.getElementById('sleepSvg').style.transition='opacity 30s ease';
-          document.getElementById('sleepSvg').style.opacity='0.1';
-          document.getElementById('sleepCount').textContent='';
-          document.getElementById('sleepPhase').textContent='963 Hz';
-        }
-      }
-      nextPhase();
-    },ph.d*1000);
-  }
-  nextPhase();
-}
-
-// QUIZ / TRIAL
-const TOTAL=6;let answers={};let trialRunning=false,phaseTick=null;
-const techMap={stress:{name:'4-7-8 Breath',phases:[{l:'Inhale',d:4},{l:'Hold',d:7},{l:'Exhale',d:8}]},sleep:{name:'4-7-8 Breath',phases:[{l:'Inhale',d:4},{l:'Hold',d:7},{l:'Exhale',d:8}]},focus:{name:'Box Breathing',phases:[{l:'Inhale',d:4},{l:'Hold',d:4},{l:'Exhale',d:4},{l:'Hold',d:4}]},perf:{name:'Wim Hof',phases:[{l:'Inhale',d:2},{l:'Exhale',d:2}]},spirit:{name:'Coherent Breath',phases:[{l:'Inhale',d:5},{l:'Exhale',d:5}]}};
-const insightMap={stress:'Our Stress Relief programme — 4-7-8 at 174Hz daily — is heading to your inbox.',sleep:'Your Pineal Sleep Protocol — 963Hz wind-down — has been sent to your inbox.',focus:'Your Deep Focus programme — Box Breathing at 440Hz — is in your inbox.',perf:'Your Performance Protocol — Wim Hof at 528Hz — has been sent.',spirit:'Your Spiritual Alignment series — DMT Breath & Coherent at 963Hz — is in your inbox.'};
-
-function buildTrack(){const t=document.getElementById('stepTrack');t.innerHTML='';for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='step-pip';if(i===0)d.classList.add('active');t.appendChild(d);}}
-function updateTrack(n){document.querySelectorAll('.step-pip').forEach((d,i)=>{d.className='step-pip';if(i<n)d.classList.add('done');else if(i===n)d.classList.add('active');});}
-function showStep(n){document.querySelectorAll('.mstep').forEach(el=>el.classList.remove('active'));const el=document.getElementById('ms'+n);if(el)el.classList.add('active');updateTrack(n);}
-function pick(si,el,val){const k=['goal','experience','challenge'][si];answers[k]=val;el.closest('.quiz-options').querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');setTimeout(()=>showStep(si+1),380);}
-function startTrial(){const email=document.getElementById('tEmail').value.trim();if(!email||!email.includes('@')){alert('Please enter a valid email.');return;}showStep(4);runTrialBreath();}
-function runTrialBreath(){
-  trialRunning=true;
-  const goal=answers.goal||'spirit';
-  const tech=techMap[goal]||techMap.spirit;
-  document.getElementById('tTechName').textContent=tech.name;
-  let elapsed=0;
-  const iv=setInterval(()=>{elapsed++;const l=60-elapsed;document.getElementById('tTimer').textContent=l;document.getElementById('tProg').style.width=Math.round((elapsed/60)*100)+'%';if(elapsed>=60){clearInterval(iv);clearTimeout(phaseTick);trialRunning=false;setTimeout(showResult,700);}},1000);
-  let pi=0;
-  function nextPhase(){
-    if(!trialRunning)return;
-    const ph=tech.phases[pi],dur=ph.l==='Hold'&&ph.d>8?8:ph.d;
-    const ring=document.getElementById('tRing');
-    document.getElementById('tPhase').textContent=ph.l;
-    const scale=/inhale|sniff|resist|curl/i.test(ph.l)?1.5:/hold|pinch/i.test(ph.l)?1.08:0.72;
-    ring.style.transition=`transform ${dur}s cubic-bezier(0.4,0,0.2,1),opacity ${dur}s ease`;
-    ring.style.transform=`scale(${scale})`;ring.style.opacity=/hold/i.test(ph.l)?'0.3':'0.95';
-    let c=dur;document.getElementById('tCount').textContent=c+'s';
-    const civ=setInterval(()=>{c--;document.getElementById('tCount').textContent=c>0?c+'s':'';},1000);
-    phaseTick=setTimeout(()=>{clearInterval(civ);pi=(pi+1)%tech.phases.length;if(trialRunning)nextPhase();},dur*1000);
-  }
-  nextPhase();
-}
-function showResult(){const goal=answers.goal||'spirit';document.getElementById('rInsight').textContent=insightMap[goal]||insightMap.spirit;showStep(5);}
-function replayTrial(){showStep(4);document.getElementById('tTimer').textContent='60';document.getElementById('tProg').style.width='0%';clearTimeout(phaseTick);runTrialBreath();}
-function openModal(){answers={};buildTrack();document.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('sel'));showStep(0);document.getElementById('trialModal').classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(){trialRunning=false;clearTimeout(phaseTick);document.getElementById('trialModal').classList.remove('open');document.body.style.overflow='';}
-document.getElementById('trialModal').addEventListener('click',e=>{if(e.target===document.getElementById('trialModal'))closeModal();});
-
-// MERCH
-const WORKER_URL = 'https://resonance-printify.roger-johansson.workers.dev';
-
-// Fallback products shown while Printify loads or if fetch fails
-const FALLBACK_PRODUCTS=[
-  {id:'f1',name:'Resonance Tee',material:'100% GOTS organic cotton · 220gsm',made:'Printed & finished in-house',price:38,bg:'sage',badge:'stock',emoji:'👕',sizes:['XS','S','M','L','XL','XXL'],colors:['#6a8c6a','#4a5568','#e8e0cc','#b5614a'],printifyId:null},
-  {id:'f2',name:'Mandala Cap',material:'Unstructured 6-panel · 100% chino cotton',made:'Embroidered in-house',price:34,bg:'slate',badge:'ltd',emoji:'🧢',sizes:['One size'],colors:['#2d3a52','#4a5568','#b5614a'],printifyId:null},
-  {id:'f3',name:'Midnight Hoodie',material:'380gsm heavyweight fleece',made:'Screen printed in-house',price:74,bg:'slate',badge:'ltd',emoji:'🧥',sizes:['XS','S','M','L','XL','XXL'],colors:['#1a1e2a','#6a8c6a','#4a5568'],printifyId:null},
-  {id:'f4',name:'Copper Vessel',material:'Hammered copper · 500ml · Yantra engraved',made:'Hand-engraved in studio',price:68,bg:'copper',badge:'ltd',emoji:'🫙',sizes:['500ml'],colors:['#b87333'],printifyId:null},
-  {id:'f5',name:'Canvas Tote',material:'12oz natural canvas · cotton lining',made:'Screen printed in-house',price:28,bg:'linen',badge:'stock',emoji:'👜',sizes:['One size'],colors:['#e8e0cc','#c4b99a'],printifyId:null},
-  {id:'f6',name:'Practice Journal',material:'192-page dotted grid · FSC paper',made:'Designed & bound in-house',price:32,bg:'sage',badge:'stock',emoji:'📓',sizes:['Standard'],colors:['#1a1e2a','#e8e0cc'],printifyId:null},
-  {id:'f7',name:'Flow Joggers',material:'French terry 280gsm · tapered',made:'Cut & sewn in-house',price:74,bg:'slate',badge:'ltd',emoji:'👖',sizes:['XS','S','M','L','XL'],colors:['#1a1e2a','#6a8c6a'],printifyId:null},
-  {id:'f8',name:'Woven Bracelet',material:'Hand-woven cotton & linen · brass clasp',made:'Handcrafted in studio',price:22,bg:'sage',badge:'stock',emoji:'📿',sizes:['One size'],colors:['#6a8c6a','#4a5568','#e8e0cc'],printifyId:null},
-];
-
-let PRODUCTS = [...FALLBACK_PRODUCTS];
-
-// Map emoji by keyword for Printify products
-function guessEmoji(title){
-  const t=title.toLowerCase();
-  if(t.includes('tee')||t.includes('shirt'))return '👕';
-  if(t.includes('hoodie')||t.includes('sweat'))return '🧥';
-  if(t.includes('cap')||t.includes('hat'))return '🧢';
-  if(t.includes('tote')||t.includes('bag'))return '👜';
-  if(t.includes('bottle')||t.includes('vessel')||t.includes('mug'))return '🫙';
-  if(t.includes('journal')||t.includes('notebook'))return '📓';
-  if(t.includes('jogger')||t.includes('pant'))return '👖';
-  if(t.includes('bracelet')||t.includes('band'))return '📿';
-  return '✦';
-}
-function guessBg(title){
-  const t=title.toLowerCase();
-  if(t.includes('tee')||t.includes('shirt')||t.includes('bracelet'))return 'sage';
-  if(t.includes('hoodie')||t.includes('cap')||t.includes('jogger'))return 'slate';
-  if(t.includes('bottle')||t.includes('vessel')||t.includes('copper'))return 'copper';
-  if(t.includes('tote')||t.includes('bag'))return 'linen';
-  return 'sage';
-}
-
-async function loadPrintifyProducts(){
-  try {
-    const res = await fetch(`${WORKER_URL}/products`);
-    if(!res.ok) throw new Error('Worker returned '+res.status);
-    const data = await res.json();
-    if(data.products && data.products.length > 0){
-      PRODUCTS = data.products.map(p => ({
-        id:          p.id,
-        printifyId:  p.id,
-        name:        p.title,
-        material:    p.description || 'Premium quality · Resonance Studio',
-        made:        'Printed & finished in-house',
-        price:       p.price,
-        bg:          guessBg(p.title),
-        badge:       'stock',
-        emoji:       guessEmoji(p.title),
-        image:       p.image,
-        sizes:       p.variants ? [...new Set(p.variants.map(v => v.title.split(' / ')[0]))] : ['One size'],
-        colors:      ['#6a8c6a','#4a5568','#e8e0cc'],
-        variants:    p.variants || [],
-        options:     p.options || [],
-      }));
-      renderProducts();
-    }
-  } catch(e) {
-    console.log('Using fallback products:', e.message);
-    // Fallback products already set — no action needed
-  }
-}
-
-let cart=[],pendingProduct=null,selSize=null,selColor=null;
-const bgMap={sage:'rgba(106,140,106,0.12)',slate:'rgba(74,85,104,0.15)',copper:'rgba(184,115,51,0.12)',linen:'rgba(232,224,204,0.08)'};
-
-function renderProducts(){
-  document.getElementById('productGrid').innerHTML=PRODUCTS.map(p=>`
-    <div class="merch-card" onclick="openSize(${p.id})">
-      <div class="merch-img-wrap" style="background:${bgMap[p.bg]||'rgba(106,140,106,0.12)'}">
-        ${p.badge==='stock'?'<div class="merch-badge mb-stock">In Stock</div>':'<div class="merch-badge mb-ltd">Limited</div>'}
-        <div class="merch-emoji">${p.emoji}</div>
-      </div>
-      <div class="merch-info">
-        <p class="merch-name">${p.name}</p>
-        <p class="merch-material">${p.material}</p>
-        <p class="merch-made">✦ ${p.made}</p>
-        <div class="merch-row">
-          <span class="merch-price">$${p.price}</span>
-          <button class="merch-add" id="ab${p.id}" onclick="event.stopPropagation();openSize(${p.id})">Add to Cart</button>
+          ${locked ? (
+            tierLocked 
+              ? `<div class="tech-lock-msg">🔒 ${tech.tier === 'pro' ? 'Pro' : 'Elite'} tier required</div>`
+              : `<div class="tech-lock-msg">🔒 Unlocks at Resonance ${tech.lock}</div>`
+          ) : `
+            <button class="btn btn-gold" style="background: ${tech.colors[0]}; color: ${['#E91E8C','#5C6BC0','#7B2FBE','#3F51B5','#1E88E5'].includes(tech.colors[0]) ? '#fff' : '#000'}; margin-top: 14px; font-size: 9px; padding: 9px 18px;" onclick="event.stopPropagation(); app.startTechnique('${tech.id}')">
+              ${tech.cat === 'SLEEP' ? 'Enter Sleep Mode →' : 'Try in App →'}
+            </button>
+          `}
         </div>
-      </div>
-    </div>`).join('');
-}
+      `;
+    }).join('');
+  },
 
-function openSize(id){
-  pendingProduct=PRODUCTS.find(p=>p.id===id);selSize=pendingProduct.sizes[0];selColor=pendingProduct.colors[0];
-  document.getElementById('smTitle').textContent=pendingProduct.name;
-  document.getElementById('smSub').textContent='$'+pendingProduct.price+' · '+pendingProduct.made;
-  document.getElementById('sizeGrid').innerHTML=pendingProduct.sizes.map(s=>`<button class="size-opt${s===selSize?' sel':''}" onclick="pickSize('${s}',this)">${s}</button>`).join('');
-  document.getElementById('colorRow').innerHTML=pendingProduct.colors.map((c,i)=>`<div class="cdot${i===0?' sel':''}" style="background:${c};border-color:${i===0?'#FFD700':'transparent'}" onclick="pickColor('${c}',this)"></div>`).join('');
-  document.getElementById('sizeOverlay').classList.add('open');
-}
-function pickSize(s,el){selSize=s;document.querySelectorAll('.size-opt').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
-function pickColor(c,el){selColor=c;document.querySelectorAll('.cdot').forEach(d=>{d.classList.remove('sel');d.style.borderColor='transparent';});el.classList.add('sel');el.style.borderColor='#FFD700';}
-function closeSizeModal(){document.getElementById('sizeOverlay').classList.remove('open');}
-function confirmAdd(){
-  if(!pendingProduct)return;
-  const key=pendingProduct.id+'|'+selSize+'|'+selColor;
-  const ex=cart.find(i=>i.key===key);
-  if(ex)ex.qty++;else cart.push({key,id:pendingProduct.id,name:pendingProduct.name,price:pendingProduct.price,emoji:pendingProduct.emoji,size:selSize,color:selColor,qty:1});
-  closeSizeModal();
-  const b=document.getElementById('ab'+pendingProduct.id);
-  if(b){b.textContent='Added ✦';b.classList.add('added');setTimeout(()=>{b.textContent='Add to Cart';b.classList.remove('added');},2000);}
-  updateCartUI();openCart();
-}
-document.getElementById('sizeOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('sizeOverlay'))closeSizeModal();});
+  getTierAccess(requiredTier) {
+    const tiers = { free: 0, pro: 1, elite: 2 };
+    const userTier = tiers[this.state.tier];
+    const reqTier = tiers[requiredTier];
+    return userTier >= reqTier;
+  },
 
-function removeItem(key){cart=cart.filter(i=>i.key!==key);updateCartUI();}
-function changeQty(key,d){const i=cart.find(x=>x.key===key);if(i){i.qty+=d;if(i.qty<=0)removeItem(key);else updateCartUI();}}
-function updateCartUI(){
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const count=cart.reduce((s,i)=>s+i.qty,0);
-  document.getElementById('fabCount').textContent=count;
-  const fab=document.getElementById('cartFab');fab.style.display=count>0?'flex':'none';
-  const cb=document.getElementById('cartBody'),cf=document.getElementById('cartFoot');
-  if(!cart.length){cb.innerHTML=`<div class="cart-empty"><div style="font-size:28px;color:rgba(255,215,0,0.25)">✦</div><p style="font-size:10px;letter-spacing:2px;margin-top:10px;color:var(--muted)">Your cart is empty</p></div>`;cf.style.display='none';return;}
-  cb.innerHTML=cart.map(i=>`
-    <div class="cart-item">
-      <div class="ci-img" style="background:${i.color}18;">${i.emoji}</div>
-      <div class="ci-info">
-        <p class="ci-name">${i.name}</p>
-        <p class="ci-var">${i.size}</p>
-        <div class="ci-row">
-          <span class="ci-price">$${(i.price*i.qty).toFixed(2)}</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div class="ci-qty"><button class="qty-btn" onclick="changeQty('${i.key}',-1)">−</button><span class="qty-num">${i.qty}</span><button class="qty-btn" onclick="changeQty('${i.key}',1)">+</button></div>
-            <button class="ci-rm" onclick="removeItem('${i.key}')">✕</button>
+  startTechnique(id) {
+    const tech = TECHNIQUES.find(t => t.id === id);
+    if (!tech) return;
+    
+    const isLocked = tech.lock > this.state.score;
+    const tierLocked = this.getTierAccess(tech.tier) === false;
+    
+    if (isLocked || tierLocked) {
+      if (tierLocked) {
+        alert(`This technique requires ${tech.tier === 'pro' ? 'Pro ($7.99/mo)' : 'Elite ($14.99/mo)'} tier.`);
+        return;
+      }
+      alert(`Unlock at Resonance ${tech.lock}`);
+      return;
+    }
+    
+    this.runSession(tech);
+  },
+
+  runSession(tech) {
+    const preZen = Math.floor(Math.random() * 4) + 3; // 3-6
+    
+    const overlay = document.createElement('div');
+    overlay.className = 'session-overlay';
+    overlay.innerHTML = `
+      <button class="session-close" onclick="app.endSession(false)">✕</button>
+      <div class="session-content">
+        <div class="session-technique">${tech.hz} Hz · ${tech.name}</div>
+        
+        <div class="session-ring-container">
+          <div class="session-ring" id="sessionRing"></div>
+          <div class="session-ring-inner">
+            <div class="session-phase" id="sessionPhase">Ready</div>
+            <div class="session-countdown" id="sessionCountdown"></div>
           </div>
         </div>
+
+        <div class="session-progress">
+          <div class="session-progress-bar" id="sessionProgressBar"></div>
+        </div>
+
+        <div class="session-time" id="sessionTime">0:00 elapsed</div>
+
+        <button class="btn btn-gold" onclick="app.endSession(true)">Complete Session</button>
       </div>
-    </div>`).join('');
-  document.getElementById('cSub').textContent='$'+total.toFixed(2);
-  document.getElementById('cTot').textContent='$'+total.toFixed(2);
-  cf.style.display='block';
-}
-function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');}
-function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');}
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    let phaseIndex = 0;
+    let totalElapsed = 0;
+    let phaseCountdown = 0;
+    
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(tech.hz, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    oscillator.start();
+    
+    const nextPhase = () => {
+      const phase = tech.phases[phaseIndex];
+      phaseCountdown = phase.d;
+      
+      document.getElementById('sessionPhase').textContent = phase.l;
+      
+      const ring = document.getElementById('sessionRing');
+      const scale = /inhale|sniff/i.test(phase.l) ? 1.6 : /hold/i.test(phase.l) ? 1.15 : 0.7;
+      const opacity = /hold/i.test(phase.l) ? 0.3 : 1;
+      ring.style.transform = `scale(${scale})`;
+      ring.style.opacity = opacity;
+      
+      const interval = setInterval(() => {
+        phaseCountdown--;
+        totalElapsed++;
+        
+        document.getElementById('sessionCountdown').textContent = Math.max(0, phaseCountdown);
+        document.getElementById('sessionTime').textContent = `${Math.floor(totalElapsed / 60)}:${(totalElapsed % 60).toString().padStart(2, '0')} elapsed`;
+        document.getElementById('sessionProgressBar').style.width = Math.min((totalElapsed / 180) * 100, 100) + '%';
+        
+        if (phaseCountdown <= 0) {
+          clearInterval(interval);
+          phaseIndex = (phaseIndex + 1) % tech.phases.length;
+          if (totalElapsed < 180) { // 3 min max
+            nextPhase();
+          } else {
+            app.endSession(true, tech, totalElapsed, preZen, audioCtx, oscillator);
+          }
+        }
+      }, 1000);
+    };
+    
+    nextPhase();
+    
+    // Store session data for completion
+    overlay.dataset.tech = tech.id;
+    overlay.dataset.preZen = preZen;
+    overlay.dataset.elapsed = '0';
+    overlay.dataset.audioCtx = 'active';
+    
+    window.sessionAudioCtx = audioCtx;
+    window.sessionOscillator = oscillator;
+  },
 
-// CHECKOUT
-const STRIPE_PK='pk_live_YOUR_RESONANCE_STRIPE_KEY';
-const BACKEND_URL='https://your-backend.com';
-let stripeInstance=null,cardElement=null,stripeReady=false;
+  endSession(completed, tech = null, elapsed = 0, preZen = 0, audioCtx = null, osc = null) {
+    // Stop audio
+    if (window.sessionOscillator) {
+      try {
+        window.sessionOscillator.stop();
+      } catch (e) {}
+      window.sessionOscillator = null;
+    }
+    if (window.sessionAudioCtx) {
+      window.sessionAudioCtx = null;
+    }
+    
+    // Remove overlay
+    const overlay = document.querySelector('.session-overlay');
+    if (overlay) {
+      overlay.remove();
+    }
+    
+    if (!completed) return;
+    
+    // If no tech provided, try to get from overlay
+    if (!tech) {
+      const techId = overlay?.dataset.tech;
+      tech = TECHNIQUES.find(t => t.id === techId);
+      preZen = parseInt(overlay?.dataset.preZen) || 5;
+      elapsed = parseInt(overlay?.dataset.elapsed) || 60;
+    }
+    
+    if (!tech) return;
+    
+    const postZen = Math.min(preZen + Math.floor(Math.random() * 4) + 2, 10); // +2 to +5
+    const zenDelta = postZen - preZen;
+    
+    // Calculate score gain
+    const baseGain = Math.floor(elapsed / 60) * 2; // 2 points per minute
+    const techniqueBonus = tech.lock > 0 ? Math.floor(tech.lock / 100) : 1;
+    const scoreGained = baseGain * techniqueBonus;
+    
+    const newScore = Math.min(this.state.score + scoreGained, 963);
+    
+    // Update streak
+    const today = new Date().toDateString();
+    let newStreak = this.state.streak;
+    
+    if (this.state.lastSessionDate !== today) {
+      const lastDate = this.state.lastSessionDate ? new Date(this.state.lastSessionDate) : null;
+      const todayDate = new Date(today);
+      
+      if (lastDate) {
+        const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          newStreak += 1;
+        } else if (diffDays > 1) {
+          newStreak = 1;
+        }
+      } else {
+        newStreak = 1;
+      }
+    }
+    
+    const session = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      technique: tech.name,
+      duration: elapsed,
+      preZen,
+      postZen,
+      scoreGained,
+      zenDelta
+    };
+    
+    this.state.score = newScore;
+    this.state.streak = newStreak;
+    this.state.lastSessionDate = today;
+    this.state.totalSessions += 1;
+    this.state.zenDeltaToday = this.state.lastSessionDate === today 
+      ? this.state.zenDeltaToday + zenDelta 
+      : zenDelta;
+    this.state.sessionHistory = [session, ...this.state.sessionHistory.slice(0, 99)];
+    
+    this.saveState();
+    this.renderUI();
+    this.showSessionCard(session, tech);
+  },
 
-function loadStripeJS(cb){if(window.Stripe){cb();return;}const s=document.createElement('script');s.src='https://js.stripe.com/v3/';s.onload=cb;document.head.appendChild(s);}
+  showSessionCard(session, tech) {
+    const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    
+    const modal = document.createElement('div');
+    modal.className = 'card-overlay';
+    modal.innerHTML = `
+      <div class="session-card">
+        <svg class="card-yantra" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="${tech.colors[0]}" stroke-width="0.5" opacity="0.4"/>
+          <polygon points="32,8 50,40 14,40" stroke="${tech.colors[0]}" stroke-width="1" fill="none"/>
+          <polygon points="32,56 14,24 50,24" stroke="${tech.colors[1] || tech.colors[0]}" stroke-width="1" fill="none" opacity="0.7"/>
+          <circle cx="32" cy="32" r="5" stroke="${tech.colors[0]}" stroke-width="0.7" fill="rgba(${tech.colors[0]},0.15)"/>
+          <circle cx="32" cy="32" r="2" fill="${tech.colors[0]}" opacity="0.9"/>
+        </svg>
 
-function mountStripeCard(){
-  if(stripeReady||STRIPE_PK.includes('YOUR_RESONANCE')){
-    document.getElementById('stripePlaceholder').innerHTML=STRIPE_PK.includes('YOUR_RESONANCE')?'Paste your Stripe key to enable live payments':'Loading...';
-    return;
+        <div class="card-title">Resonance</div>
+        <div class="card-subtitle">Session Complete · ${tech.hz} Hz</div>
+
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="metric-value">${tech.name.split(' ')[0]}</div>
+            <div class="metric-label">Technique</div>
+          </div>
+          <div class="card-metric">
+            <div class="metric-value">${Math.floor(session.duration / 60)}m</div>
+            <div class="metric-label">Duration</div>
+          </div>
+          <div class="card-metric">
+            <div class="metric-value">+${session.zenDelta}</div>
+            <div class="metric-label">Zen Delta</div>
+          </div>
+          <div class="card-metric">
+            <div class="metric-value" style="font-size: 18px;">${this.state.score}</div>
+            <div class="metric-label">Resonance</div>
+          </div>
+        </div>
+
+        <div class="card-quote">"${quote}"</div>
+        <div class="card-wordmark">resonance · breathe · ascend</div>
+
+        <div class="card-actions">
+          <button class="btn btn-gold" onclick="app.downloadSessionCard(${JSON.stringify(session).replace(/"/g, '&quot;')}, ${JSON.stringify(tech).replace(/"/g, '&quot;')})">
+            Download Card ↓
+          </button>
+          <button class="btn btn-outline" onclick="this.closest('.card-overlay').remove()">
+            Continue
+          </button>
+        </div>
+      </div>
+    `;
+    
+    modal.onclick = (e) => {
+      if (e.target === modal) modal.remove();
+    };
+    
+    document.body.appendChild(modal);
+  },
+
+  downloadSessionCard(session, tech) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+    
+    // Background
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(0, 0, 1080, 1080);
+    
+    // Top gradient line
+    const gradient = ctx.createLinearGradient(0, 0, 1080, 0);
+    gradient.addColorStop(0, 'transparent');
+    gradient.addColorStop(0.5, '#FFD700');
+    gradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1080, 2);
+    
+    // Draw Sri Yantra (simplified)
+    ctx.strokeStyle = tech.colors[0];
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(540, 200);
+    ctx.lineTo(700, 450);
+    ctx.lineTo(380, 450);
+    ctx.closePath();
+    ctx.stroke();
+    
+    ctx.strokeStyle = tech.colors[1] || tech.colors[0];
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(540, 650);
+    ctx.lineTo(380, 400);
+    ctx.lineTo(700, 400);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    
+    ctx.beginPath();
+    ctx.arc(540, 425, 15, 0, Math.PI * 2);
+    ctx.fillStyle = tech.colors[0];
+    ctx.fill();
+    
+    // Title
+    ctx.fillStyle = '#FFD700';
+    ctx.font = '700 28px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.letterSpacing = '12px';
+    ctx.fillText('RESONANCE', 540, 520);
+    
+    // Subtitle
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '400 22px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.letterSpacing = '6px';
+    ctx.fillText(`SESSION COMPLETE · ${tech.hz} HZ`, 540, 560);
+    
+    // Metrics grid
+    const metrics = [
+      { label: 'TECHNIQUE', value: tech.name.split(' ')[0] },
+      { label: 'DURATION', value: Math.floor(session.duration / 60) + 'm' },
+      { label: 'ZEN DELTA', value: '+' + session.zenDelta },
+      { label: 'RESONANCE', value: this.state.score }
+    ];
+    
+    const startY = 620;
+    const boxW = 240;
+    const boxH = 140;
+    const gap = 20;
+    
+    metrics.forEach((m, i) => {
+      const x = 180 + (i % 2) * (boxW + gap);
+      const y = startY + Math.floor(i / 2) * (boxH + gap);
+      
+      ctx.fillStyle = 'rgba(255,255,255,0.02)';
+      ctx.fillRect(x, y, boxW, boxH);
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, boxW, boxH);
+      
+      ctx.fillStyle = '#FFD700';
+      ctx.font = i === 3 ? '200 52px -apple-system' : '200 48px -apple-system';
+      ctx.textAlign = 'center';
+      ctx.fillText(m.value, x + boxW/2, y + 60);
+      
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.font = '400 14px -apple-system';
+      ctx.letterSpacing = '4px';
+      ctx.fillText(m.label, x + boxW/2, y + 95);
+    });
+    
+    // Wordmark
+    ctx.fillStyle = 'rgba(255,215,0,0.3)';
+    ctx.font = '700 18px -apple-system';
+    ctx.letterSpacing = '10px';
+    ctx.fillText('RESONANCE · BREATHE · ASCEND', 540, 1020);
+    
+    // Download
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `resonance-session-${Date.now()}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  },
+
+  openTrialModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal">
+        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+        <h3 class="modal-title">What calls you to breathwork?</h3>
+        <p class="modal-subtitle">We'll match you to the perfect technique.</p>
+        <div class="modal-options">
+          <button class="modal-option" onclick="app.quickSession('stress')">Reduce stress & anxiety</button>
+          <button class="modal-option" onclick="app.quickSession('sleep')">Sleep more deeply</button>
+          <button class="modal-option" onclick="app.quickSession('focus')">Sharpen focus & clarity</button>
+          <button class="modal-option" onclick="app.quickSession('perf')">Athletic peak performance</button>
+          <button class="modal-option" onclick="app.quickSession('spirit')">Spiritual practice & alignment</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  },
+
+  quickSession(goal) {
+    const map = {
+      stress: '478',
+      sleep: '478',
+      focus: 'box',
+      perf: 'coherent',
+      spirit: 'coherent'
+    };
+    
+    document.querySelector('.modal-overlay').remove();
+    
+    const tech = TECHNIQUES.find(t => t.id === map[goal]);
+    if (tech) {
+      setTimeout(() => this.startTechnique(tech.id), 300);
+    }
+  },
+
+  upgradeToPro() {
+    alert('Pro upgrade: $7.99/month\n\nThis would integrate with your payment provider (Stripe, Apple Pay, etc.)\n\nFor demo purposes, upgrading you to Pro now.');
+    this.state.tier = 'pro';
+    this.saveState();
+    this.renderTechniques();
+  },
+
+  upgradeToElite() {
+    alert('Elite upgrade: $14.99/month\n\nThis would integrate with your payment provider (Stripe, Apple Pay, etc.)\n\nFor demo purposes, upgrading you to Elite now.');
+    this.state.tier = 'elite';
+    this.saveState();
+    this.renderTechniques();
   }
-  loadStripeJS(()=>{
-    stripeInstance=Stripe(STRIPE_PK);
-    const elements=stripeInstance.elements({appearance:{theme:'night',variables:{colorPrimary:'#FFD700',colorBackground:'#0a0a0c',colorText:'#f0ece4',colorDanger:'#ff6b6b',fontFamily:'Segoe UI,system-ui,sans-serif',borderRadius:'0px'}}});
-    cardElement=elements.create('card',{hidePostalCode:true});
-    const ph=document.getElementById('stripePlaceholder');if(ph)ph.remove();
-    cardElement.mount('#stripeCardEl');
-    cardElement.on('change',e=>{const err=document.getElementById('cardError');if(err)err.textContent=e.error?e.error.message:'';});
-    stripeReady=true;
-  });
-}
+};
 
-function goCheckout(){
-  if(!cart.length)return;
-  closeCart();
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const shipping=total>=80?0:12;
-  document.getElementById('coItems').innerHTML=cart.map(i=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-      <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">${i.emoji}</span><div><div style="font-size:11px;font-weight:700;letter-spacing:1px;">${i.name}</div><div style="font-size:10px;color:var(--muted);">${i.size} · Qty ${i.qty}</div></div></div>
-      <span style="font-size:13px;color:var(--gold);">$${(i.price*i.qty).toFixed(2)}</span>
-    </div>`).join('');
-  document.getElementById('coSubtotal').textContent='$'+total.toFixed(2);
-  document.getElementById('coShipping').textContent=shipping===0?'Free ✦':'$'+shipping.toFixed(2);
-  document.getElementById('coTotal').textContent='$'+(total+shipping).toFixed(2);
-  document.getElementById('coSummary').style.display='block';
-  document.getElementById('coPayment').style.display='none';
-  document.getElementById('coSuccess').style.display='none';
-  document.getElementById('checkoutModal').classList.add('open');
-  document.body.style.overflow='hidden';
-}
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 
-function showPayment(){document.getElementById('coSummary').style.display='none';document.getElementById('coPayment').style.display='block';mountStripeCard();}
-
-async function submitPayment(){
-  const fields=['coEmail','coFirst','coLast','coAddr','coCity','coCountry'];
-  for(const f of fields){const el=document.getElementById(f);if(!el||!el.value.trim()){if(el){el.focus();el.style.borderColor='rgba(255,107,107,0.6)';}return;}el.style.borderColor='';}
-  if(!document.getElementById('coEmail').value.includes('@')){document.getElementById('coEmail').focus();return;}
-  const btn=document.getElementById('payBtn'),txt=document.getElementById('payBtnText');
-  txt.textContent='Processing...';btn.disabled=true;btn.style.opacity='0.7';
-  if(STRIPE_PK.includes('YOUR_RESONANCE')){await new Promise(r=>setTimeout(r,1800));showSuccess();}
-  else{
-    try{
-      const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-      const shipping=total>=80?0:12;
-      const res=await fetch(BACKEND_URL+'/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round((total+shipping)*100),currency:'hkd',customerEmail:document.getElementById('coEmail').value.trim()})});
-      const {clientSecret,error:se}=await res.json();
-      if(se)throw new Error(se);
-      const {error,paymentIntent}=await stripeInstance.confirmCardPayment(clientSecret,{payment_method:{card:cardElement,billing_details:{name:document.getElementById('coFirst').value+' '+document.getElementById('coLast').value,email:document.getElementById('coEmail').value}}});
-      if(error)throw new Error(error.message);
-      if(paymentIntent.status==='succeeded')showSuccess();
-    }catch(e){const err=document.getElementById('cardError');if(err)err.textContent=e.message||'Payment failed. Please try again.';}
-  }
-  btn.disabled=false;btn.style.opacity='1';txt.textContent='Complete Order →';
-}
-function showSuccess(){document.getElementById('coPayment').style.display='none';document.getElementById('coSuccess').style.display='block';}
-function closeCheckout(){document.getElementById('checkoutModal').classList.remove('open');document.body.style.overflow='';}
-function clearCart(){cart=[];updateCartUI();}
-document.getElementById('checkoutModal').addEventListener('click',e=>{if(e.target===document.getElementById('checkoutModal'))closeCheckout();});
-
-// BILLING TOGGLE
-let annual=false;
-function toggleBilling(){annual=!annual;document.getElementById('billToggle').classList.toggle('on',annual);document.getElementById('mLbl').classList.toggle('active',!annual);document.getElementById('aLbl').classList.toggle('active',annual);document.getElementById('proAmt').innerHTML=annual?'$4.99<span> / month</span>':'$7.99<span> / month</span>';document.getElementById('eliteAmt').innerHTML=annual?'$9.49<span> / month</span>':'$14.99<span> / month</span>';}
-
-// WAITLIST BANNER
-let bannerDismissed=false;
-function showBanner(){if(!bannerDismissed)document.getElementById('waitlistBanner').style.transform='translateY(0)';}
-function dismissBanner(){bannerDismissed=true;document.getElementById('waitlistBanner').style.transform='translateY(100%)';}
-function joinWaitlist(){
-  const email=document.getElementById('waitlistEmail').value.trim();
-  if(!email||!email.includes('@')){document.getElementById('waitlistEmail').style.borderColor='rgba(255,107,107,0.6)';document.getElementById('waitlistEmail').focus();return;}
-  document.getElementById('waitlistEmail').style.borderColor='rgba(74,154,138,0.6)';
-  document.getElementById('waitlistEmail').value='';
-  document.getElementById('waitlistEmail').placeholder='You\'re on the list ✦';
-  setTimeout(dismissBanner,2400);
-}
-// Show banner after 4 seconds
-setTimeout(showBanner,4000);
-
-renderTech();
-renderProducts();
-updateCartUI();
-loadPrintifyProducts();
+document.addEventListener('DOMContentLoaded', () => {
+  app.init();
+});
 </script>
+
 </body>
 </html>
