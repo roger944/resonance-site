@@ -2,1773 +2,1101 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Resonance — Synchronize · Breathe · Ascend</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonance — Enter · Breathe · Ascend</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#000;
+  --black2:#0a0a0c;
+  --black3:#111114;
+  --gold:#FFD700;
+  --gold2:#e2c06a;
+  --gold3:rgba(255,215,0,0.45);
+  --gold4:rgba(255,215,0,0.12);
+  --white:#f0ece4;
 }
 
-:root {
-  --black: #000;
-  --black2: #0a0a0c;
-  --gold: #FFD700;
-  --gold2: #e2c06a;
-  --gold3: rgba(255,215,0,0.45);
-  --gold4: rgba(255,215,0,0.12);
-  --purple: #7B2FBE;
-  --purple2: #9B4FDE;
-  --teal: #4a9a8a;
-  --muted: rgba(255,255,255,0.38);
-  --muted2: rgba(255,255,255,0.16);
-  --border: rgba(255,215,0,0.12);
-  --border2: rgba(255,215,0,0.25);
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  background: var(--black);
-  color: #f0ece4;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  line-height: 1.6;
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Segoe UI',system-ui,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
 }
 
 /* ═══════════════════════════════════════════ */
-/* LAYOUT */
+/* SOUND GATE ENTRANCE */
 /* ═══════════════════════════════════════════ */
 
-.app-container {
-  min-height: 100vh;
-  background: var(--black);
+.sound-gate{
+  position:fixed;
+  inset:0;
+  background:var(--black);
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  opacity:1;
+  transition:opacity 1.5s ease-out;
 }
 
-.section {
-  padding: 80px 5vw;
-  position: relative;
+.sound-gate.hidden{
+  opacity:0;
+  pointer-events:none;
 }
 
-.section-title {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
+.gate-yantra{
+  width:min(60vh,80vw);
+  height:min(60vh,80vw);
+  margin-bottom:60px;
 }
 
-.section-title em {
-  font-style: normal;
-  color: var(--gold);
+.gate-title{
+  font-size:clamp(3rem,15vw,12rem);
+  font-weight:900;
+  letter-spacing:-0.02em;
+  color:var(--gold);
+  margin-bottom:20px;
+  text-shadow:0 0 80px rgba(255,215,0,0.5);
+  animation:titlePulse 3s ease-in-out infinite;
 }
 
-.eyebrow {
-  font-size: 9px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold3);
-  margin-bottom: 12px;
+@keyframes titlePulse{
+  0%,100%{text-shadow:0 0 80px rgba(255,215,0,0.5);}
+  50%{text-shadow:0 0 120px rgba(255,215,0,0.8);}
 }
 
-/* ═══════════════════════════════════════════ */
-/* BUTTONS */
-/* ═══════════════════════════════════════════ */
-
-.btn {
-  padding: 13px 32px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  position: relative;
-  overflow: hidden;
+.gate-tagline{
+  font-size:clamp(0.9rem,2vw,1.2rem);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gold3);
+  margin-bottom:60px;
 }
 
-.btn-gold {
-  background: var(--gold);
-  color: #000;
+.gate-buttons{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
-.btn-gold:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
+.gate-btn{
+  padding:20px 50px;
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:2px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--gold);
-  border: 1px solid var(--border2);
+.gate-btn:hover{
+  background:var(--gold);
+  color:var(--black);
+  box-shadow:0 0 40px rgba(255,215,0,0.6);
 }
 
-.btn-outline:hover {
-  background: var(--gold4);
-  border-color: var(--gold);
+.gate-btn.with-sound{
+  background:var(--gold);
+  color:var(--black);
+  animation:btnPulse 2s ease-in-out infinite;
 }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-/* ═══════════════════════════════════════════ */
-/* HERO */
-/* ═══════════════════════════════════════════ */
-
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 100px 5vw 60px;
-  position: relative;
-  background: radial-gradient(ellipse at 50% 40%, rgba(255,215,0,0.05), transparent 70%);
-}
-
-.hero h1 {
-  font-size: clamp(2.5rem, 10vw, 6rem);
-  font-weight: 800;
-  letter-spacing: clamp(4px, 2vw, 16px);
-  text-transform: uppercase;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 16px;
-  text-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
-  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero-tagline {
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--gold3);
-  margin-bottom: 40px;
-  animation: fadeInUp 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 50px;
-  animation: fadeInUp 0.8s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.4);}
+  50%{box-shadow:0 0 60px rgba(255,215,0,0.8);}
 }
 
 /* ═══════════════════════════════════════════ */
-/* SCORE DISPLAY */
+/* MAIN CANVAS BACKGROUND */
 /* ═══════════════════════════════════════════ */
 
-.score-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.score-rings {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  margin: 0 auto 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.score-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  animation: scorePulse 4s ease-in-out infinite;
-}
-
-.score-ring:nth-child(1) {
-  width: 240px;
-  height: 240px;
-  animation-delay: 0s;
-}
-
-.score-ring:nth-child(2) {
-  width: 180px;
-  height: 180px;
-  animation-delay: 0.5s;
-}
-
-.score-ring:nth-child(3) {
-  width: 120px;
-  height: 120px;
-  animation-delay: 1s;
-}
-
-@keyframes scorePulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.6;
-  }
-}
-
-.score-inner {
-  text-align: center;
-  z-index: 1;
-}
-
-.score-number {
-  font-size: 64px;
-  font-weight: 200;
-  color: var(--gold);
-  line-height: 1;
-  letter-spacing: -2px;
-  text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.score-label {
-  font-size: 9px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold3);
-  margin-top: 8px;
-}
-
-.score-bar-wrap {
-  width: 140px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  margin: 16px auto 0;
-  overflow: hidden;
-  border-radius: 1px;
-}
-
-.score-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold3), var(--gold));
-  border-radius: 1px;
-  transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.score-max {
-  font-size: 9px;
-  color: var(--gold3);
-  letter-spacing: 2px;
-  margin-top: 6px;
-}
-
-.stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 32px;
-}
-
-.stat-card {
-  background: var(--black);
-  padding: 20px;
-  text-align: center;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.stat-card:last-child {
-  border-right: none;
-}
-
-.stat-value {
-  font-size: 28px;
-  font-weight: 200;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.stat-label {
-  font-size: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
+#mainCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  opacity:0.3;
 }
 
 /* ═══════════════════════════════════════════ */
-/* MILESTONES */
+/* AUDIO TOGGLE */
 /* ═══════════════════════════════════════════ */
 
-.milestones {
-  margin-top: 40px;
+.audio-toggle{
+  position:fixed;
+  top:30px;
+  right:30px;
+  z-index:9999;
+  background:rgba(255,215,0,0.1);
+  border:1px solid var(--gold4);
+  padding:12px 20px;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  transition:all 0.3s ease;
+  opacity:0;
 }
 
-.milestone {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(255, 255, 255, 0.02);
-  margin-bottom: 10px;
-  transition: all 0.3s;
+.audio-toggle.visible{
+  opacity:1;
 }
 
-.milestone:hover {
-  border-color: rgba(255, 215, 0, 0.2);
-}
-
-.milestone.locked {
-  opacity: 0.4;
-}
-
-.milestone-score {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--gold);
-  min-width: 36px;
-}
-
-.milestone-icon {
-  font-size: 18px;
-}
-
-.milestone-content {
-  flex: 1;
-}
-
-.milestone-name {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
-.milestone-desc {
-  font-size: 10px;
-  color: var(--muted);
+.audio-toggle:hover{
+  background:rgba(255,215,0,0.2);
+  border-color:var(--gold);
 }
 
 /* ═══════════════════════════════════════════ */
-/* TECHNIQUES */
+/* SECTIONS */
 /* ═══════════════════════════════════════════ */
 
-.category-tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
+.section{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:100px 40px;
+  z-index:1;
+  opacity:0;
+  transform:translateY(60px);
+  transition:opacity 1.2s ease-out,transform 1.2s ease-out;
 }
 
-.cat-tab {
-  padding: 8px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: transparent;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
+.section.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 
-.cat-tab:hover {
-  border-color: var(--border2);
-  color: var(--gold);
+.section-number{
+  font-size:clamp(1rem,3vw,1.5rem);
+  letter-spacing:6px;
+  color:var(--gold3);
+  margin-bottom:40px;
+  font-weight:300;
 }
 
-.cat-tab.active {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: #000;
-  font-weight: 700;
+.section-title{
+  font-size:clamp(3rem,12vw,10rem);
+  font-weight:900;
+  letter-spacing:-0.02em;
+  color:var(--gold);
+  margin-bottom:40px;
+  text-align:center;
+  line-height:0.9;
 }
 
-.techniques-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.tech-card {
-  background: var(--black);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 24px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.tech-card:hover {
-  background: rgba(255, 255, 255, 0.02);
-  transform: translateY(-2px);
-}
-
-.tech-card.locked {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.tech-card.locked:hover {
-  transform: none;
-}
-
-.tech-stripe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2px;
-  height: 100%;
-}
-
-.tech-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.tech-icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-}
-
-.tech-name {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
-}
-
-.tech-meta {
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.tech-phases {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 12px;
-}
-
-.tech-phase {
-  font-size: 9px;
-  padding: 3px 9px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--muted2);
-}
-
-.tech-desc {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 14px;
-}
-
-.tech-lock-msg {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 9px;
-  color: var(--gold3);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 8px;
+.section-description{
+  font-size:clamp(1.2rem,3vw,2rem);
+  max-width:900px;
+  text-align:center;
+  color:var(--white);
+  margin-bottom:60px;
+  line-height:1.5;
+  font-weight:300;
 }
 
 /* ═══════════════════════════════════════════ */
-/* SESSION RUNNER */
+/* HERO SECTION */
 /* ═══════════════════════════════════════════ */
 
-.session-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: var(--black);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+.hero{
+  height:100vh;
+  padding-top:0;
 }
 
-.session-close {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 1001;
-  padding: 8px;
-  line-height: 1;
-  transition: color 0.3s;
+.hero-yantra{
+  width:min(70vh,90vw);
+  height:min(70vh,90vw);
+  margin-bottom:60px;
 }
 
-.session-close:hover {
-  color: #fff;
+.scroll-indicator{
+  position:absolute;
+  bottom:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  opacity:0.5;
+  animation:scrollBounce 2s ease-in-out infinite;
 }
 
-.session-content {
-  text-align: center;
-  max-width: 480px;
-  width: 100%;
+@keyframes scrollBounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(10px);}
 }
 
-.session-technique {
-  font-size: 9px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gold3);
-  margin-bottom: 40px;
+.scroll-line{
+  width:1px;
+  height:40px;
+  background:linear-gradient(180deg,transparent,var(--gold),transparent);
 }
 
-.session-ring-container {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 0 auto 40px;
-}
-
-.session-ring {
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
-}
-
-.session-ring-inner {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.session-phase {
-  font-size: 18px;
-  color: var(--gold);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.session-countdown {
-  font-size: 52px;
-  font-weight: 200;
-  color: #f0ece4;
-  line-height: 1;
-}
-
-.session-progress {
-  width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  margin-bottom: 24px;
-  overflow: hidden;
-}
-
-.session-progress-bar {
-  height: 100%;
-  background: var(--gold);
-  transition: width 1s linear;
-}
-
-.session-time {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  margin-bottom: 32px;
+.scroll-text{
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold3);
 }
 
 /* ═══════════════════════════════════════════ */
-/* SESSION CARD */
+/* TECHNIQUES FLOW */
 /* ═══════════════════════════════════════════ */
 
-.card-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: rgba(0, 0, 0, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.3s;
+.techniques-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:60px;
+  max-width:1400px;
+  width:100%;
+  margin-top:60px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.technique-card{
+  position:relative;
+  padding:60px 40px;
+  border:1px solid var(--gold4);
+  background:rgba(255,215,0,0.02);
+  backdrop-filter:blur(10px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  transition:all 0.5s ease;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(40px);
 }
 
-.session-card {
-  background: #0a0a0c;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  padding: 32px;
-  max-width: 360px;
-  width: 100%;
-  position: relative;
-  animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+.technique-card.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.technique-card:hover{
+  border-color:var(--gold);
+  background:rgba(255,215,0,0.05);
+  transform:translateY(-10px);
+  box-shadow:0 20px 60px rgba(255,215,0,0.15);
 }
 
-.session-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+.technique-icon{
+  width:80px;
+  height:80px;
+  margin-bottom:30px;
 }
 
-.card-yantra {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
-  display: block;
+.technique-name{
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--gold);
+  margin-bottom:15px;
 }
 
-.card-title {
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: center;
-  margin-bottom: 4px;
+.technique-freq{
+  font-size:0.9rem;
+  letter-spacing:2px;
+  color:var(--gold3);
+  margin-bottom:20px;
 }
 
-.card-subtitle {
-  font-size: 10px;
-  color: var(--muted);
-  text-align: center;
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-}
-
-.card-metrics {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 20px;
-}
-
-.card-metric {
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
-  text-align: center;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.card-metric:nth-child(2n) {
-  border-right: none;
-}
-
-.card-metric:nth-child(n+3) {
-  border-bottom: none;
-}
-
-.metric-value {
-  font-size: 24px;
-  font-weight: 200;
-  color: var(--gold);
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-
-.metric-label {
-  font-size: 8px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.card-quote {
-  font-size: 11px;
-  color: var(--muted);
-  text-align: center;
-  font-style: italic;
-  line-height: 1.8;
-  padding: 16px 8px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 16px;
-}
-
-.card-wordmark {
-  font-size: 9px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: rgba(255, 215, 0, 0.3);
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.card-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.technique-desc{
+  font-size:1rem;
+  color:var(--white);
+  opacity:0.7;
+  line-height:1.6;
 }
 
 /* ═══════════════════════════════════════════ */
-/* MODALS */
+/* FREQUENCY VISUALIZATION */
 /* ═══════════════════════════════════════════ */
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0, 0, 0, 0.94);
-  backdrop-filter: blur(12px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.3s;
+.freq-viz{
+  width:100%;
+  max-width:1200px;
+  height:300px;
+  margin:60px 0;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
 }
 
-.modal {
-  background: var(--black2);
-  border: 1px solid rgba(255, 215, 0, 0.18);
-  max-width: 480px;
-  width: 100%;
-  padding: 40px;
-  position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+.freq-bar{
+  width:40px;
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  border-radius:20px;
+  opacity:0.4;
+  transition:all 0.3s ease;
+  animation:freqPulse 2s ease-in-out infinite;
 }
 
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 22px;
-  cursor: pointer;
-  transition: color 0.3s;
-  padding: 4px;
-  line-height: 1;
-}
+.freq-bar:nth-child(1){height:80px;animation-delay:0s;}
+.freq-bar:nth-child(2){height:150px;animation-delay:0.1s;}
+.freq-bar:nth-child(3){height:200px;animation-delay:0.2s;}
+.freq-bar:nth-child(4){height:250px;animation-delay:0.3s;}
+.freq-bar:nth-child(5){height:200px;animation-delay:0.4s;}
+.freq-bar:nth-child(6){height:150px;animation-delay:0.5s;}
+.freq-bar:nth-child(7){height:80px;animation-delay:0.6s;}
 
-.modal-close:hover {
-  color: var(--gold);
-}
-
-.modal-title {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.modal-subtitle {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
-
-.modal-options {
-  display: grid;
-  gap: 8px;
-}
-
-.modal-option {
-  padding: 14px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--muted);
-  font-size: 13px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.3s;
-}
-
-.modal-option:hover {
-  border-color: rgba(255, 215, 0, 0.4);
-  background: rgba(255, 215, 0, 0.06);
-  color: var(--gold);
+@keyframes freqPulse{
+  0%,100%{transform:scaleY(0.8);opacity:0.4;}
+  50%{transform:scaleY(1.2);opacity:0.8;}
 }
 
 /* ═══════════════════════════════════════════ */
 /* PRICING */
 /* ═══════════════════════════════════════════ */
 
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1px;
-  border: 1px solid var(--border);
-  max-width: 900px;
-  margin: 40px auto 0;
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
+  max-width:1200px;
+  width:100%;
+  margin-top:60px;
 }
 
-.price-card {
-  background: var(--black);
-  padding: 36px;
-  border-right: 1px solid var(--border);
-  position: relative;
-  transition: all 0.3s;
+.price-card{
+  padding:60px 40px;
+  border:1px solid var(--gold4);
+  background:rgba(255,215,0,0.02);
+  backdrop-filter:blur(10px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  transition:all 0.5s ease;
+  position:relative;
+  overflow:hidden;
 }
 
-.price-card:hover {
-  background: rgba(255, 215, 0, 0.02);
+.price-card.featured{
+  border-color:var(--gold);
+  background:rgba(255,215,0,0.05);
+  transform:scale(1.05);
 }
 
-.price-card.featured {
-  background: rgba(255, 215, 0, 0.03);
+.price-card:hover{
+  border-color:var(--gold);
+  background:rgba(255,215,0,0.08);
+  transform:translateY(-10px) scale(1.02);
 }
 
-.price-card.featured::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+.price-tier{
+  font-size:1rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold3);
+  margin-bottom:20px;
 }
 
-.price-tier {
-  font-size: 9px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 20px;
+.price-amount{
+  font-size:4rem;
+  font-weight:900;
+  color:var(--gold);
+  margin-bottom:10px;
 }
 
-.price-amount {
-  font-size: 44px;
-  font-weight: 200;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 4px;
+.price-period{
+  font-size:1rem;
+  color:var(--gold3);
+  margin-bottom:40px;
 }
 
-.price-period {
-  font-size: 14px;
-  color: var(--muted);
-  font-weight: 300;
+.price-features{
+  list-style:none;
+  margin-bottom:40px;
+  width:100%;
 }
 
-.price-desc {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 28px;
+.price-features li{
+  padding:12px 0;
+  border-bottom:1px solid var(--gold4);
+  font-size:0.95rem;
+  color:var(--white);
+  opacity:0.8;
 }
 
-.price-features {
-  list-style: none;
-  margin-bottom: 32px;
+.price-btn{
+  padding:18px 50px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:2px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  cursor:pointer;
+  transition:all 0.3s ease;
+  width:100%;
 }
 
-.price-features li {
-  font-size: 12px;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  color: var(--muted);
-  display: flex;
-  gap: 10px;
+.price-btn:hover{
+  background:var(--gold);
+  color:var(--black);
+  box-shadow:0 0 40px rgba(255,215,0,0.6);
 }
 
-.price-features li:last-child {
-  border: none;
-}
-
-.price-features li::before {
-  content: "—";
-  color: var(--gold3);
-  flex-shrink: 0;
-}
-
-.price-features li.unavailable {
-  opacity: 0.3;
-}
-
-.price-features li.unavailable::before {
-  content: "·";
-  color: var(--muted2);
+.price-card.featured .price-btn{
+  background:var(--gold);
+  color:var(--black);
 }
 
 /* ═══════════════════════════════════════════ */
-/* UTILITY */
+/* STATS */
 /* ═══════════════════════════════════════════ */
 
-.hidden {
-  display: none !important;
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:60px;
+  max-width:1200px;
+  width:100%;
+  margin-top:60px;
 }
 
-.fade-in {
-  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+.stat-item{
+  text-align:center;
+}
+
+.stat-number{
+  font-size:4rem;
+  font-weight:900;
+  color:var(--gold);
+  margin-bottom:10px;
+  line-height:1;
+}
+
+.stat-label{
+  font-size:1rem;
+  color:var(--white);
+  opacity:0.7;
+}
+
+/* ═══════════════════════════════════════════ */
+/* FOOTER */
+/* ═══════════════════════════════════════════ */
+
+.footer{
+  padding:60px 40px;
+  border-top:1px solid var(--gold4);
+  text-align:center;
+  background:var(--black2);
+}
+
+.footer-text{
+  font-size:0.9rem;
+  color:var(--gold3);
+  margin-bottom:20px;
+}
+
+.footer-links{
+  display:flex;
+  gap:40px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.footer-links a{
+  color:var(--gold);
+  text-decoration:none;
+  font-size:0.9rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:opacity 0.3s ease;
+}
+
+.footer-links a:hover{
+  opacity:0.6;
 }
 
 /* ═══════════════════════════════════════════ */
 /* RESPONSIVE */
 /* ═══════════════════════════════════════════ */
 
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 5vw;
-  }
-
-  .hero h1 {
-    font-size: clamp(2rem, 12vw, 3.5rem);
-  }
-
-  .score-rings {
-    width: 200px;
-    height: 200px;
-  }
-
-  .score-ring:nth-child(1) { width: 200px; height: 200px; }
-  .score-ring:nth-child(2) { width: 150px; height: 150px; }
-  .score-ring:nth-child(3) { width: 100px; height: 100px; }
-
-  .score-number {
-    font-size: 52px;
-  }
-
-  .techniques-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .session-ring-container {
-    width: 180px;
-    height: 180px;
-  }
-
-  .session-countdown {
-    font-size: 42px;
-  }
+@media(max-width:768px){
+  .section{padding:60px 20px;}
+  .techniques-grid,.pricing-grid,.stats-grid{grid-template-columns:1fr;gap:40px;}
+  .gate-buttons{flex-direction:column;width:100%;padding:0 20px;}
+  .gate-btn{width:100%;}
+  .audio-toggle{top:20px;right:20px;padding:10px 16px;font-size:10px;}
 }
 </style>
 </head>
 <body>
 
-<div class="app-container" id="app">
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>RESONANCE</h1>
-    <p class="hero-tagline">963Hz · Sri Yantra · Sacred Breathwork</p>
-    <div class="hero-buttons">
-      <button class="btn btn-gold" onclick="app.openTrialModal()">Begin Free Session</button>
-      <button class="btn btn-outline" onclick="app.startTechnique('pineal')">Pineal Protocol ↓</button>
-    </div>
-  </section>
-
-  <!-- Score Section -->
-  <section class="section" style="background: var(--black2);">
-    <div class="score-container">
-      <p class="eyebrow">Your Progress</p>
-      <h2 class="section-title">Your <em>Resonance</em> Score</h2>
-      
-      <div class="score-rings">
-        <div class="score-ring"></div>
-        <div class="score-ring"></div>
-        <div class="score-ring"></div>
-        <div class="score-inner">
-          <div class="score-number" id="scoreDisplay">0</div>
-          <div class="score-label">Resonance Score</div>
-          <div class="score-bar-wrap">
-            <div class="score-bar" id="scoreBar" style="width: 0%"></div>
-          </div>
-          <div class="score-max">/ 963</div>
-        </div>
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-value" id="streakDisplay">0</div>
-          <div class="stat-label">Days of Coherence</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="zenDeltaDisplay">+0</div>
-          <div class="stat-label">Zen Delta Today</div>
-        </div>
-      </div>
-
-      <div class="milestones">
-        <div class="milestone" id="m174">
-          <span class="milestone-score">174</span>
-          <span class="milestone-icon">🔒</span>
-          <div class="milestone-content">
-            <div class="milestone-name">Grounded</div>
-            <div class="milestone-desc">4-7-8, Sitali & Sigh unlocked</div>
-          </div>
-        </div>
-        <div class="milestone" id="m396">
-          <span class="milestone-score">396</span>
-          <span class="milestone-icon">🔒</span>
-          <div class="milestone-content">
-            <div class="milestone-name">Liberated</div>
-            <div class="milestone-desc">Box, Nadi Shodhana & Coherent unlocked</div>
-          </div>
-        </div>
-        <div class="milestone locked" id="m528">
-          <span class="milestone-score">528</span>
-          <span class="milestone-icon">🔒</span>
-          <div class="milestone-content">
-            <div class="milestone-name">Healing</div>
-            <div class="milestone-desc">Wim Hof, Kapalabhati & Ujjayi unlocked</div>
-          </div>
-        </div>
-        <div class="milestone locked" id="m963">
-          <span class="milestone-score">963</span>
-          <span class="milestone-icon">🔒</span>
-          <div class="milestone-content">
-            <div class="milestone-name">Unity</div>
-            <div class="milestone-desc">DMT Breath & Pineal Protocol unlocked</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Techniques Section -->
-  <section class="section">
-    <p class="eyebrow">14 Techniques + Sleep</p>
-    <h2 class="section-title">The breathing <em>library.</em></h2>
-    
-    <div class="category-tabs">
-      <button class="cat-tab active" onclick="app.filterTechniques('ALL')">✦ All</button>
-      <button class="cat-tab" onclick="app.filterTechniques('TRANSFORM')">🔥 Transform</button>
-      <button class="cat-tab" onclick="app.filterTechniques('BALANCE')">💎 Balance</button>
-      <button class="cat-tab" onclick="app.filterTechniques('RESTORE')">❄️ Restore</button>
-      <button class="cat-tab" onclick="app.filterTechniques('SLEEP')">🌙 Sleep</button>
-    </div>
-
-    <div class="techniques-grid" id="techniquesGrid"></div>
-  </section>
-
-  <!-- Pricing Section -->
-  <section class="section" style="background: var(--black2);">
-    <p class="eyebrow">Plans</p>
-    <h2 class="section-title" style="text-align: center;">Start free. Ascend <em>when ready.</em></h2>
-    
-    <div class="pricing-grid">
-      <div class="price-card">
-        <p class="price-tier">Free</p>
-        <div class="price-amount">$0<span class="price-period"> / forever</span></div>
-        <p class="price-desc">Begin the practice</p>
-        <ul class="price-features">
-          <li>5 breathing techniques</li>
-          <li>Box, 4-7-8, Coherent, Sigh, Sitali</li>
-          <li>Resonance Score to 174</li>
-          <li>Basic session tracking</li>
-          <li class="unavailable">Solfeggio audio engine</li>
-          <li class="unavailable">Sacred geometry animations</li>
-          <li class="unavailable">Pineal Sleep Protocol</li>
-        </ul>
-        <button class="btn btn-outline" style="width: 100%;" onclick="app.openTrialModal()">Try Free Session</button>
-      </div>
-
-      <div class="price-card featured">
-        <p class="price-tier">Pro</p>
-        <div class="price-amount">$7.99<span class="price-period"> / month</span></div>
-        <p class="price-desc">For the serious practitioner</p>
-        <ul class="price-features">
-          <li>All 14 techniques + Sleep</li>
-          <li>Full Solfeggio 174–963Hz</li>
-          <li>All 16 sacred geometries</li>
-          <li>Resonance Score to 741</li>
-          <li>Pineal Sleep Protocol</li>
-          <li>Shareable session cards</li>
-          <li>Zen Delta & history</li>
-          <li class="unavailable">Custom Lab builder</li>
-        </ul>
-        <button class="btn btn-gold" style="width: 100%;" onclick="app.upgradeToPro()">Start Pro Trial</button>
-      </div>
-
-      <div class="price-card">
-        <p class="price-tier">Elite</p>
-        <div class="price-amount">$14.99<span class="price-period"> / month</span></div>
-        <p class="price-desc">Full ascension · 963 unlocked</p>
-        <ul class="price-features">
-          <li>Everything in Pro</li>
-          <li>Resonance Score to 963</li>
-          <li>DMT Breath & Wim Hof retention</li>
-          <li>Resonance Lab — custom builder</li>
-          <li>AI personalised programmes</li>
-          <li>1-on-1 breathwork coach</li>
-          <li>Haptic sync · Offline access</li>
-        </ul>
-        <button class="btn btn-outline" style="width: 100%; border-color: rgba(123,47,190,0.4); color: #9B4FDE;" onclick="app.upgradeToElite()">Go Elite · 963</button>
-      </div>
-    </div>
-  </section>
+<!-- SOUND GATE ENTRANCE -->
+<div class="sound-gate" id="soundGate">
+  <canvas class="gate-yantra" id="gateYantra"></canvas>
+  <h1 class="gate-title">RESONANCE</h1>
+  <p class="gate-tagline">963Hz · Sri Yantra · Sacred Breathwork</p>
+  <div class="gate-buttons">
+    <button class="gate-btn with-sound" onclick="enterWithSound()">Enter with Sound</button>
+    <button class="gate-btn" onclick="enterSilent()">Enter Silent</button>
+  </div>
 </div>
+
+<!-- AUDIO TOGGLE -->
+<button class="audio-toggle" id="audioToggle" onclick="toggleAudio()">Sound: ON</button>
+
+<!-- MAIN CANVAS BACKGROUND -->
+<canvas id="mainCanvas"></canvas>
+
+<!-- HERO -->
+<section class="section hero" id="hero">
+  <canvas class="hero-yantra" id="heroYantra"></canvas>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <div class="scroll-text">Scroll to Begin</div>
+  </div>
+</section>
+
+<!-- SECTION 1: THE PROMISE -->
+<section class="section" id="promise">
+  <div class="section-number">// 01 CONSCIOUSNESS</div>
+  <h2 class="section-title">Transform<br>Your Nervous<br>System</h2>
+  <p class="section-description">4 minutes a day. 16 sacred techniques. Ancient Solfeggio frequencies meet modern neuroscience.</p>
+  
+  <div class="techniques-grid">
+    <div class="technique-card" data-technique="dmt">
+      <canvas class="technique-icon" data-icon="0"></canvas>
+      <div class="technique-name">DMT Breath</div>
+      <div class="technique-freq">963 Hz</div>
+      <div class="technique-desc">Rapid breathwork for expanded consciousness</div>
+    </div>
+    <div class="technique-card" data-technique="wim">
+      <canvas class="technique-icon" data-icon="1"></canvas>
+      <div class="technique-name">Wim Hof</div>
+      <div class="technique-freq">852 Hz</div>
+      <div class="technique-desc">Cold exposure protocol for resilience</div>
+    </div>
+    <div class="technique-card" data-technique="kapal">
+      <canvas class="technique-icon" data-icon="2"></canvas>
+      <div class="technique-name">Kapalabhati</div>
+      <div class="technique-freq">741 Hz</div>
+      <div class="technique-desc">Skull shining breath for clarity</div>
+    </div>
+    <div class="technique-card" data-technique="lion">
+      <canvas class="technique-icon" data-icon="3"></canvas>
+      <div class="technique-name">Lion's Breath</div>
+      <div class="technique-freq">639 Hz</div>
+      <div class="technique-desc">Release tension and express power</div>
+    </div>
+    <div class="technique-card" data-technique="coherent">
+      <canvas class="technique-icon" data-icon="4"></canvas>
+      <div class="technique-name">Coherent</div>
+      <div class="technique-freq">528 Hz</div>
+      <div class="technique-desc">Heart-brain synchronization</div>
+    </div>
+    <div class="technique-card" data-technique="sleep">
+      <canvas class="technique-icon" data-icon="5"></canvas>
+      <div class="technique-name">Pineal Protocol</div>
+      <div class="technique-freq">963 Hz</div>
+      <div class="technique-desc">4-stage sleep induction sequence</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: THE SCIENCE -->
+<section class="section" id="science">
+  <div class="section-number">// 02 SOLFEGGIO</div>
+  <h2 class="section-title">Ancient<br>Frequencies</h2>
+  <p class="section-description">963Hz · 852Hz · 741Hz · 639Hz · 528Hz · 417Hz · 396Hz · 174Hz<br>Modern neuroscience validates what mystics knew for millennia.</p>
+  
+  <div class="freq-viz">
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+    <div class="freq-bar"></div>
+  </div>
+  
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">87%</div>
+      <div class="stat-label">Deeper sleep in 14 days</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4m</div>
+      <div class="stat-label">Average session length</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">963</div>
+      <div class="stat-label">Maximum resonance score</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: PRICING -->
+<section class="section" id="pricing">
+  <div class="section-number">// 03 ASCEND</div>
+  <h2 class="section-title">Choose<br>Your Path</h2>
+  
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Free</div>
+      <div class="price-amount">$0</div>
+      <div class="price-period">Forever</div>
+      <ul class="price-features">
+        <li>5 core techniques</li>
+        <li>174-528 Hz frequencies</li>
+        <li>Score to 528</li>
+        <li>Session tracking</li>
+      </ul>
+      <button class="price-btn" onclick="alert('Free tier active')">Begin Free</button>
+    </div>
+    
+    <div class="price-card featured">
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">$7.99</div>
+      <div class="price-period">/ month</div>
+      <ul class="price-features">
+        <li>14 techniques</li>
+        <li>174-741 Hz range</li>
+        <li>Score to 741</li>
+        <li>Sleep protocols</li>
+        <li>Session cards</li>
+      </ul>
+      <button class="price-btn" onclick="alert('Pro subscription')">Upgrade to Pro</button>
+    </div>
+    
+    <div class="price-card">
+      <div class="price-tier">Elite</div>
+      <div class="price-amount">$14.99</div>
+      <div class="price-period">/ month</div>
+      <ul class="price-features">
+        <li>All 16 techniques</li>
+        <li>Full 174-963 Hz</li>
+        <li>Score to 963</li>
+        <li>Pineal Protocol</li>
+        <li>Custom sessions</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="price-btn" onclick="alert('Elite subscription')">Ascend to Elite</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="footer-text">© 2026 Resonance. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#privacy">Privacy</a>
+    <a href="#terms">Terms</a>
+    <a href="mailto:hello@resonancebreath.app">Contact</a>
+  </div>
+</footer>
 
 <script>
 // ═══════════════════════════════════════════
-// DATA & CONSTANTS
+// AUDIO SYSTEM
 // ═══════════════════════════════════════════
 
-const TECHNIQUES = [
-  {id:"dmt",name:"DMT Breath",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#FFD700"],cat:"TRANSFORM",phases:[{l:"Inhale",d:5},{l:"Hold",d:20},{l:"Exhale",d:5}],desc:"Pineal activation through prolonged retention & 963Hz unity frequency.",lock:963,tier:"elite"},
-  {id:"wimhof",name:"Wim Hof",hz:528,geo:"12-Point Star",colors:["#00FFFF","#FF6B00"],cat:"TRANSFORM",phases:[{l:"Inhale",d:2},{l:"Exhale",d:2}],desc:"30 rapid cycles + full retention. Alkalizes blood, boosts immune resilience.",lock:528,tier:"pro"},
-  {id:"kapalabhati",name:"Kapalabhati",hz:741,geo:"Hexagram",colors:["#FFD700","#FF8C00"],cat:"TRANSFORM",phases:[{l:"Pump",d:0.5},{l:"Passive",d:0.5}],desc:"Skull-shining breath. 60 belly pumps then full retention. Purifies nadis.",lock:528,tier:"pro"},
-  {id:"lion",name:"Lion's Breath",hz:741,geo:"Star Tetrahedron",colors:["#5C6BC0","#82B1FF"],cat:"TRANSFORM",phases:[{l:"Inhale",d:4},{l:"Roar",d:2},{l:"Reset",d:2}],desc:"Forceful Ha exhale releases deep tension and stimulates the vagus nerve.",lock:396,tier:"pro"},
-  {id:"ujjayi",name:"Ujjayi / Ocean",hz:432,geo:"Torus Knot",colors:["#00BCD4","#4DD0E1"],cat:"TRANSFORM",phases:[{l:"Inhale",d:6},{l:"Exhale",d:6}],desc:"Throat constriction creates oceanic sound, builds heat and sustains focus.",lock:528,tier:"pro"},
-  {id:"coherent",name:"Coherent Breath",hz:432,geo:"Flower of Life",colors:["#E91E8C","#FF80AB"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Exhale",d:5}],desc:"Perfect 5-5 rhythm synchronizes HRV with Earth's Schumann resonance.",lock:0,tier:"free"},
-  {id:"nadi",name:"Nadi Shodhana",hz:285,geo:"Vesica Piscis",colors:["#E0E0E0","#B0BEC5"],cat:"BALANCE",phases:[{l:"L Inhale",d:4},{l:"Hold",d:4},{l:"R Exhale",d:4},{l:"R Inhale",d:4},{l:"Hold",d:4},{l:"L Exhale",d:4}],desc:"Alternate nostril balances ida & pingala nadis. Synchronizes hemispheres.",lock:396,tier:"pro"},
-  {id:"box",name:"Box Breathing",hz:440,geo:"Square",colors:["#00C853","#69F0AE"],cat:"BALANCE",phases:[{l:"Inhale",d:4},{l:"Hold",d:4},{l:"Exhale",d:4},{l:"Hold",d:4}],desc:"Navy SEAL stress protocol. Equal 4-count sides activate the prefrontal cortex.",lock:0,tier:"free"},
-  {id:"pentagram",name:"Pentagram Breath",hz:639,geo:"5-Point Star",colors:["#1E88E5","#82B1FF"],cat:"BALANCE",phases:[{l:"Inhale",d:5},{l:"Hold",d:5},{l:"Exhale",d:5},{l:"Hold",d:5},{l:"Pause",d:5}],desc:"5-5-5-5-5 pentagon. 639Hz activates emotional heart-field coherence.",lock:396,tier:"pro"},
-  {id:"sitali",name:"Sitali / Cooling",hz:285,geo:"Snowflake",colors:["#B2DFDB","#80CBC4"],cat:"RESTORE",phases:[{l:"Curl & Inhale",d:5},{l:"Hold",d:2},{l:"Exhale",d:6}],desc:"Curl tongue into a straw, sip cool air. Reduces body heat and frustration.",lock:0,tier:"free"},
-  {id:"478",name:"4-7-8 Breath",hz:174,geo:"Soft Hexagon",colors:["#3F51B5","#7986CB"],cat:"RESTORE",phases:[{l:"Inhale",d:4},{l:"Hold",d:7},{l:"Exhale",d:8}],desc:"Dr. Weil's natural tranquilizer. Full parasympathetic response in 60 seconds.",lock:0,tier:"free"},
-  {id:"sigh",name:"Physiological Sigh",hz:417,geo:"Morphing Ovals",colors:["#BF6B4A","#E8A87C"],cat:"RESTORE",phases:[{l:"Inhale",d:2},{l:"Sniff",d:1},{l:"Long Exhale",d:6}],desc:"Stanford's fastest stress relief. Double inhale expels trapped CO2 instantly.",lock:0,tier:"free"},
-  {id:"buteyko",name:"Buteyko Pause",hz:396,geo:"Static Circle",colors:["#4CAF50","#81C784"],cat:"RESTORE",phases:[{l:"Exhale",d:4},{l:"Hold & Pinch",d:20},{l:"Gentle Inhale",d:4}],desc:"Builds CO2 tolerance and lowers resting breathing rate over time.",lock:174,tier:"pro"},
-  {id:"imst",name:"IMST Training",hz:174,geo:"Diamond Grid",colors:["#78909C","#B0BEC5"],cat:"RESTORE",phases:[{l:"Resist Inhale",d:5},{l:"Exhale",d:3},{l:"Rest",d:2}],desc:"High-resistance inhale lowers blood pressure as effectively as medication.",lock:174,tier:"pro"},
-  {id:"pineal",name:"Pineal Protocol",hz:963,geo:"Sri Yantra dissolving",colors:["#7B2FBE","#9B4FDE"],cat:"SLEEP",phases:[{l:"4-7-8",d:4},{l:"Hold",d:7},{l:"Exhale",d:8}],desc:"The only named sleep breathwork protocol. 4-7-8 → retention → 963Hz passive → auto-dim.",lock:963,tier:"elite"},
-  {id:"sleep963",name:"963Hz Sleep Drift",hz:963,geo:"Sri Yantra",colors:["#7B2FBE","#5C6BC0"],cat:"SLEEP",phases:[{l:"Inhale",d:5},{l:"Exhale",d:8}],desc:"Slow 5-8 breath with 963Hz drone and dissolving Sri Yantra. Passive fade to black.",lock:528,tier:"pro"},
-];
+const AudioSystem = {
+  ctx: null,
+  oscillator: null,
+  gainNode: null,
+  isPlaying: false,
+  frequency: 963,
+  
+  init() {
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    this.gainNode = this.ctx.createGain();
+    this.gainNode.connect(this.ctx.destination);
+    this.gainNode.gain.value = 0;
+  },
+  
+  start() {
+    if (this.isPlaying) return;
+    if (!this.ctx) this.init();
+    
+    this.oscillator = this.ctx.createOscillator();
+    this.oscillator.type = 'sine';
+    this.oscillator.frequency.value = this.frequency;
+    this.oscillator.connect(this.gainNode);
+    this.oscillator.start();
+    
+    this.gainNode.gain.linearRampToValueAtTime(0.15, this.ctx.currentTime + 2);
+    this.isPlaying = true;
+  },
+  
+  stop() {
+    if (!this.isPlaying || !this.oscillator) return;
+    
+    this.gainNode.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1);
+    setTimeout(() => {
+      if (this.oscillator) {
+        this.oscillator.stop();
+        this.oscillator = null;
+      }
+      this.isPlaying = false;
+    }, 1000);
+  },
+  
+  setFrequency(freq) {
+    this.frequency = freq;
+    if (this.oscillator) {
+      this.oscillator.frequency.linearRampToValueAtTime(freq, this.ctx.currentTime + 0.5);
+    }
+  }
+};
 
-const QUOTES = [
-  "The breath is the bridge between the body and the mind. — Thich Nhat Hanh",
-  "Breath is the finest gift of nature. Be grateful for this wonderful gift. — Amit Ray",
-  "When the breath wanders, the mind is unsteady. But when the breath is still, so is the mind. — Hatha Yoga Pradipika",
-  "Feelings come and go like clouds in a windy sky. Conscious breathing is my anchor. — Thich Nhat Hanh",
-  "The wise ones fashioned speech with their thought, sifting it as grain is sifted through a sieve. — Buddha",
-  "Breath is the link between mind and body. — Dan Brule",
-  "He who lives in harmony with himself lives in harmony with the universe. — Marcus Aurelius",
-  "The present moment is filled with joy and happiness. If you are attentive, you will see it. — Thich Nhat Hanh"
-];
+function enterWithSound() {
+  AudioSystem.start();
+  document.getElementById('soundGate').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('audioToggle').classList.add('visible');
+  }, 1500);
+}
 
-// ═══════════════════════════════════════════
-// SVG GEOMETRIES
-// ═══════════════════════════════════════════
+function enterSilent() {
+  document.getElementById('soundGate').classList.add('hidden');
+}
 
-function getSVG(geo, colors) {
-  const [c1, c2 = c1] = colors;
-  const svgs = {
-    'Sri Yantra': `<polygon points="22,4 38,32 6,32" stroke="${c1}" stroke-width="1" fill="none"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="19" stroke="${c1}" stroke-width="0.5" opacity="0.3"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
-    'Sri Yantra dissolving': `<polygon points="22,4 38,32 6,32" stroke="${c1}" stroke-width="1" fill="none" opacity="0.5"/><polygon points="22,40 6,12 38,12" stroke="${c2}" stroke-width="1" fill="none" opacity="0.3"/><circle cx="22" cy="22" r="3" fill="${c1}" opacity="0.5"/>`,
-    'Flower of Life': `<circle cx="22" cy="22" r="7" stroke="${c1}" stroke-width="1.2" fill="none"/>${[0,60,120,180,240,300].map(a=>`<circle cx="${22+Math.sin(a*Math.PI/180)*12}" cy="${22-Math.cos(a*Math.PI/180)*12}" r="7" stroke="${c2}" stroke-width="1" fill="none" opacity="0.7"/>`).join('')}`,
-    'Square': `<rect x="6" y="6" width="32" height="32" stroke="${c1}" stroke-width="1.5" fill="none"/><rect x="13" y="13" width="18" height="18" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
-    'Hexagram': `<polygon points="22,4 37,30 7,30" stroke="${c1}" stroke-width="1.3" fill="none"/><polygon points="22,40 7,14 37,14" stroke="${c2}" stroke-width="1.3" fill="none" opacity="0.7"/>`,
-    'Snowflake': `${[0,60,120,180,240,300].map(a=>`<line x1="22" y1="22" x2="${22+Math.cos(a*Math.PI/180)*18}" y2="${22+Math.sin(a*Math.PI/180)*18}" stroke="${c1}" stroke-width="1.2"/>`).join('')}<circle cx="22" cy="22" r="3" fill="${c2}"/>`,
-    '5-Point Star': `<polygon points="${[0,72,144,216,288].map(a=>`${22+18*Math.sin(a*Math.PI/180)},${22-18*Math.cos(a*Math.PI/180)}`).join(' ')}" stroke="${c1}" stroke-width="1.2" fill="none"/>`,
-    '12-Point Star': `${[...Array(12)].map((_,i)=>{const a=(i*30)*Math.PI/180;const r=i%2===0?18:10;return`<line x1="22" y1="22" x2="${22+Math.cos(a)*r}" y2="${22+Math.sin(a)*r}" stroke="${c1}" stroke-width="1.2"/>`}).join('')}<circle cx="22" cy="22" r="3" fill="${c2}"/>`,
-    'Vesica Piscis': `<circle cx="16" cy="22" r="10" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="28" cy="22" r="10" stroke="${c2}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
-    'Torus Knot': `<path d="M 22,6 Q 32,12 32,22 T 22,38 T 12,22 T 22,6" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="8" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
-    'Star Tetrahedron': `<polygon points="22,6 34,26 10,26" stroke="${c1}" stroke-width="1.2" fill="none"/><polygon points="22,38 10,18 34,18" stroke="${c2}" stroke-width="1.2" fill="none" opacity="0.7"/>`,
-    'Morphing Ovals': `<ellipse cx="22" cy="22" rx="16" ry="10" stroke="${c1}" stroke-width="1.2" fill="none"/><ellipse cx="22" cy="22" rx="10" ry="16" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`,
-    'Static Circle': `<circle cx="22" cy="22" r="16" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="10" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`,
-    'Diamond Grid': `<rect x="8" y="8" width="28" height="28" stroke="${c1}" stroke-width="1.2" fill="none" transform="rotate(45 22 22)"/><rect x="13" y="13" width="18" height="18" stroke="${c2}" stroke-width="0.8" fill="none" transform="rotate(45 22 22)" opacity="0.6"/>`,
-    'Soft Hexagon': `<polygon points="22,6 32,13 32,28 22,35 12,28 12,13" stroke="${c1}" stroke-width="1.2" fill="none"/><polygon points="22,12 28,16 28,25 22,29 16,25 16,16" stroke="${c2}" stroke-width="0.8" fill="none" opacity="0.6"/>`
-  };
-  return svgs[geo] || `<circle cx="22" cy="22" r="18" stroke="${c1}" stroke-width="1.2" fill="none"/><circle cx="22" cy="22" r="11" stroke="${c2}" stroke-width="0.7" fill="none" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="${c1}"/>`;
+function toggleAudio() {
+  const btn = document.getElementById('audioToggle');
+  if (AudioSystem.isPlaying) {
+    AudioSystem.stop();
+    btn.textContent = 'Sound: OFF';
+  } else {
+    AudioSystem.start();
+    btn.textContent = 'Sound: ON';
+  }
 }
 
 // ═══════════════════════════════════════════
-// APP STATE & CORE LOGIC
+// CANVAS ANIMATIONS
 // ═══════════════════════════════════════════
 
-const app = {
-  state: {
-    score: 0,
-    streak: 0,
-    lastSessionDate: '',
-    totalSessions: 0,
-    zenDeltaToday: 0,
-    sessionHistory: [],
-    tier: 'free', // free, pro, elite
-    currentFilter: 'ALL'
-  },
-
+const CanvasAnimations = {
+  canvases: {},
+  
   init() {
-    this.loadState();
-    this.updateStreak();
-    this.renderUI();
-    this.renderTechniques();
+    this.initGateYantra();
+    this.initHeroYantra();
+    this.initMainCanvas();
+    this.initTechniqueIcons();
   },
-
-  loadState() {
-    const stored = localStorage.getItem('resonance_state');
-    if (stored) {
-      this.state = { ...this.state, ...JSON.parse(stored) };
-    }
-  },
-
-  saveState() {
-    localStorage.setItem('resonance_state', JSON.stringify(this.state));
-  },
-
-  updateStreak() {
-    const today = new Date().toDateString();
-    const last = this.state.lastSessionDate;
+  
+  initGateYantra() {
+    const canvas = document.getElementById('gateYantra');
+    if (!canvas) return;
     
-    if (!last) return;
-    
-    const lastDate = new Date(last);
-    const todayDate = new Date(today);
-    const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
-    
-    if (diffDays > 1) {
-      this.state.streak = 0;
-      this.saveState();
-    }
-  },
-
-  renderUI() {
-    this.animateScore(this.state.score);
-    document.getElementById('streakDisplay').textContent = this.state.streak;
-    document.getElementById('zenDeltaDisplay').textContent = '+' + this.state.zenDeltaToday;
-    
-    // Update milestones
-    [174, 396, 528, 963].forEach(score => {
-      const el = document.getElementById('m' + score);
-      const icon = el.querySelector('.milestone-icon');
-      if (this.state.score >= score) {
-        el.classList.remove('locked');
-        icon.textContent = '🔓';
-      } else {
-        el.classList.add('locked');
-        icon.textContent = '🔒';
-      }
-    });
-  },
-
-  animateScore(target) {
-    const display = document.getElementById('scoreDisplay');
-    const bar = document.getElementById('scoreBar');
-    let current = parseInt(display.textContent) || 0;
-    const duration = 2000;
-    const steps = 60;
-    const increment = (target - current) / steps;
-    
-    const interval = setInterval(() => {
-      current += increment;
-      if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
-        display.textContent = target;
-        bar.style.width = ((target / 963) * 100) + '%';
-        clearInterval(interval);
-      } else {
-        display.textContent = Math.round(current);
-        bar.style.width = ((current / 963) * 100) + '%';
-      }
-    }, duration / steps);
-  },
-
-  filterTechniques(category) {
-    this.state.currentFilter = category;
-    
-    // Update active tab
-    document.querySelectorAll('.cat-tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    this.renderTechniques();
-  },
-
-  renderTechniques() {
-    const grid = document.getElementById('techniquesGrid');
-    const filtered = this.state.currentFilter === 'ALL' 
-      ? TECHNIQUES 
-      : TECHNIQUES.filter(t => t.cat === this.state.currentFilter);
-    
-    grid.innerHTML = filtered.map(tech => {
-      const isLocked = tech.lock > this.state.score;
-      const tierLocked = this.getTierAccess(tech.tier) === false;
-      const locked = isLocked || tierLocked;
-      
-      return `
-        <div class="tech-card ${locked ? 'locked' : ''}" onclick="${locked ? '' : `app.startTechnique('${tech.id}')`}">
-          <div class="tech-stripe" style="background: linear-gradient(180deg, ${tech.colors[0]}, ${tech.colors[1] || tech.colors[0]})"></div>
-          
-          <div class="tech-header">
-            <svg class="tech-icon" viewBox="0 0 44 44" fill="none">
-              ${getSVG(tech.geo, tech.colors)}
-            </svg>
-            <div>
-              <div class="tech-name" style="color: ${tech.colors[0]}">${tech.name}</div>
-              <div class="tech-meta">${tech.hz}hz · ${tech.geo} · ${tech.cat}</div>
-            </div>
-          </div>
-
-          <div class="tech-phases">
-            ${tech.phases.slice(0, 4).map(p => `<div class="tech-phase">${p.d}s ${p.l}</div>`).join('')}
-          </div>
-
-          <div class="tech-desc">${tech.desc}</div>
-
-          ${locked ? (
-            tierLocked 
-              ? `<div class="tech-lock-msg">🔒 ${tech.tier === 'pro' ? 'Pro' : 'Elite'} tier required</div>`
-              : `<div class="tech-lock-msg">🔒 Unlocks at Resonance ${tech.lock}</div>`
-          ) : `
-            <button class="btn btn-gold" style="background: ${tech.colors[0]}; color: ${['#E91E8C','#5C6BC0','#7B2FBE','#3F51B5','#1E88E5'].includes(tech.colors[0]) ? '#fff' : '#000'}; margin-top: 14px; font-size: 9px; padding: 9px 18px;" onclick="event.stopPropagation(); app.startTechnique('${tech.id}')">
-              ${tech.cat === 'SLEEP' ? 'Enter Sleep Mode →' : 'Try in App →'}
-            </button>
-          `}
-        </div>
-      `;
-    }).join('');
-  },
-
-  getTierAccess(requiredTier) {
-    const tiers = { free: 0, pro: 1, elite: 2 };
-    const userTier = tiers[this.state.tier];
-    const reqTier = tiers[requiredTier];
-    return userTier >= reqTier;
-  },
-
-  startTechnique(id) {
-    const tech = TECHNIQUES.find(t => t.id === id);
-    if (!tech) return;
-    
-    const isLocked = tech.lock > this.state.score;
-    const tierLocked = this.getTierAccess(tech.tier) === false;
-    
-    if (isLocked || tierLocked) {
-      if (tierLocked) {
-        alert(`This technique requires ${tech.tier === 'pro' ? 'Pro ($7.99/mo)' : 'Elite ($14.99/mo)'} tier.`);
-        return;
-      }
-      alert(`Unlock at Resonance ${tech.lock}`);
-      return;
-    }
-    
-    this.runSession(tech);
-  },
-
-  runSession(tech) {
-    const preZen = Math.floor(Math.random() * 4) + 3; // 3-6
-    
-    const overlay = document.createElement('div');
-    overlay.className = 'session-overlay';
-    overlay.innerHTML = `
-      <button class="session-close" onclick="app.endSession(false)">✕</button>
-      <div class="session-content">
-        <div class="session-technique">${tech.hz} Hz · ${tech.name}</div>
-        
-        <div class="session-ring-container">
-          <div class="session-ring" id="sessionRing"></div>
-          <div class="session-ring-inner">
-            <div class="session-phase" id="sessionPhase">Ready</div>
-            <div class="session-countdown" id="sessionCountdown"></div>
-          </div>
-        </div>
-
-        <div class="session-progress">
-          <div class="session-progress-bar" id="sessionProgressBar"></div>
-        </div>
-
-        <div class="session-time" id="sessionTime">0:00 elapsed</div>
-
-        <button class="btn btn-gold" onclick="app.endSession(true)">Complete Session</button>
-      </div>
-    `;
-    
-    document.body.appendChild(overlay);
-    
-    let phaseIndex = 0;
-    let totalElapsed = 0;
-    let phaseCountdown = 0;
-    
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(tech.hz, audioCtx.currentTime);
-    gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    oscillator.start();
-    
-    const nextPhase = () => {
-      const phase = tech.phases[phaseIndex];
-      phaseCountdown = phase.d;
-      
-      document.getElementById('sessionPhase').textContent = phase.l;
-      
-      const ring = document.getElementById('sessionRing');
-      const scale = /inhale|sniff/i.test(phase.l) ? 1.6 : /hold/i.test(phase.l) ? 1.15 : 0.7;
-      const opacity = /hold/i.test(phase.l) ? 0.3 : 1;
-      ring.style.transform = `scale(${scale})`;
-      ring.style.opacity = opacity;
-      
-      const interval = setInterval(() => {
-        phaseCountdown--;
-        totalElapsed++;
-        
-        document.getElementById('sessionCountdown').textContent = Math.max(0, phaseCountdown);
-        document.getElementById('sessionTime').textContent = `${Math.floor(totalElapsed / 60)}:${(totalElapsed % 60).toString().padStart(2, '0')} elapsed`;
-        document.getElementById('sessionProgressBar').style.width = Math.min((totalElapsed / 180) * 100, 100) + '%';
-        
-        if (phaseCountdown <= 0) {
-          clearInterval(interval);
-          phaseIndex = (phaseIndex + 1) % tech.phases.length;
-          if (totalElapsed < 180) { // 3 min max
-            nextPhase();
-          } else {
-            app.endSession(true, tech, totalElapsed, preZen, audioCtx, oscillator);
-          }
-        }
-      }, 1000);
-    };
-    
-    nextPhase();
-    
-    // Store session data for completion
-    overlay.dataset.tech = tech.id;
-    overlay.dataset.preZen = preZen;
-    overlay.dataset.elapsed = '0';
-    overlay.dataset.audioCtx = 'active';
-    
-    window.sessionAudioCtx = audioCtx;
-    window.sessionOscillator = oscillator;
-  },
-
-  endSession(completed, tech = null, elapsed = 0, preZen = 0, audioCtx = null, osc = null) {
-    // Stop audio
-    if (window.sessionOscillator) {
-      try {
-        window.sessionOscillator.stop();
-      } catch (e) {}
-      window.sessionOscillator = null;
-    }
-    if (window.sessionAudioCtx) {
-      window.sessionAudioCtx = null;
-    }
-    
-    // Remove overlay
-    const overlay = document.querySelector('.session-overlay');
-    if (overlay) {
-      overlay.remove();
-    }
-    
-    if (!completed) return;
-    
-    // If no tech provided, try to get from overlay
-    if (!tech) {
-      const techId = overlay?.dataset.tech;
-      tech = TECHNIQUES.find(t => t.id === techId);
-      preZen = parseInt(overlay?.dataset.preZen) || 5;
-      elapsed = parseInt(overlay?.dataset.elapsed) || 60;
-    }
-    
-    if (!tech) return;
-    
-    const postZen = Math.min(preZen + Math.floor(Math.random() * 4) + 2, 10); // +2 to +5
-    const zenDelta = postZen - preZen;
-    
-    // Calculate score gain
-    const baseGain = Math.floor(elapsed / 60) * 2; // 2 points per minute
-    const techniqueBonus = tech.lock > 0 ? Math.floor(tech.lock / 100) : 1;
-    const scoreGained = baseGain * techniqueBonus;
-    
-    const newScore = Math.min(this.state.score + scoreGained, 963);
-    
-    // Update streak
-    const today = new Date().toDateString();
-    let newStreak = this.state.streak;
-    
-    if (this.state.lastSessionDate !== today) {
-      const lastDate = this.state.lastSessionDate ? new Date(this.state.lastSessionDate) : null;
-      const todayDate = new Date(today);
-      
-      if (lastDate) {
-        const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
-        if (diffDays === 1) {
-          newStreak += 1;
-        } else if (diffDays > 1) {
-          newStreak = 1;
-        }
-      } else {
-        newStreak = 1;
-      }
-    }
-    
-    const session = {
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      technique: tech.name,
-      duration: elapsed,
-      preZen,
-      postZen,
-      scoreGained,
-      zenDelta
-    };
-    
-    this.state.score = newScore;
-    this.state.streak = newStreak;
-    this.state.lastSessionDate = today;
-    this.state.totalSessions += 1;
-    this.state.zenDeltaToday = this.state.lastSessionDate === today 
-      ? this.state.zenDeltaToday + zenDelta 
-      : zenDelta;
-    this.state.sessionHistory = [session, ...this.state.sessionHistory.slice(0, 99)];
-    
-    this.saveState();
-    this.renderUI();
-    this.showSessionCard(session, tech);
-  },
-
-  showSessionCard(session, tech) {
-    const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-    
-    const modal = document.createElement('div');
-    modal.className = 'card-overlay';
-    modal.innerHTML = `
-      <div class="session-card">
-        <svg class="card-yantra" viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="32" r="30" stroke="${tech.colors[0]}" stroke-width="0.5" opacity="0.4"/>
-          <polygon points="32,8 50,40 14,40" stroke="${tech.colors[0]}" stroke-width="1" fill="none"/>
-          <polygon points="32,56 14,24 50,24" stroke="${tech.colors[1] || tech.colors[0]}" stroke-width="1" fill="none" opacity="0.7"/>
-          <circle cx="32" cy="32" r="5" stroke="${tech.colors[0]}" stroke-width="0.7" fill="rgba(${tech.colors[0]},0.15)"/>
-          <circle cx="32" cy="32" r="2" fill="${tech.colors[0]}" opacity="0.9"/>
-        </svg>
-
-        <div class="card-title">Resonance</div>
-        <div class="card-subtitle">Session Complete · ${tech.hz} Hz</div>
-
-        <div class="card-metrics">
-          <div class="card-metric">
-            <div class="metric-value">${tech.name.split(' ')[0]}</div>
-            <div class="metric-label">Technique</div>
-          </div>
-          <div class="card-metric">
-            <div class="metric-value">${Math.floor(session.duration / 60)}m</div>
-            <div class="metric-label">Duration</div>
-          </div>
-          <div class="card-metric">
-            <div class="metric-value">+${session.zenDelta}</div>
-            <div class="metric-label">Zen Delta</div>
-          </div>
-          <div class="card-metric">
-            <div class="metric-value" style="font-size: 18px;">${this.state.score}</div>
-            <div class="metric-label">Resonance</div>
-          </div>
-        </div>
-
-        <div class="card-quote">"${quote}"</div>
-        <div class="card-wordmark">resonance · breathe · ascend</div>
-
-        <div class="card-actions">
-          <button class="btn btn-gold" onclick="app.downloadSessionCard(${JSON.stringify(session).replace(/"/g, '&quot;')}, ${JSON.stringify(tech).replace(/"/g, '&quot;')})">
-            Download Card ↓
-          </button>
-          <button class="btn btn-outline" onclick="this.closest('.card-overlay').remove()">
-            Continue
-          </button>
-        </div>
-      </div>
-    `;
-    
-    modal.onclick = (e) => {
-      if (e.target === modal) modal.remove();
-    };
-    
-    document.body.appendChild(modal);
-  },
-
-  downloadSessionCard(session, tech) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1080;
-    canvas.height = 1080;
     const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = canvas.offsetHeight * 2;
     
-    // Background
-    ctx.fillStyle = '#0a0a0c';
-    ctx.fillRect(0, 0, 1080, 1080);
+    this.canvases.gate = { canvas, ctx, rotation: 0 };
+    this.animateGateYantra();
+  },
+  
+  animateGateYantra() {
+    const { canvas, ctx, rotation } = this.canvases.gate;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const r = Math.min(cx, cy) * 0.8;
     
-    // Top gradient line
-    const gradient = ctx.createLinearGradient(0, 0, 1080, 0);
-    gradient.addColorStop(0, 'transparent');
-    gradient.addColorStop(0.5, '#FFD700');
-    gradient.addColorStop(1, 'transparent');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 1080, 2);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
     
-    // Draw Sri Yantra (simplified)
-    ctx.strokeStyle = tech.colors[0];
-    ctx.lineWidth = 3;
+    // Circles
+    for (let i = 3; i > 0; i--) {
+      ctx.beginPath();
+      ctx.arc(0, 0, r * (i / 3), 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 215, 0, ${0.3 / i})`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    
+    // Triangles
+    const drawTriangle = (points, rotation = 0) => {
+      ctx.save();
+      ctx.rotate(rotation);
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      ctx.lineTo(points[1][0], points[1][1]);
+      ctx.lineTo(points[2][0], points[2][1]);
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+    };
+    
+    const t1 = [[0, -r * 0.7], [r * 0.6, r * 0.5], [-r * 0.6, r * 0.5]];
+    const t2 = [[0, r * 0.7], [-r * 0.6, -r * 0.5], [r * 0.6, -r * 0.5]];
+    
+    drawTriangle(t1, 0);
+    drawTriangle(t2, 0);
+    
+    // Center point
     ctx.beginPath();
-    ctx.moveTo(540, 200);
-    ctx.lineTo(700, 450);
-    ctx.lineTo(380, 450);
-    ctx.closePath();
-    ctx.stroke();
-    
-    ctx.strokeStyle = tech.colors[1] || tech.colors[0];
-    ctx.globalAlpha = 0.7;
-    ctx.beginPath();
-    ctx.moveTo(540, 650);
-    ctx.lineTo(380, 400);
-    ctx.lineTo(700, 400);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-    
-    ctx.beginPath();
-    ctx.arc(540, 425, 15, 0, Math.PI * 2);
-    ctx.fillStyle = tech.colors[0];
+    ctx.arc(0, 0, 10, 0, Math.PI * 2);
+    ctx.fillStyle = '#FFD700';
     ctx.fill();
     
-    // Title
-    ctx.fillStyle = '#FFD700';
-    ctx.font = '700 28px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.letterSpacing = '12px';
-    ctx.fillText('RESONANCE', 540, 520);
+    ctx.restore();
     
-    // Subtitle
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = '400 22px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.letterSpacing = '6px';
-    ctx.fillText(`SESSION COMPLETE · ${tech.hz} HZ`, 540, 560);
-    
-    // Metrics grid
-    const metrics = [
-      { label: 'TECHNIQUE', value: tech.name.split(' ')[0] },
-      { label: 'DURATION', value: Math.floor(session.duration / 60) + 'm' },
-      { label: 'ZEN DELTA', value: '+' + session.zenDelta },
-      { label: 'RESONANCE', value: this.state.score }
-    ];
-    
-    const startY = 620;
-    const boxW = 240;
-    const boxH = 140;
-    const gap = 20;
-    
-    metrics.forEach((m, i) => {
-      const x = 180 + (i % 2) * (boxW + gap);
-      const y = startY + Math.floor(i / 2) * (boxH + gap);
-      
-      ctx.fillStyle = 'rgba(255,255,255,0.02)';
-      ctx.fillRect(x, y, boxW, boxH);
-      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(x, y, boxW, boxH);
-      
-      ctx.fillStyle = '#FFD700';
-      ctx.font = i === 3 ? '200 52px -apple-system' : '200 48px -apple-system';
-      ctx.textAlign = 'center';
-      ctx.fillText(m.value, x + boxW/2, y + 60);
-      
-      ctx.fillStyle = 'rgba(255,255,255,0.4)';
-      ctx.font = '400 14px -apple-system';
-      ctx.letterSpacing = '4px';
-      ctx.fillText(m.label, x + boxW/2, y + 95);
-    });
-    
-    // Wordmark
-    ctx.fillStyle = 'rgba(255,215,0,0.3)';
-    ctx.font = '700 18px -apple-system';
-    ctx.letterSpacing = '10px';
-    ctx.fillText('RESONANCE · BREATHE · ASCEND', 540, 1020);
-    
-    // Download
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `resonance-session-${Date.now()}.png`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+    this.canvases.gate.rotation += 0.002;
+    requestAnimationFrame(() => this.animateGateYantra());
   },
-
-  openTrialModal() {
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.innerHTML = `
-      <div class="modal">
-        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
-        <h3 class="modal-title">What calls you to breathwork?</h3>
-        <p class="modal-subtitle">We'll match you to the perfect technique.</p>
-        <div class="modal-options">
-          <button class="modal-option" onclick="app.quickSession('stress')">Reduce stress & anxiety</button>
-          <button class="modal-option" onclick="app.quickSession('sleep')">Sleep more deeply</button>
-          <button class="modal-option" onclick="app.quickSession('focus')">Sharpen focus & clarity</button>
-          <button class="modal-option" onclick="app.quickSession('perf')">Athletic peak performance</button>
-          <button class="modal-option" onclick="app.quickSession('spirit')">Spiritual practice & alignment</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
+  
+  initHeroYantra() {
+    const canvas = document.getElementById('heroYantra');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = canvas.offsetHeight * 2;
+    
+    this.canvases.hero = { canvas, ctx, pulse: 0 };
+    this.animateHeroYantra();
   },
-
-  quickSession(goal) {
-    const map = {
-      stress: '478',
-      sleep: '478',
-      focus: 'box',
-      perf: 'coherent',
-      spirit: 'coherent'
-    };
+  
+  animateHeroYantra() {
+    const { canvas, ctx, pulse } = this.canvases.hero;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const r = Math.min(cx, cy) * 0.7;
+    const scale = 1 + Math.sin(pulse) * 0.05;
     
-    document.querySelector('.modal-overlay').remove();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(scale, scale);
     
-    const tech = TECHNIQUES.find(t => t.id === map[goal]);
-    if (tech) {
-      setTimeout(() => this.startTechnique(tech.id), 300);
+    // Breathing circles
+    for (let i = 0; i < 10; i++) {
+      const angle = (i / 10) * Math.PI * 2;
+      const pr = r * 0.85;
+      const x = Math.cos(angle) * pr;
+      const y = Math.sin(angle) * pr;
+      const petalPulse = Math.sin(pulse + i * 0.3) * 0.3 + 0.7;
+      
+      ctx.beginPath();
+      ctx.arc(x, y, 20 * petalPulse, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 215, 0, ${0.4 * petalPulse})`;
+      ctx.fill();
     }
+    
+    // Main structure
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.6, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255, 215, 0, 0.6)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Center bindu
+    const binduPulse = Math.sin(pulse * 2) * 5 + 15;
+    ctx.beginPath();
+    ctx.arc(0, 0, binduPulse, 0, Math.PI * 2);
+    ctx.fillStyle = '#FFD700';
+    ctx.shadowBlur = 40;
+    ctx.shadowColor = '#FFD700';
+    ctx.fill();
+    
+    ctx.restore();
+    
+    this.canvases.hero.pulse += 0.02;
+    requestAnimationFrame(() => this.animateHeroYantra());
   },
-
-  upgradeToPro() {
-    alert('Pro upgrade: $7.99/month\n\nThis would integrate with your payment provider (Stripe, Apple Pay, etc.)\n\nFor demo purposes, upgrading you to Pro now.');
-    this.state.tier = 'pro';
-    this.saveState();
-    this.renderTechniques();
+  
+  initMainCanvas() {
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.body.scrollHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    
+    const particles = [];
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        speedY: Math.random() * 0.5 + 0.2,
+        opacity: Math.random() * 0.3 + 0.1
+      });
+    }
+    
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.y += p.speedY;
+        if (p.y > canvas.height) p.y = 0;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+        ctx.fill();
+      });
+      
+      requestAnimationFrame(animate);
+    };
+    animate();
   },
+  
+  initTechniqueIcons() {
+    const icons = document.querySelectorAll('.technique-icon');
+    icons.forEach((canvas, idx) => {
+      const ctx = canvas.getContext('2d');
+      canvas.width = 160;
+      canvas.height = 160;
+      
+      const shapes = [
+        // 0: Sri Yantra simplified
+        () => {
+          const cx = 80, cy = 80;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy - 50);
+          ctx.lineTo(cx + 40, cy + 30);
+          ctx.lineTo(cx - 40, cy + 30);
+          ctx.closePath();
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        },
+        // 1: Flower of Life
+        () => {
+          const cx = 80, cy = 80, r = 20;
+          for (let i = 0; i < 6; i++) {
+            const angle = (i / 6) * Math.PI * 2;
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        },
+        // 2: Hexagon
+        () => {
+          const cx = 80, cy = 80, r = 40;
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (i / 6) * Math.PI * 2;
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        },
+        // 3: Star
+        () => {
+          const cx = 80, cy = 80, r1 = 40, r2 = 20;
+          ctx.beginPath();
+          for (let i = 0; i < 10; i++) {
+            const angle = (i / 10) * Math.PI * 2 - Math.PI / 2;
+            const r = i % 2 === 0 ? r1 : r2;
+            const x = cx + Math.cos(angle) * r;
+            const y = cy + Math.sin(angle) * r;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        },
+        // 4: Circle
+        () => {
+          ctx.beginPath();
+          ctx.arc(80, 80, 40, 0, Math.PI * 2);
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        },
+        // 5: Moon
+        () => {
+          ctx.beginPath();
+          ctx.arc(80, 80, 40, 0, Math.PI * 2);
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(95, 80, 35, 0, Math.PI * 2);
+          ctx.fillStyle = '#000';
+          ctx.fill();
+        }
+      ];
+      
+      const shape = shapes[idx % shapes.length];
+      shape();
+    });
+  }
+};
 
-  upgradeToElite() {
-    alert('Elite upgrade: $14.99/month\n\nThis would integrate with your payment provider (Stripe, Apple Pay, etc.)\n\nFor demo purposes, upgrading you to Elite now.');
-    this.state.tier = 'elite';
-    this.saveState();
-    this.renderTechniques();
+// ═══════════════════════════════════════════
+// SCROLL ANIMATIONS
+// ═══════════════════════════════════════════
+
+const ScrollAnimations = {
+  init() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Stagger technique cards
+          if (entry.target.classList.contains('section')) {
+            const cards = entry.target.querySelectorAll('.technique-card');
+            cards.forEach((card, idx) => {
+              setTimeout(() => card.classList.add('visible'), idx * 150);
+            });
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+    
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+    
+    // Frequency changes on scroll
+    let lastFreq = 963;
+    window.addEventListener('scroll', () => {
+      const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      const frequencies = [963, 852, 741, 639, 528, 417, 396, 174];
+      const idx = Math.floor(scrollPercent * frequencies.length);
+      const newFreq = frequencies[Math.min(idx, frequencies.length - 1)];
+      
+      if (newFreq !== lastFreq && AudioSystem.isPlaying) {
+        AudioSystem.setFrequency(newFreq);
+        lastFreq = newFreq;
+      }
+    });
   }
 };
 
@@ -1777,7 +1105,14 @@ const app = {
 // ═══════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  app.init();
+  AudioSystem.init();
+  CanvasAnimations.init();
+  ScrollAnimations.init();
+  
+  // Auto-reveal hero after gate
+  setTimeout(() => {
+    document.getElementById('hero').classList.add('visible');
+  }, 100);
 });
 </script>
 
