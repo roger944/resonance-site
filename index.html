@@ -3,21 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resonance — Enter · Breathe · Ascend</title>
+<title>Resonance — Enter · Breathe · Transcend</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --black:#000;
-  --black2:#0a0a0c;
-  --black3:#111114;
-  --gold:#FFD700;
-  --gold2:#e2c06a;
-  --gold3:rgba(255,215,0,0.45);
-  --gold4:rgba(255,215,0,0.12);
   --white:#f0ece4;
+  
+  /* Frequency colors */
+  --freq-963-1:#d946ef; /* magenta */
+  --freq-963-2:#fbbf24; /* gold */
+  --freq-963-3:#a855f7; /* purple */
+  
+  --freq-852-1:#06b6d4; /* cyan */
+  --freq-852-2:#3b82f6; /* blue */
+  --freq-852-3:#60a5fa; /* light blue */
+  
+  --freq-741-1:#22d3ee; /* cyan */
+  --freq-741-2:#0ea5e9; /* sky */
+  --freq-741-3:#38bdf8; /* light cyan */
+  
+  --freq-639-1:#84cc16; /* lime */
+  --freq-639-2:#facc15; /* yellow */
+  --freq-639-3:#65a30d; /* green */
+  
+  --freq-528-1:#fbbf24; /* gold */
+  --freq-528-2:#f59e0b; /* amber */
+  --freq-528-3:#eab308; /* yellow */
+  
+  --freq-417-1:#f97316; /* orange */
+  --freq-417-2:#ef4444; /* red */
+  --freq-417-3:#fb923c; /* light orange */
+  
+  --freq-396-1:#dc2626; /* red */
+  --freq-396-2:#b91c1c; /* dark red */
+  --freq-396-3:#f87171; /* light red */
+  
+  --freq-174-1:#d97706; /* amber */
+  --freq-174-2:#78716c; /* stone */
+  --freq-174-3:#a8a29e; /* warm gray */
 }
 
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{
   background:var(--black);
   color:var(--white);
@@ -27,7 +54,7 @@ body{
 }
 
 /* ═══════════════════════════════════════════ */
-/* SOUND GATE ENTRANCE */
+/* SOUND GATE */
 /* ═══════════════════════════════════════════ */
 
 .sound-gate{
@@ -40,7 +67,7 @@ body{
   align-items:center;
   justify-content:center;
   opacity:1;
-  transition:opacity 1.5s ease-out;
+  transition:opacity 2s ease-out;
 }
 
 .sound-gate.hidden{
@@ -48,32 +75,35 @@ body{
   pointer-events:none;
 }
 
-.gate-yantra{
-  width:min(60vh,80vw);
-  height:min(60vh,80vw);
+.gate-mandala-container{
+  width:min(70vh,85vw);
+  height:min(70vh,85vw);
   margin-bottom:60px;
+  position:relative;
 }
 
 .gate-title{
   font-size:clamp(3rem,15vw,12rem);
   font-weight:900;
   letter-spacing:-0.02em;
-  color:var(--gold);
+  background:linear-gradient(135deg,#d946ef,#fbbf24,#a855f7);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
   margin-bottom:20px;
-  text-shadow:0 0 80px rgba(255,215,0,0.5);
-  animation:titlePulse 3s ease-in-out infinite;
+  animation:titleShimmer 4s ease-in-out infinite;
 }
 
-@keyframes titlePulse{
-  0%,100%{text-shadow:0 0 80px rgba(255,215,0,0.5);}
-  50%{text-shadow:0 0 120px rgba(255,215,0,0.8);}
+@keyframes titleShimmer{
+  0%,100%{filter:brightness(1) drop-shadow(0 0 60px rgba(217,70,239,0.4));}
+  50%{filter:brightness(1.3) drop-shadow(0 0 100px rgba(217,70,239,0.7));}
 }
 
 .gate-tagline{
   font-size:clamp(0.9rem,2vw,1.2rem);
   letter-spacing:4px;
   text-transform:uppercase;
-  color:var(--gold3);
+  color:rgba(217,70,239,0.6);
   margin-bottom:60px;
 }
 
@@ -90,43 +120,45 @@ body{
   font-weight:600;
   letter-spacing:2px;
   text-transform:uppercase;
-  border:2px solid var(--gold);
+  border:2px solid #d946ef;
   background:transparent;
-  color:var(--gold);
+  color:#d946ef;
   cursor:pointer;
-  transition:all 0.3s ease;
+  transition:all 0.4s ease;
   position:relative;
   overflow:hidden;
 }
 
+.gate-btn::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#d946ef,#a855f7);
+  transform:translateY(100%);
+  transition:transform 0.4s ease;
+  z-index:-1;
+}
+
+.gate-btn:hover::before{
+  transform:translateY(0);
+}
+
 .gate-btn:hover{
-  background:var(--gold);
   color:var(--black);
-  box-shadow:0 0 40px rgba(255,215,0,0.6);
+  border-color:#fbbf24;
+  box-shadow:0 0 40px rgba(217,70,239,0.6);
 }
 
 .gate-btn.with-sound{
-  background:var(--gold);
+  background:linear-gradient(135deg,#d946ef,#a855f7);
   color:var(--black);
+  border-color:#fbbf24;
   animation:btnPulse 2s ease-in-out infinite;
 }
 
 @keyframes btnPulse{
-  0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.4);}
-  50%{box-shadow:0 0 60px rgba(255,215,0,0.8);}
-}
-
-/* ═══════════════════════════════════════════ */
-/* MAIN CANVAS BACKGROUND */
-/* ═══════════════════════════════════════════ */
-
-#mainCanvas{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:0;
-  opacity:0.3;
+  0%,100%{box-shadow:0 0 30px rgba(217,70,239,0.4),0 0 60px rgba(168,85,247,0.2);}
+  50%{box-shadow:0 0 50px rgba(217,70,239,0.7),0 0 100px rgba(168,85,247,0.4);}
 }
 
 /* ═══════════════════════════════════════════ */
@@ -138,13 +170,13 @@ body{
   top:30px;
   right:30px;
   z-index:9999;
-  background:rgba(255,215,0,0.1);
-  border:1px solid var(--gold4);
+  background:rgba(217,70,239,0.1);
+  border:1px solid rgba(217,70,239,0.3);
   padding:12px 20px;
   font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
-  color:var(--gold);
+  color:#d946ef;
   cursor:pointer;
   backdrop-filter:blur(10px);
   transition:all 0.3s ease;
@@ -156,8 +188,22 @@ body{
 }
 
 .audio-toggle:hover{
-  background:rgba(255,215,0,0.2);
-  border-color:var(--gold);
+  background:rgba(217,70,239,0.2);
+  border-color:#d946ef;
+}
+
+/* ═══════════════════════════════════════════ */
+/* MAIN CANVAS */
+/* ═══════════════════════════════════════════ */
+
+#mainCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  opacity:0.2;
+  pointer-events:none;
 }
 
 /* ═══════════════════════════════════════════ */
@@ -173,46 +219,55 @@ body{
   justify-content:center;
   padding:100px 40px;
   z-index:1;
-  opacity:0;
-  transform:translateY(60px);
-  transition:opacity 1.2s ease-out,transform 1.2s ease-out;
 }
 
-.section.visible{
-  opacity:1;
-  transform:translateY(0);
+.section-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  opacity:0.15;
+}
+
+.section-content{
+  position:relative;
+  z-index:2;
+  max-width:1400px;
+  width:100%;
 }
 
 .section-number{
   font-size:clamp(1rem,3vw,1.5rem);
   letter-spacing:6px;
-  color:var(--gold3);
   margin-bottom:40px;
   font-weight:300;
+  opacity:0.6;
 }
 
 .section-title{
   font-size:clamp(3rem,12vw,10rem);
   font-weight:900;
   letter-spacing:-0.02em;
-  color:var(--gold);
   margin-bottom:40px;
   text-align:center;
   line-height:0.9;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 
 .section-description{
   font-size:clamp(1.2rem,3vw,2rem);
   max-width:900px;
   text-align:center;
-  color:var(--white);
-  margin-bottom:60px;
+  margin:0 auto 60px;
   line-height:1.5;
   font-weight:300;
+  opacity:0.9;
 }
 
 /* ═══════════════════════════════════════════ */
-/* HERO SECTION */
+/* HERO */
 /* ═══════════════════════════════════════════ */
 
 .hero{
@@ -220,144 +275,121 @@ body{
   padding-top:0;
 }
 
-.hero-yantra{
+.hero-mandala-container{
   width:min(70vh,90vw);
   height:min(70vh,90vw);
   margin-bottom:60px;
+  position:relative;
 }
 
 .scroll-indicator{
   position:absolute;
   bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:12px;
   opacity:0.5;
   animation:scrollBounce 2s ease-in-out infinite;
+  z-index:3;
 }
 
 @keyframes scrollBounce{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(10px);}
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(10px);}
 }
 
 .scroll-line{
   width:1px;
   height:40px;
-  background:linear-gradient(180deg,transparent,var(--gold),transparent);
+  background:linear-gradient(180deg,transparent,#d946ef,transparent);
 }
 
 .scroll-text{
   font-size:9px;
   letter-spacing:3px;
   text-transform:uppercase;
-  color:var(--gold3);
+  color:rgba(217,70,239,0.6);
 }
 
 /* ═══════════════════════════════════════════ */
-/* TECHNIQUES FLOW */
+/* TECHNIQUES GRID */
 /* ═══════════════════════════════════════════ */
 
 .techniques-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:60px;
-  max-width:1400px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
   width:100%;
   margin-top:60px;
 }
 
 .technique-card{
   position:relative;
-  padding:60px 40px;
-  border:1px solid var(--gold4);
-  background:rgba(255,215,0,0.02);
-  backdrop-filter:blur(10px);
+  padding:40px 30px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(20px);
   display:flex;
   flex-direction:column;
   align-items:center;
   text-align:center;
-  transition:all 0.5s ease;
+  transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
   cursor:pointer;
-  opacity:0;
-  transform:translateY(40px);
+  overflow:hidden;
 }
 
-.technique-card.visible{
-  opacity:1;
-  transform:translateY(0);
+.technique-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,var(--card-glow),transparent 70%);
+  opacity:0;
+  transition:opacity 0.5s ease;
+}
+
+.technique-card:hover::before{
+  opacity:0.3;
 }
 
 .technique-card:hover{
-  border-color:var(--gold);
-  background:rgba(255,215,0,0.05);
-  transform:translateY(-10px);
-  box-shadow:0 20px 60px rgba(255,215,0,0.15);
+  border-color:var(--card-color);
+  background:rgba(0,0,0,0.5);
+  transform:translateY(-15px) scale(1.03);
+  box-shadow:0 30px 80px var(--card-shadow);
 }
 
-.technique-icon{
-  width:80px;
-  height:80px;
-  margin-bottom:30px;
+.technique-mandala{
+  width:120px;
+  height:120px;
+  margin-bottom:25px;
+  transition:all 0.5s ease;
+}
+
+.technique-card:hover .technique-mandala{
+  transform:scale(1.15);
 }
 
 .technique-name{
-  font-size:1.5rem;
+  font-size:1.3rem;
   font-weight:700;
-  color:var(--gold);
-  margin-bottom:15px;
+  margin-bottom:10px;
+  color:var(--card-color);
 }
 
 .technique-freq{
-  font-size:0.9rem;
+  font-size:0.85rem;
   letter-spacing:2px;
-  color:var(--gold3);
-  margin-bottom:20px;
+  opacity:0.6;
+  margin-bottom:15px;
 }
 
 .technique-desc{
-  font-size:1rem;
-  color:var(--white);
+  font-size:0.95rem;
   opacity:0.7;
-  line-height:1.6;
-}
-
-/* ═══════════════════════════════════════════ */
-/* FREQUENCY VISUALIZATION */
-/* ═══════════════════════════════════════════ */
-
-.freq-viz{
-  width:100%;
-  max-width:1200px;
-  height:300px;
-  margin:60px 0;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-}
-
-.freq-bar{
-  width:40px;
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  border-radius:20px;
-  opacity:0.4;
-  transition:all 0.3s ease;
-  animation:freqPulse 2s ease-in-out infinite;
-}
-
-.freq-bar:nth-child(1){height:80px;animation-delay:0s;}
-.freq-bar:nth-child(2){height:150px;animation-delay:0.1s;}
-.freq-bar:nth-child(3){height:200px;animation-delay:0.2s;}
-.freq-bar:nth-child(4){height:250px;animation-delay:0.3s;}
-.freq-bar:nth-child(5){height:200px;animation-delay:0.4s;}
-.freq-bar:nth-child(6){height:150px;animation-delay:0.5s;}
-.freq-bar:nth-child(7){height:80px;animation-delay:0.6s;}
-
-@keyframes freqPulse{
-  0%,100%{transform:scaleY(0.8);opacity:0.4;}
-  50%{transform:scaleY(1.2);opacity:0.8;}
+  line-height:1.5;
 }
 
 /* ═══════════════════════════════════════════ */
@@ -368,55 +400,56 @@ body{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:40px;
-  max-width:1200px;
   width:100%;
   margin-top:60px;
 }
 
 .price-card{
   padding:60px 40px;
-  border:1px solid var(--gold4);
-  background:rgba(255,215,0,0.02);
-  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(20px);
   display:flex;
   flex-direction:column;
   align-items:center;
   text-align:center;
   transition:all 0.5s ease;
   position:relative;
-  overflow:hidden;
 }
 
 .price-card.featured{
-  border-color:var(--gold);
-  background:rgba(255,215,0,0.05);
+  border-color:#d946ef;
+  background:rgba(217,70,239,0.1);
   transform:scale(1.05);
 }
 
 .price-card:hover{
-  border-color:var(--gold);
-  background:rgba(255,215,0,0.08);
+  border-color:#d946ef;
   transform:translateY(-10px) scale(1.02);
+  box-shadow:0 30px 80px rgba(217,70,239,0.3);
 }
 
 .price-tier{
   font-size:1rem;
   letter-spacing:3px;
   text-transform:uppercase;
-  color:var(--gold3);
+  opacity:0.6;
   margin-bottom:20px;
 }
 
 .price-amount{
   font-size:4rem;
   font-weight:900;
-  color:var(--gold);
+  background:linear-gradient(135deg,#d946ef,#fbbf24);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
   margin-bottom:10px;
 }
 
 .price-period{
   font-size:1rem;
-  color:var(--gold3);
+  opacity:0.6;
   margin-bottom:40px;
 }
 
@@ -428,9 +461,8 @@ body{
 
 .price-features li{
   padding:12px 0;
-  border-bottom:1px solid var(--gold4);
+  border-bottom:1px solid rgba(255,255,255,0.1);
   font-size:0.95rem;
-  color:var(--white);
   opacity:0.8;
 }
 
@@ -440,54 +472,23 @@ body{
   font-weight:600;
   letter-spacing:2px;
   text-transform:uppercase;
-  border:2px solid var(--gold);
+  border:2px solid #d946ef;
   background:transparent;
-  color:var(--gold);
+  color:#d946ef;
   cursor:pointer;
   transition:all 0.3s ease;
   width:100%;
 }
 
 .price-btn:hover{
-  background:var(--gold);
+  background:linear-gradient(135deg,#d946ef,#a855f7);
   color:var(--black);
-  box-shadow:0 0 40px rgba(255,215,0,0.6);
+  box-shadow:0 0 40px rgba(217,70,239,0.6);
 }
 
 .price-card.featured .price-btn{
-  background:var(--gold);
+  background:linear-gradient(135deg,#d946ef,#a855f7);
   color:var(--black);
-}
-
-/* ═══════════════════════════════════════════ */
-/* STATS */
-/* ═══════════════════════════════════════════ */
-
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:60px;
-  max-width:1200px;
-  width:100%;
-  margin-top:60px;
-}
-
-.stat-item{
-  text-align:center;
-}
-
-.stat-number{
-  font-size:4rem;
-  font-weight:900;
-  color:var(--gold);
-  margin-bottom:10px;
-  line-height:1;
-}
-
-.stat-label{
-  font-size:1rem;
-  color:var(--white);
-  opacity:0.7;
 }
 
 /* ═══════════════════════════════════════════ */
@@ -496,14 +497,14 @@ body{
 
 .footer{
   padding:60px 40px;
-  border-top:1px solid var(--gold4);
+  border-top:1px solid rgba(255,255,255,0.1);
   text-align:center;
-  background:var(--black2);
+  background:rgba(0,0,0,0.5);
 }
 
 .footer-text{
   font-size:0.9rem;
-  color:var(--gold3);
+  opacity:0.6;
   margin-bottom:20px;
 }
 
@@ -515,7 +516,7 @@ body{
 }
 
 .footer-links a{
-  color:var(--gold);
+  color:#d946ef;
   text-decoration:none;
   font-size:0.9rem;
   letter-spacing:2px;
@@ -533,20 +534,21 @@ body{
 
 @media(max-width:768px){
   .section{padding:60px 20px;}
-  .techniques-grid,.pricing-grid,.stats-grid{grid-template-columns:1fr;gap:40px;}
+  .techniques-grid,.pricing-grid{grid-template-columns:1fr;gap:30px;}
   .gate-buttons{flex-direction:column;width:100%;padding:0 20px;}
   .gate-btn{width:100%;}
-  .audio-toggle{top:20px;right:20px;padding:10px 16px;font-size:10px;}
 }
 </style>
 </head>
 <body>
 
-<!-- SOUND GATE ENTRANCE -->
+<!-- SOUND GATE -->
 <div class="sound-gate" id="soundGate">
-  <canvas class="gate-yantra" id="gateYantra"></canvas>
+  <div class="gate-mandala-container">
+    <canvas id="gateMandala"></canvas>
+  </div>
   <h1 class="gate-title">RESONANCE</h1>
-  <p class="gate-tagline">963Hz · Sri Yantra · Sacred Breathwork</p>
+  <p class="gate-tagline">963Hz · Sacred Geometry · Transcendence</p>
   <div class="gate-buttons">
     <button class="gate-btn with-sound" onclick="enterWithSound()">Enter with Sound</button>
     <button class="gate-btn" onclick="enterSilent()">Enter Silent</button>
@@ -556,142 +558,87 @@ body{
 <!-- AUDIO TOGGLE -->
 <button class="audio-toggle" id="audioToggle" onclick="toggleAudio()">Sound: ON</button>
 
-<!-- MAIN CANVAS BACKGROUND -->
+<!-- MAIN CANVAS -->
 <canvas id="mainCanvas"></canvas>
 
 <!-- HERO -->
-<section class="section hero" id="hero">
-  <canvas class="hero-yantra" id="heroYantra"></canvas>
+<section class="section hero" style="--c1:#d946ef;--c2:#fbbf24;--c3:#a855f7;">
+  <div class="section-bg">
+    <canvas id="heroBg"></canvas>
+  </div>
+  <div class="hero-mandala-container">
+    <canvas id="heroMandala"></canvas>
+  </div>
   <div class="scroll-indicator">
     <div class="scroll-line"></div>
-    <div class="scroll-text">Scroll to Begin</div>
+    <div class="scroll-text">Begin Journey</div>
   </div>
 </section>
 
-<!-- SECTION 1: THE PROMISE -->
-<section class="section" id="promise">
-  <div class="section-number">// 01 CONSCIOUSNESS</div>
-  <h2 class="section-title">Transform<br>Your Nervous<br>System</h2>
-  <p class="section-description">4 minutes a day. 16 sacred techniques. Ancient Solfeggio frequencies meet modern neuroscience.</p>
-  
-  <div class="techniques-grid">
-    <div class="technique-card" data-technique="dmt">
-      <canvas class="technique-icon" data-icon="0"></canvas>
-      <div class="technique-name">DMT Breath</div>
-      <div class="technique-freq">963 Hz</div>
-      <div class="technique-desc">Rapid breathwork for expanded consciousness</div>
-    </div>
-    <div class="technique-card" data-technique="wim">
-      <canvas class="technique-icon" data-icon="1"></canvas>
-      <div class="technique-name">Wim Hof</div>
-      <div class="technique-freq">852 Hz</div>
-      <div class="technique-desc">Cold exposure protocol for resilience</div>
-    </div>
-    <div class="technique-card" data-technique="kapal">
-      <canvas class="technique-icon" data-icon="2"></canvas>
-      <div class="technique-name">Kapalabhati</div>
-      <div class="technique-freq">741 Hz</div>
-      <div class="technique-desc">Skull shining breath for clarity</div>
-    </div>
-    <div class="technique-card" data-technique="lion">
-      <canvas class="technique-icon" data-icon="3"></canvas>
-      <div class="technique-name">Lion's Breath</div>
-      <div class="technique-freq">639 Hz</div>
-      <div class="technique-desc">Release tension and express power</div>
-    </div>
-    <div class="technique-card" data-technique="coherent">
-      <canvas class="technique-icon" data-icon="4"></canvas>
-      <div class="technique-name">Coherent</div>
-      <div class="technique-freq">528 Hz</div>
-      <div class="technique-desc">Heart-brain synchronization</div>
-    </div>
-    <div class="technique-card" data-technique="sleep">
-      <canvas class="technique-icon" data-icon="5"></canvas>
-      <div class="technique-name">Pineal Protocol</div>
-      <div class="technique-freq">963 Hz</div>
-      <div class="technique-desc">4-stage sleep induction sequence</div>
-    </div>
+<!-- SECTION 1: TECHNIQUES -->
+<section class="section" style="--c1:#06b6d4;--c2:#3b82f6;--c3:#60a5fa;">
+  <div class="section-bg">
+    <canvas id="techniquesBg"></canvas>
   </div>
-</section>
-
-<!-- SECTION 2: THE SCIENCE -->
-<section class="section" id="science">
-  <div class="section-number">// 02 SOLFEGGIO</div>
-  <h2 class="section-title">Ancient<br>Frequencies</h2>
-  <p class="section-description">963Hz · 852Hz · 741Hz · 639Hz · 528Hz · 417Hz · 396Hz · 174Hz<br>Modern neuroscience validates what mystics knew for millennia.</p>
-  
-  <div class="freq-viz">
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-    <div class="freq-bar"></div>
-  </div>
-  
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-number">87%</div>
-      <div class="stat-label">Deeper sleep in 14 days</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">4m</div>
-      <div class="stat-label">Average session length</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">963</div>
-      <div class="stat-label">Maximum resonance score</div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 3: PRICING -->
-<section class="section" id="pricing">
-  <div class="section-number">// 03 ASCEND</div>
-  <h2 class="section-title">Choose<br>Your Path</h2>
-  
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Free</div>
-      <div class="price-amount">$0</div>
-      <div class="price-period">Forever</div>
-      <ul class="price-features">
-        <li>5 core techniques</li>
-        <li>174-528 Hz frequencies</li>
-        <li>Score to 528</li>
-        <li>Session tracking</li>
-      </ul>
-      <button class="price-btn" onclick="alert('Free tier active')">Begin Free</button>
-    </div>
+  <div class="section-content">
+    <div class="section-number">// 01 CONSCIOUSNESS</div>
+    <h2 class="section-title">Transform<br>Your Nervous<br>System</h2>
+    <p class="section-description">16 sacred techniques. Ancient Solfeggio frequencies. Modern neuroscience.</p>
     
-    <div class="price-card featured">
-      <div class="price-tier">Pro</div>
-      <div class="price-amount">$7.99</div>
-      <div class="price-period">/ month</div>
-      <ul class="price-features">
-        <li>14 techniques</li>
-        <li>174-741 Hz range</li>
-        <li>Score to 741</li>
-        <li>Sleep protocols</li>
-        <li>Session cards</li>
-      </ul>
-      <button class="price-btn" onclick="alert('Pro subscription')">Upgrade to Pro</button>
-    </div>
+    <div class="techniques-grid" id="techniquesGrid"></div>
+  </div>
+</section>
+
+<!-- SECTION 2: PRICING -->
+<section class="section" style="--c1:#fbbf24;--c2:#f59e0b;--c3:#eab308;">
+  <div class="section-bg">
+    <canvas id="pricingBg"></canvas>
+  </div>
+  <div class="section-content">
+    <div class="section-number">// 02 ASCEND</div>
+    <h2 class="section-title">Choose<br>Your Path</h2>
     
-    <div class="price-card">
-      <div class="price-tier">Elite</div>
-      <div class="price-amount">$14.99</div>
-      <div class="price-period">/ month</div>
-      <ul class="price-features">
-        <li>All 16 techniques</li>
-        <li>Full 174-963 Hz</li>
-        <li>Score to 963</li>
-        <li>Pineal Protocol</li>
-        <li>Custom sessions</li>
-        <li>Priority support</li>
-      </ul>
-      <button class="price-btn" onclick="alert('Elite subscription')">Ascend to Elite</button>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">Forever</div>
+        <ul class="price-features">
+          <li>5 core techniques</li>
+          <li>174-528 Hz frequencies</li>
+          <li>Score to 528</li>
+          <li>Session tracking</li>
+        </ul>
+        <button class="price-btn">Begin Free</button>
+      </div>
+      
+      <div class="price-card featured">
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">$7.99</div>
+        <div class="price-period">/ month</div>
+        <ul class="price-features">
+          <li>14 techniques</li>
+          <li>174-741 Hz range</li>
+          <li>Score to 741</li>
+          <li>Sleep protocols</li>
+          <li>Session cards</li>
+        </ul>
+        <button class="price-btn">Upgrade to Pro</button>
+      </div>
+      
+      <div class="price-card">
+        <div class="price-tier">Elite</div>
+        <div class="price-amount">$14.99</div>
+        <div class="price-period">/ month</div>
+        <ul class="price-features">
+          <li>All 16 techniques</li>
+          <li>Full 174-963 Hz</li>
+          <li>Score to 963</li>
+          <li>Pineal Protocol</li>
+          <li>Custom sessions</li>
+        </ul>
+        <button class="price-btn">Ascend to Elite</button>
+      </div>
     </div>
   </div>
 </section>
@@ -708,60 +655,362 @@ body{
 
 <script>
 // ═══════════════════════════════════════════
-// AUDIO SYSTEM
+// TECHNIQUE DATA
 // ═══════════════════════════════════════════
+
+const TECHNIQUES = [
+  {name:'DMT Breath',freq:963,desc:'Rapid breathwork for expanded consciousness',colors:['#d946ef','#fbbf24','#a855f7']},
+  {name:'Wim Hof',freq:852,desc:'Cold exposure protocol for resilience',colors:['#06b6d4','#3b82f6','#60a5fa']},
+  {name:'Kapalabhati',freq:741,desc:'Skull shining breath for clarity',colors:['#22d3ee','#0ea5e9','#38bdf8']},
+  {name:'Lion\'s Breath',freq:639,desc:'Release tension and express power',colors:['#84cc16','#facc15','#65a30d']},
+  {name:'Ujjayi',freq:528,desc:'Victorious breath for focus',colors:['#fbbf24','#f59e0b','#eab308']},
+  {name:'Coherent',freq:528,desc:'Heart-brain synchronization',colors:['#fbbf24','#f59e0b','#eab308']},
+  {name:'Nadi Shodhana',freq:417,desc:'Alternate nostril for balance',colors:['#f97316','#ef4444','#fb923c']},
+  {name:'Box Breathing',freq:417,desc:'4-4-4-4 pattern for calm',colors:['#f97316','#ef4444','#fb923c']},
+  {name:'Pentagram',freq:396,desc:'5-point breath meditation',colors:['#dc2626','#b91c1c','#f87171']},
+  {name:'Sitali',freq:396,desc:'Cooling breath for heat',colors:['#dc2626','#b91c1c','#f87171']},
+  {name:'4-7-8 Breath',freq:174,desc:'Natural tranquilizer',colors:['#d97706','#78716c','#a8a29e']},
+  {name:'Sigh Breath',freq:174,desc:'Physiological relief',colors:['#d97706','#78716c','#a8a29e']},
+  {name:'Buteyko',freq:174,desc:'Reduced breathing for CO2',colors:['#d97706','#78716c','#a8a29e']},
+  {name:'IMST',freq:174,desc:'Inspiratory muscle training',colors:['#d97706','#78716c','#a8a29e']},
+  {name:'Pineal Protocol',freq:963,desc:'4-stage sleep induction',colors:['#d946ef','#fbbf24','#a855f7']},
+  {name:'963Hz Sleep Drift',freq:963,desc:'Passive frequency immersion',colors:['#d946ef','#fbbf24','#a855f7']}
+];
+
+// ═══════════════════════════════════════════
+// MANDALA RENDERER
+// ═══════════════════════════════════════════
+
+class MandalaRenderer {
+  constructor(canvas, colors, type = 'fluid') {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.colors = colors;
+    this.type = type;
+    this.rotation = 0;
+    this.pulse = 0;
+    this.particles = [];
+    this.resize();
+  }
+  
+  resize() {
+    const dpr = window.devicePixelRatio || 1;
+    this.canvas.width = this.canvas.offsetWidth * dpr;
+    this.canvas.height = this.canvas.offsetHeight * dpr;
+    this.ctx.scale(dpr, dpr);
+    this.w = this.canvas.offsetWidth;
+    this.h = this.canvas.offsetHeight;
+    this.cx = this.w / 2;
+    this.cy = this.h / 2;
+    this.r = Math.min(this.cx, this.cy) * 0.8;
+  }
+  
+  render() {
+    this.ctx.clearRect(0, 0, this.w, this.h);
+    this.ctx.save();
+    this.ctx.translate(this.cx, this.cy);
+    
+    const scale = 1 + Math.sin(this.pulse * 0.5) * 0.08;
+    this.ctx.scale(scale, scale);
+    this.ctx.rotate(this.rotation * 0.3);
+    
+    // Outer petals
+    for (let i = 0; i < 12; i++) {
+      const angle = (i / 12) * Math.PI * 2;
+      const petalPulse = Math.sin(this.pulse + i * 0.4) * 0.2 + 0.8;
+      
+      this.ctx.save();
+      this.ctx.rotate(angle);
+      this.ctx.translate(0, -this.r * 0.75);
+      
+      const gradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, 30 * petalPulse);
+      gradient.addColorStop(0, this.colors[0]);
+      gradient.addColorStop(0.5, this.colors[1]);
+      gradient.addColorStop(1, 'transparent');
+      
+      this.ctx.fillStyle = gradient;
+      this.ctx.beginPath();
+      this.ctx.arc(0, 0, 30 * petalPulse, 0, Math.PI * 2);
+      this.ctx.fill();
+      
+      this.ctx.restore();
+    }
+    
+    // Intricate mandala layers
+    for (let layer = 0; layer < 6; layer++) {
+      const layerR = this.r * (0.7 - layer * 0.11);
+      const points = 6 + layer * 2;
+      const offsetAngle = this.rotation * (layer % 2 === 0 ? 1 : -1);
+      
+      this.ctx.strokeStyle = this.colors[layer % this.colors.length];
+      this.ctx.lineWidth = 2;
+      this.ctx.globalAlpha = 0.4 + Math.sin(this.pulse + layer) * 0.2;
+      
+      this.ctx.beginPath();
+      for (let i = 0; i <= points; i++) {
+        const angle = (i / points) * Math.PI * 2 + offsetAngle;
+        const wave = Math.sin(this.pulse * 0.8 + i + layer) * 5;
+        const r = layerR + wave;
+        const x = Math.cos(angle) * r;
+        const y = Math.sin(angle) * r;
+        if (i === 0) this.ctx.moveTo(x, y);
+        else this.ctx.lineTo(x, y);
+      }
+      this.ctx.closePath();
+      this.ctx.stroke();
+    }
+    
+    // Center bindu
+    const binduPulse = Math.sin(this.pulse * 2) * 8 + 20;
+    const binduGradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, binduPulse);
+    binduGradient.addColorStop(0, this.colors[1]);
+    binduGradient.addColorStop(0.5, this.colors[0]);
+    binduGradient.addColorStop(1, 'transparent');
+    
+    this.ctx.fillStyle = binduGradient;
+    this.ctx.shadowBlur = 40;
+    this.ctx.shadowColor = this.colors[0];
+    this.ctx.beginPath();
+    this.ctx.arc(0, 0, binduPulse, 0, Math.PI * 2);
+    this.ctx.fill();
+    
+    this.ctx.restore();
+    
+    this.rotation += 0.005;
+    this.pulse += 0.03;
+  }
+}
+
+// ═══════════════════════════════════════════
+// PARTICLE SYSTEM
+// ═══════════════════════════════════════════
+
+class ParticleSystem {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.particles = [];
+    this.mouse = {x: 0, y: 0};
+    this.resize();
+    
+    window.addEventListener('mousemove', (e) => {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+    });
+  }
+  
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = document.body.scrollHeight;
+  }
+  
+  createParticles(count = 40) {
+    this.particles = [];
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        size: Math.random() * 2 + 1,
+        speedY: Math.random() * 0.3 + 0.1,
+        opacity: Math.random() * 0.4 + 0.1,
+        hue: Math.random() * 60 + 280
+      });
+    }
+  }
+  
+  render() {
+    this.ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    this.particles.forEach(p => {
+      p.y += p.speedY;
+      if (p.y > this.canvas.height) p.y = 0;
+      
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.opacity})`;
+      this.ctx.fill();
+    });
+  }
+}
+
+// ═══════════════════════════════════════════
+// AUDIO SYSTEM (from previous build)
+// ═══════════════════════════════════════════
+
+const AUDIO_PROFILES = {
+  963: {
+    layers: [
+      {freq:963,type:'sine',vol:0.08,detune:0,pan:0},
+      {freq:481.5,type:'sine',vol:0.05,detune:2,pan:0},
+      {freq:1926,type:'sine',vol:0.04,detune:-2,pan:0},
+      {freq:963,type:'sine',vol:0.06,detune:0,pan:-0.7},
+      {freq:970,type:'sine',vol:0.06,detune:0,pan:0.7},
+      {freq:240.75,type:'triangle',vol:0.03,detune:5,pan:0},
+      {freq:3852,type:'sawtooth',vol:0.02,detune:-10,pan:0,filterFreq:1200}
+    ],
+    pulseSpeed:8
+  },
+  852:{layers:[{freq:852,type:'sine',vol:0.09,detune:0,pan:0},{freq:426,type:'sine',vol:0.06,detune:3,pan:0},{freq:1704,type:'triangle',vol:0.04,detune:-2,pan:0},{freq:852,type:'sine',vol:0.05,detune:0,pan:-0.6},{freq:858,type:'sine',vol:0.05,detune:0,pan:0.6},{freq:213,type:'sine',vol:0.04,detune:8,pan:0},{freq:3408,type:'sawtooth',vol:0.025,detune:-5,pan:0,filterFreq:1000}],pulseSpeed:7},
+  741:{layers:[{freq:741,type:'sine',vol:0.1,detune:0,pan:0},{freq:370.5,type:'sine',vol:0.07,detune:4,pan:0},{freq:1482,type:'triangle',vol:0.05,detune:-3,pan:0},{freq:741,type:'sine',vol:0.05,detune:0,pan:-0.5},{freq:749,type:'sine',vol:0.05,detune:0,pan:0.5},{freq:185.25,type:'triangle',vol:0.04,detune:6,pan:0},{freq:2964,type:'sawtooth',vol:0.03,detune:-8,pan:0,filterFreq:900}],pulseSpeed:6},
+  639:{layers:[{freq:639,type:'sine',vol:0.09,detune:0,pan:0},{freq:319.5,type:'sine',vol:0.07,detune:2,pan:0},{freq:1278,type:'triangle',vol:0.05,detune:-2,pan:0},{freq:639,type:'sine',vol:0.06,detune:0,pan:-0.6},{freq:646,type:'sine',vol:0.06,detune:0,pan:0.6},{freq:159.75,type:'sine',vol:0.05,detune:4,pan:0},{freq:2556,type:'sawtooth',vol:0.025,detune:-6,pan:0,filterFreq:800}],pulseSpeed:7},
+  528:{layers:[{freq:528,type:'sine',vol:0.1,detune:0,pan:0},{freq:264,type:'sine',vol:0.08,detune:3,pan:0},{freq:1056,type:'triangle',vol:0.06,detune:-2,pan:0},{freq:528,type:'sine',vol:0.07,detune:0,pan:-0.7},{freq:534,type:'sine',vol:0.07,detune:0,pan:0.7},{freq:132,type:'triangle',vol:0.05,detune:5,pan:0},{freq:2112,type:'sawtooth',vol:0.03,detune:-7,pan:0,filterFreq:750}],pulseSpeed:9},
+  417:{layers:[{freq:417,type:'sine',vol:0.1,detune:0,pan:0},{freq:208.5,type:'sine',vol:0.08,detune:4,pan:0},{freq:834,type:'triangle',vol:0.05,detune:-3,pan:0},{freq:417,type:'sine',vol:0.06,detune:0,pan:-0.5},{freq:423,type:'sine',vol:0.06,detune:0,pan:0.5},{freq:104.25,type:'sine',vol:0.06,detune:6,pan:0},{freq:1668,type:'sawtooth',vol:0.03,detune:-9,pan:0,filterFreq:700}],pulseSpeed:8},
+  396:{layers:[{freq:396,type:'sine',vol:0.11,detune:0,pan:0},{freq:198,type:'sine',vol:0.09,detune:5,pan:0},{freq:792,type:'triangle',vol:0.06,detune:-2,pan:0},{freq:396,type:'sine',vol:0.07,detune:0,pan:-0.6},{freq:402,type:'sine',vol:0.07,detune:0,pan:0.6},{freq:99,type:'triangle',vol:0.07,detune:7,pan:0},{freq:1584,type:'sawtooth',vol:0.035,detune:-8,pan:0,filterFreq:650}],pulseSpeed:10},
+  174:{layers:[{freq:174,type:'sine',vol:0.12,detune:0,pan:0},{freq:87,type:'sine',vol:0.1,detune:6,pan:0},{freq:348,type:'triangle',vol:0.07,detune:-2,pan:0},{freq:174,type:'sine',vol:0.08,detune:0,pan:-0.7},{freq:178,type:'sine',vol:0.08,detune:0,pan:0.7},{freq:43.5,type:'sine',vol:0.08,detune:8,pan:0},{freq:696,type:'sawtooth',vol:0.04,detune:-10,pan:0,filterFreq:500}],pulseSpeed:12}
+};
 
 const AudioSystem = {
   ctx: null,
-  oscillator: null,
-  gainNode: null,
+  layers: [],
+  masterGain: null,
   isPlaying: false,
-  frequency: 963,
+  currentFrequency: 963,
+  pulseInterval: null,
   
   init() {
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    this.gainNode = this.ctx.createGain();
-    this.gainNode.connect(this.ctx.destination);
-    this.gainNode.gain.value = 0;
+    this.masterGain = this.ctx.createGain();
+    this.masterGain.connect(this.ctx.destination);
+    this.masterGain.gain.value = 0;
   },
   
-  start() {
-    if (this.isPlaying) return;
+  createLayer(config) {
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    const filter = this.ctx.createBiquadFilter();
+    
+    osc.type = config.type;
+    osc.frequency.value = config.freq;
+    osc.detune.value = config.detune;
+    
+    filter.type = 'lowpass';
+    filter.frequency.value = config.filterFreq || 800;
+    filter.Q.value = 1;
+    
+    gain.gain.value = config.vol;
+    
+    osc.connect(filter);
+    filter.connect(gain);
+    
+    if (config.pan && config.pan !== 0) {
+      const panner = this.ctx.createStereoPanner();
+      panner.pan.value = config.pan;
+      gain.connect(panner);
+      panner.connect(this.masterGain);
+    } else {
+      gain.connect(this.masterGain);
+    }
+    
+    return { osc, gain, filter, config };
+  },
+  
+  start(frequency = 963) {
+    if (this.isPlaying) this.stop();
     if (!this.ctx) this.init();
     
-    this.oscillator = this.ctx.createOscillator();
-    this.oscillator.type = 'sine';
-    this.oscillator.frequency.value = this.frequency;
-    this.oscillator.connect(this.gainNode);
-    this.oscillator.start();
+    this.currentFrequency = frequency;
+    const profile = AUDIO_PROFILES[frequency];
+    if (!profile) return;
     
-    this.gainNode.gain.linearRampToValueAtTime(0.15, this.ctx.currentTime + 2);
+    profile.layers.forEach(layerConfig => {
+      const layer = this.createLayer(layerConfig);
+      layer.osc.start();
+      this.layers.push(layer);
+    });
+    
+    this.masterGain.gain.linearRampToValueAtTime(0.25, this.ctx.currentTime + 4);
+    this.startPulsing(profile.pulseSpeed);
+    this.isPlaying = true;
+  },
+  
+  startPulsing(speed) {
+    if (this.pulseInterval) clearInterval(this.pulseInterval);
+    const pulse = () => {
+      if (!this.isPlaying) return;
+      const now = this.ctx.currentTime;
+      const currentGain = this.masterGain.gain.value;
+      this.masterGain.gain.cancelScheduledValues(now);
+      this.masterGain.gain.setValueAtTime(currentGain, now);
+      this.masterGain.gain.linearRampToValueAtTime(currentGain * 1.12, now + speed / 2);
+      this.masterGain.gain.linearRampToValueAtTime(currentGain, now + speed);
+    };
+    pulse();
+    this.pulseInterval = setInterval(pulse, speed * 1000);
+  },
+  
+  stop() {
+    if (!this.isPlaying) return;
+    this.masterGain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 2);
+    if (this.pulseInterval) clearInterval(this.pulseInterval);
+    setTimeout(() => {
+      this.layers.forEach(layer => layer.osc.stop());
+      this.layers = [];
+      this.isPlaying = false;
+    }, 2000);
+  },
+  
+  switchFrequency(newFreq) {
+    if (!this.isPlaying) return;
+    this.stop();
+    setTimeout(() => this.start(newFreq), 2000);
+  }
+};
+
+const PreviewAudio = {
+  ctx: null,
+  layers: [],
+  gain: null,
+  isPlaying: false,
+  
+  init() {
+    if (!AudioSystem.ctx) AudioSystem.init();
+    this.ctx = AudioSystem.ctx;
+    this.gain = this.ctx.createGain();
+    this.gain.connect(this.ctx.destination);
+    this.gain.gain.value = 0;
+  },
+  
+  play(frequency) {
+    if (this.isPlaying) this.stop();
+    if (!this.ctx) this.init();
+    const profile = AUDIO_PROFILES[frequency];
+    if (!profile) return;
+    profile.layers.slice(0, 3).forEach(layerConfig => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = layerConfig.type;
+      osc.frequency.value = layerConfig.freq;
+      gain.gain.value = layerConfig.vol * 0.5;
+      osc.connect(gain);
+      gain.connect(this.gain);
+      osc.start();
+      this.layers.push({ osc, gain });
+    });
+    this.gain.gain.linearRampToValueAtTime(0.12, this.ctx.currentTime + 0.5);
     this.isPlaying = true;
   },
   
   stop() {
-    if (!this.isPlaying || !this.oscillator) return;
-    
-    this.gainNode.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 1);
+    if (!this.isPlaying) return;
+    this.gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.3);
     setTimeout(() => {
-      if (this.oscillator) {
-        this.oscillator.stop();
-        this.oscillator = null;
-      }
+      this.layers.forEach(layer => layer.osc.stop());
+      this.layers = [];
       this.isPlaying = false;
-    }, 1000);
-  },
-  
-  setFrequency(freq) {
-    this.frequency = freq;
-    if (this.oscillator) {
-      this.oscillator.frequency.linearRampToValueAtTime(freq, this.ctx.currentTime + 0.5);
-    }
+    }, 300);
   }
 };
 
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+
+let mandalas = {};
+let particleSystem;
+
 function enterWithSound() {
-  AudioSystem.start();
+  AudioSystem.start(963);
   document.getElementById('soundGate').classList.add('hidden');
   setTimeout(() => {
     document.getElementById('audioToggle').classList.add('visible');
@@ -783,336 +1032,88 @@ function toggleAudio() {
   }
 }
 
-// ═══════════════════════════════════════════
-// CANVAS ANIMATIONS
-// ═══════════════════════════════════════════
+function initTechniques() {
+  const grid = document.getElementById('techniquesGrid');
+  
+  TECHNIQUES.forEach((tech, idx) => {
+    const card = document.createElement('div');
+    card.className = 'technique-card';
+    card.style.setProperty('--card-color', tech.colors[0]);
+    card.style.setProperty('--card-glow', tech.colors[1]);
+    card.style.setProperty('--card-shadow', `rgba(${hexToRgb(tech.colors[0])}, 0.4)`);
+    
+    const canvas = document.createElement('canvas');
+    canvas.className = 'technique-mandala';
+    canvas.width = 240;
+    canvas.height = 240;
+    
+    const mandala = new MandalaRenderer(canvas, tech.colors);
+    mandalas[`tech${idx}`] = mandala;
+    
+    card.innerHTML = `
+      <div class="technique-name">${tech.name}</div>
+      <div class="technique-freq">${tech.freq} Hz</div>
+      <div class="technique-desc">${tech.desc}</div>
+    `;
+    card.prepend(canvas);
+    
+    card.addEventListener('mouseenter', () => PreviewAudio.play(tech.freq));
+    card.addEventListener('mouseleave', () => PreviewAudio.stop());
+    
+    grid.appendChild(card);
+  });
+}
 
-const CanvasAnimations = {
-  canvases: {},
-  
-  init() {
-    this.initGateYantra();
-    this.initHeroYantra();
-    this.initMainCanvas();
-    this.initTechniqueIcons();
-  },
-  
-  initGateYantra() {
-    const canvas = document.getElementById('gateYantra');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth * 2;
-    canvas.height = canvas.offsetHeight * 2;
-    
-    this.canvases.gate = { canvas, ctx, rotation: 0 };
-    this.animateGateYantra();
-  },
-  
-  animateGateYantra() {
-    const { canvas, ctx, rotation } = this.canvases.gate;
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const r = Math.min(cx, cy) * 0.8;
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation);
-    
-    // Circles
-    for (let i = 3; i > 0; i--) {
-      ctx.beginPath();
-      ctx.arc(0, 0, r * (i / 3), 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255, 215, 0, ${0.3 / i})`;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-    
-    // Triangles
-    const drawTriangle = (points, rotation = 0) => {
-      ctx.save();
-      ctx.rotate(rotation);
-      ctx.beginPath();
-      ctx.moveTo(points[0][0], points[0][1]);
-      ctx.lineTo(points[1][0], points[1][1]);
-      ctx.lineTo(points[2][0], points[2][1]);
-      ctx.closePath();
-      ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.restore();
-    };
-    
-    const t1 = [[0, -r * 0.7], [r * 0.6, r * 0.5], [-r * 0.6, r * 0.5]];
-    const t2 = [[0, r * 0.7], [-r * 0.6, -r * 0.5], [r * 0.6, -r * 0.5]];
-    
-    drawTriangle(t1, 0);
-    drawTriangle(t2, 0);
-    
-    // Center point
-    ctx.beginPath();
-    ctx.arc(0, 0, 10, 0, Math.PI * 2);
-    ctx.fillStyle = '#FFD700';
-    ctx.fill();
-    
-    ctx.restore();
-    
-    this.canvases.gate.rotation += 0.002;
-    requestAnimationFrame(() => this.animateGateYantra());
-  },
-  
-  initHeroYantra() {
-    const canvas = document.getElementById('heroYantra');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth * 2;
-    canvas.height = canvas.offsetHeight * 2;
-    
-    this.canvases.hero = { canvas, ctx, pulse: 0 };
-    this.animateHeroYantra();
-  },
-  
-  animateHeroYantra() {
-    const { canvas, ctx, pulse } = this.canvases.hero;
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-    const r = Math.min(cx, cy) * 0.7;
-    const scale = 1 + Math.sin(pulse) * 0.05;
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(scale, scale);
-    
-    // Breathing circles
-    for (let i = 0; i < 10; i++) {
-      const angle = (i / 10) * Math.PI * 2;
-      const pr = r * 0.85;
-      const x = Math.cos(angle) * pr;
-      const y = Math.sin(angle) * pr;
-      const petalPulse = Math.sin(pulse + i * 0.3) * 0.3 + 0.7;
-      
-      ctx.beginPath();
-      ctx.arc(x, y, 20 * petalPulse, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 215, 0, ${0.4 * petalPulse})`;
-      ctx.fill();
-    }
-    
-    // Main structure
-    ctx.beginPath();
-    ctx.arc(0, 0, r * 0.6, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(255, 215, 0, 0.6)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    
-    // Center bindu
-    const binduPulse = Math.sin(pulse * 2) * 5 + 15;
-    ctx.beginPath();
-    ctx.arc(0, 0, binduPulse, 0, Math.PI * 2);
-    ctx.fillStyle = '#FFD700';
-    ctx.shadowBlur = 40;
-    ctx.shadowColor = '#FFD700';
-    ctx.fill();
-    
-    ctx.restore();
-    
-    this.canvases.hero.pulse += 0.02;
-    requestAnimationFrame(() => this.animateHeroYantra());
-  },
-  
-  initMainCanvas() {
-    const canvas = document.getElementById('mainCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.body.scrollHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-    
-    const particles = [];
-    for (let i = 0; i < 30; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
-        speedY: Math.random() * 0.5 + 0.2,
-        opacity: Math.random() * 0.3 + 0.1
-      });
-    }
-    
-    const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(p => {
-        p.y += p.speedY;
-        if (p.y > canvas.height) p.y = 0;
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
-        ctx.fill();
-      });
-      
-      requestAnimationFrame(animate);
-    };
-    animate();
-  },
-  
-  initTechniqueIcons() {
-    const icons = document.querySelectorAll('.technique-icon');
-    icons.forEach((canvas, idx) => {
-      const ctx = canvas.getContext('2d');
-      canvas.width = 160;
-      canvas.height = 160;
-      
-      const shapes = [
-        // 0: Sri Yantra simplified
-        () => {
-          const cx = 80, cy = 80;
-          ctx.beginPath();
-          ctx.moveTo(cx, cy - 50);
-          ctx.lineTo(cx + 40, cy + 30);
-          ctx.lineTo(cx - 40, cy + 30);
-          ctx.closePath();
-          ctx.strokeStyle = '#FFD700';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        },
-        // 1: Flower of Life
-        () => {
-          const cx = 80, cy = 80, r = 20;
-          for (let i = 0; i < 6; i++) {
-            const angle = (i / 6) * Math.PI * 2;
-            const x = cx + Math.cos(angle) * r;
-            const y = cy + Math.sin(angle) * r;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        },
-        // 2: Hexagon
-        () => {
-          const cx = 80, cy = 80, r = 40;
-          ctx.beginPath();
-          for (let i = 0; i < 6; i++) {
-            const angle = (i / 6) * Math.PI * 2;
-            const x = cx + Math.cos(angle) * r;
-            const y = cy + Math.sin(angle) * r;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.closePath();
-          ctx.strokeStyle = '#FFD700';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        },
-        // 3: Star
-        () => {
-          const cx = 80, cy = 80, r1 = 40, r2 = 20;
-          ctx.beginPath();
-          for (let i = 0; i < 10; i++) {
-            const angle = (i / 10) * Math.PI * 2 - Math.PI / 2;
-            const r = i % 2 === 0 ? r1 : r2;
-            const x = cx + Math.cos(angle) * r;
-            const y = cy + Math.sin(angle) * r;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.closePath();
-          ctx.strokeStyle = '#FFD700';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        },
-        // 4: Circle
-        () => {
-          ctx.beginPath();
-          ctx.arc(80, 80, 40, 0, Math.PI * 2);
-          ctx.strokeStyle = '#FFD700';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        },
-        // 5: Moon
-        () => {
-          ctx.beginPath();
-          ctx.arc(80, 80, 40, 0, Math.PI * 2);
-          ctx.strokeStyle = '#FFD700';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(95, 80, 35, 0, Math.PI * 2);
-          ctx.fillStyle = '#000';
-          ctx.fill();
-        }
-      ];
-      
-      const shape = shapes[idx % shapes.length];
-      shape();
-    });
-  }
-};
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  return `${r}, ${g}, ${b}`;
+}
 
-// ═══════════════════════════════════════════
-// SCROLL ANIMATIONS
-// ═══════════════════════════════════════════
-
-const ScrollAnimations = {
-  init() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          
-          // Stagger technique cards
-          if (entry.target.classList.contains('section')) {
-            const cards = entry.target.querySelectorAll('.technique-card');
-            cards.forEach((card, idx) => {
-              setTimeout(() => card.classList.add('visible'), idx * 150);
-            });
-          }
-        }
-      });
-    }, { threshold: 0.2 });
-    
-    document.querySelectorAll('.section').forEach(section => {
-      observer.observe(section);
-    });
-    
-    // Frequency changes on scroll
-    let lastFreq = 963;
-    window.addEventListener('scroll', () => {
-      const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      const frequencies = [963, 852, 741, 639, 528, 417, 396, 174];
-      const idx = Math.floor(scrollPercent * frequencies.length);
-      const newFreq = frequencies[Math.min(idx, frequencies.length - 1)];
-      
-      if (newFreq !== lastFreq && AudioSystem.isPlaying) {
-        AudioSystem.setFrequency(newFreq);
-        lastFreq = newFreq;
-      }
-    });
-  }
-};
-
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
+function animate() {
+  Object.values(mandalas).forEach(m => m.render());
+  if (particleSystem) particleSystem.render();
+  requestAnimationFrame(animate);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  AudioSystem.init();
-  CanvasAnimations.init();
-  ScrollAnimations.init();
+  // Init mandalas
+  mandalas.gate = new MandalaRenderer(
+    document.getElementById('gateMandala'),
+    ['#d946ef', '#fbbf24', '#a855f7']
+  );
   
-  // Auto-reveal hero after gate
-  setTimeout(() => {
-    document.getElementById('hero').classList.add('visible');
-  }, 100);
+  mandalas.hero = new MandalaRenderer(
+    document.getElementById('heroMandala'),
+    ['#d946ef', '#fbbf24', '#a855f7']
+  );
+  
+  mandalas.techniquesBg = new MandalaRenderer(
+    document.getElementById('techniquesBg'),
+    ['#06b6d4', '#3b82f6', '#60a5fa']
+  );
+  
+  mandalas.pricingBg = new MandalaRenderer(
+    document.getElementById('pricingBg'),
+    ['#fbbf24', '#f59e0b', '#eab308']
+  );
+  
+  // Init particles
+  particleSystem = new ParticleSystem(document.getElementById('mainCanvas'));
+  particleSystem.createParticles();
+  
+  // Init techniques
+  initTechniques();
+  
+  // Start animation loop
+  animate();
+  
+  // Resize handler
+  window.addEventListener('resize', () => {
+    Object.values(mandalas).forEach(m => m.resize());
+    particleSystem.resize();
+  });
 });
 </script>
 
